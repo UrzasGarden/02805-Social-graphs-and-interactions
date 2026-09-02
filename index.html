@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marvel Character Network</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.26.0/cytoscape.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --panel-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+            --border: #334155;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        /* Cytoscape Container */
+        #cy {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        /* UI Overlays */
+        .panel {
+            position: absolute;
+            background-color: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            z-index: 10;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+        }
+
+        #controls {
+            top: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 250px;
+        }
+
+        #info-panel {
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            max-height: 80vh;
+            overflow-y: auto;
+            display: none;
+        }
+
+        h1, h2 {
+            margin: 0 0 8px 0;
+            font-size: 1.1rem;
+            color: var(--accent);
+        }
+
+        p {
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--text-muted);
+        }
+
+        .info-desc {
+            margin-top: 12px;
+            color: var(--text-main);
+        }
+
+        label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        select, button {
+            width: 100%;
+            padding: 8px;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        select:hover, button:hover {
+            border-color: var(--accent);
+        }
+
+        /* Loading Screen */
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loading">Fetching Multiverse Data...</div>
+
+    <div id="controls" class="panel">
+        <h1>Marvel Network</h1>
+        <p>303 Nodes | 1784 Edges</p>
+        <hr style="border: 0; border-top: 1px solid var(--border); width: 100%; margin: 8px 0;">
+        
+        <label for="layout-select">Display Option</label>
+        <select id="layout-select">
+            <option value="cose">Force-Directed (Organic)</option>
+            <option value="concentric">Concentric (By Connectivity)</option>
+            <option value="circle">Circular</option>
+            <option value="grid">Grid</option>
+        </select>
+        
+        <button id="reset-btn">Reset View</button>
+    </div>
+
+    <div id="info-panel" class="panel">
+        <h2 id="info-title">Character Name</h2>
+        <p id="info-meta">Connections: 0</p>
+        <p id="info-desc" class="info-desc">Select a character to see their Wikipedia description.</p>
+    </div>
+
+    <div id="cy"></div>
+
+    <script>
+        // Layout configurations
+        const layouts = {
+            cose: {
+                name: 'cose', // Force-directed compound spring embedder
+                idealEdgeLength: 100,
+                nodeOverlap: 20,
+                refresh: 20,
+                fit: true,
+                padding: 50,
+                randomize: true,
+                componentSpacing: 120,
+                nodeRepulsion: 400000,
+                edgeElasticity: 100,
+                nestTensor: 20,
+                animate: true
+            },
+            circle: { name: 'circle', fit: true, padding: 50, animate: true },
+            grid: { name: 'grid', fit: true, padding: 50, animate: true },
+            concentric: {
+                name: 'concentric',
+                fit: true,
+                padding: 50,
+                animate: true,
+                // Place nodes with higher degree towards the center
+                concentric: function(node) {
+                    return node.data('degree');
+                },
+                levelWidth: function(nodes) {
+                    return 5; 
+                }
+            }
+        };
+
+        let cy;
+
+        // Simple robust TSV parser
+        function parseTSV(text) {
+            return text.split('\n')
+                .filter(line => line.trim() !== '' && !line.startsWith('#'))
+                .map(line => line.split('\t'));
+        }
+
+        async function initGraph() {
+            try {
+                // Fetch the datasets
+                const [nodesRes, edgesRes] = await Promise.all([
+                    fetch('week1_nodes.tsv'),
+                    fetch('week1_edges.tsv')
+                ]);
+
+                if (!nodesRes.ok || !edgesRes.ok) {
+                    throw new Error("Failed to load TSV files. Ensure they are in the same directory.");
+                }
+
+                const nodesText = await nodesRes.text();
+                const edgesText = await edgesRes.text();
+
+                const nodesRaw = parseTSV(nodesText);
+                const edgesRaw = parseTSV(edgesText);
+
+                const elements = [];
+                const degrees = {};
+
+                // Process Edges
+                edgesRaw.forEach(row => {
+                    const source = row[0].trim();
+                    const target = row[1].trim();
+                    
+                    elements.push({
+                        group: 'edges',
+                        data: {
+                            id: `${source}-${target}`,
+                            source: source,
+                            target: target
+                        }
+                    });
+
+                    degrees[source] = (degrees[source] || 0) + 1;
+                    degrees[target] = (degrees[target] || 0) + 1;
+                });
+
+                // Process Nodes (accounting for isolated nodes)
+                nodesRaw.forEach(row => {
+                    if (row[0] === 'node_id') return; // Skip header
+
+                    const id = row[0].trim();
+                    const name = row[1].trim();
+                    const desc = row[4] ? row[4].trim() : "No description available.";
+                    const degree = degrees[id] || 0;
+
+                    elements.push({
+                        group: 'nodes',
+                        data: {
+                            id: id,
+                            name: name,
+                            desc: desc,
+                            degree: degree
+                        }
+                    });
+                });
+
+                document.getElementById('loading').style.display = 'none';
+
+                // Initialize Cytoscape
+                cy = cytoscape({
+                    container: document.getElementById('cy'),
+                    elements: elements,
+                    style: [
+                        {
+                            selector: 'node',
+                            style: {
+                                'label': 'data(name)',
+                                'color': '#f8fafc',
+                                'font-size': '12px',
+                                'text-valign': 'bottom',
+                                'text-margin-y': 6,
+                                'text-outline-width': 2,
+                                'text-outline-color': '#0f172a',
+                                // Color gradient: Blue (low connections) to Pink/Red (high connections)
+                                'background-color': 'mapData(degree, 0, 80, #38bdf8, #f43f5e)',
+                                // Size scaling based on connections
+                                'width': 'mapData(degree, 0, 100, 15, 75)',
+                                'height': 'mapData(degree, 0, 100, 15, 75)',
+                                'border-width': 2,
+                                'border-color': '#1e293b'
+                            }
+                        },
+                        {
+                            selector: 'edge',
+                            style: {
+                                'width': 1.5,
+                                'line-color': '#334155',
+                                'target-arrow-color': '#334155',
+                                'target-arrow-shape': 'triangle',
+                                'curve-style': 'bezier',
+                                'opacity': 0.4
+                            }
+                        },
+                        // Highlighting active nodes/edges
+                        {
+                            selector: 'node.highlight',
+                            style: {
+                                'border-color': '#fbbf24',
+                                'border-width': 4,
+                                'text-outline-color': '#fbbf24',
+                                'color': '#0f172a'
+                            }
+                        },
+                        {
+                            selector: 'edge.highlight',
+                            style: {
+                                'line-color': '#fbbf24',
+                                'target-arrow-color': '#fbbf24',
+                                'opacity': 1,
+                                'width': 3,
+                                'z-index': 999
+                            }
+                        },
+                        {
+                            selector: 'node.fade',
+                            style: { 'opacity': 0.2 }
+                        },
+                        {
+                            selector: 'edge.fade',
+                            style: { 'opacity': 0.1 }
+                        }
+                    ],
+                    layout: layouts.cose // Default layout
+                });
+
+                // Interaction: Node Click
+                cy.on('tap', 'node', function(evt){
+                    const node = evt.target;
+                    
+                    // Update UI panel
+                    document.getElementById('info-panel').style.display = 'block';
+                    document.getElementById('info-title').innerText = node.data('name');
+                    document.getElementById('info-meta').innerText = `Total Links (In/Out): ${node.data('degree')}`;
+                    document.getElementById('info-desc').innerText = node.data('desc');
+
+                    // Highlight neighbors
+                    cy.elements().removeClass('highlight fade');
+                    cy.elements().addClass('fade');
+                    
+                    node.removeClass('fade').addClass('highlight');
+                    node.connectedEdges().removeClass('fade').addClass('highlight');
+                    node.connectedEdges().connectedNodes().removeClass('fade').addClass('highlight');
+                });
+
+                // Interaction: Background Click (Reset)
+                cy.on('tap', function(evt){
+                    if(evt.target === cy){
+                        cy.elements().removeClass('highlight fade');
+                        document.getElementById('info-panel').style.display = 'none';
+                    }
+                });
+
+            } catch (error) {
+                document.getElementById('loading').innerText = "Error: " + error.message;
+                document.getElementById('loading').style.color = "#f43f5e";
+                console.error(error);
+            }
+        }
+
+        // Layout Switcher
+        document.getElementById('layout-select').addEventListener('change', function(e) {
+            const layoutName = e.target.value;
+            if(cy) {
+                cy.layout(layouts[layoutName]).run();
+            }
+        });
+
+        // Reset View Button
+        document.getElementById('reset-btn').addEventListener('click', function() {
+            if(cy) {
+                cy.fit(cy.elements(), 50);
+            }
+        });
+
+        // Start initialization
+        initGraph();
+    </script>
+</body>
+</html>
