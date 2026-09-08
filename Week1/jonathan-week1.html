@@ -24,12 +24,55 @@
             overflow: hidden;
         }
 
+        /* Top navigation bar */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 56px;
+            padding: 0 20px;
+            box-sizing: border-box;
+            background-color: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            z-index: 50;
+        }
+
+        .topbar .brand {
+            font-size: 0.95rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .topbar .nav {
+            display: flex;
+            gap: 18px;
+        }
+
+        .topbar .nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        .topbar .nav a.active {
+            color: var(--accent);
+        }
+
+        .topbar .nav a:hover {
+            color: var(--text-main);
+        }
+
         /* Cytoscape Container */
         #cy {
             width: 100vw;
-            height: 100vh;
+            height: calc(100vh - 56px);
             position: absolute;
-            top: 0;
+            top: 56px;
             left: 0;
             z-index: 1;
         }
@@ -47,7 +90,7 @@
         }
 
         #controls {
-            top: 20px;
+            top: 76px;
             left: 20px;
             display: flex;
             flex-direction: column;
@@ -56,7 +99,7 @@
         }
 
         #info-panel {
-            top: 20px;
+            top: 76px;
             right: 20px;
             width: 300px;
             max-height: 80vh;
@@ -120,6 +163,15 @@
     </style>
 </head>
 <body>
+
+    <header class="topbar">
+        <a class="brand" href="../index.html">Social Graphs and Interactions</a>
+        <nav class="nav" aria-label="Main navigation">
+            <a href="../index.html#overview">Overview</a>
+            <a href="jonathan-week1.html" class="active">Week 1</a>
+            <a href="../Week2/week2.html">Week 2</a>
+        </nav>
+    </header>
 
     <div id="loading">Fetching Multiverse Data...</div>
 

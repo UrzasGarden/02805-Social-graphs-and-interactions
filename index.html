@@ -6,15 +6,15 @@
     <title>Social Graphs and Interactions</title>
     <style>
       :root {
-        --bg: #f4f7fb;
-        --panel: #ffffff;
-        --panel-soft: #eef4ff;
-        --text: #1a2433;
-        --muted: #5d6b80;
-        --line: #dfe9f5;
-        --accent: #4568dc;
-        --accent-2: #6aaefc;
-        --shadow: 0 18px 40px rgba(23, 41, 75, 0.09);
+        --bg: #0f1420;
+        --panel: #161d2b;
+        --panel-soft: #1c2436;
+        --text: #e7ecf5;
+        --muted: #9aa7bd;
+        --line: #2a3346;
+        --accent: #6c8dff;
+        --accent-2: #7fd0ff;
+        --shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
       }
 
       * {
@@ -23,6 +23,7 @@
 
       html {
         scroll-behavior: smooth;
+        color-scheme: dark;
       }
 
       body {
@@ -30,8 +31,8 @@
         min-height: 100vh;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         background:
-          radial-gradient(circle at top left, rgba(94, 128, 255, 0.18), transparent 28%),
-          linear-gradient(180deg, #f8fafe 0%, var(--bg) 100%);
+          radial-gradient(circle at top left, rgba(108, 141, 255, 0.16), transparent 28%),
+          linear-gradient(180deg, #0b0f18 0%, var(--bg) 100%);
         color: var(--text);
       }
 
@@ -49,7 +50,7 @@
         padding: 12px 18px;
         border: 1px solid var(--line);
         border-radius: 16px;
-        background: rgba(255, 255, 255, 0.72);
+        background: rgba(22, 29, 43, 0.72);
         backdrop-filter: blur(10px);
       }
 
@@ -74,11 +75,7 @@
       }
 
       .hero {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(238, 244, 255, 0.9));
-        border: 1px solid var(--line);
-        border-radius: 28px;
-        box-shadow: var(--shadow);
-        padding: 52px 48px;
+        padding: 24px 4px 12px;
       }
 
       .eyebrow {
@@ -86,7 +83,7 @@
         padding: 8px 12px;
         border-radius: 999px;
         background: var(--panel-soft);
-        border: 1px solid #dfe9ff;
+        border: 1px solid var(--line);
         font-size: 0.75rem;
         letter-spacing: 0.08em;
         text-transform: uppercase;
@@ -139,7 +136,7 @@
       }
 
       .button.secondary {
-        background: rgba(255, 255, 255, 0.9);
+        background: rgba(22, 29, 43, 0.9);
         border: 1px solid var(--line);
         color: var(--text);
       }
@@ -152,7 +149,7 @@
       }
 
       .card {
-        background: rgba(255, 255, 255, 0.72);
+        background: rgba(22, 29, 43, 0.72);
         border: 1px solid var(--line);
         border-radius: 20px;
         padding: 24px 22px;
@@ -182,7 +179,7 @@
       .note {
         margin-top: 30px;
         padding: 26px 28px;
-        background: linear-gradient(135deg, #ffffff, #edf5ff);
+        background: linear-gradient(135deg, #161d2b, #1c2436);
         border: 1px solid var(--line);
         border-radius: 22px;
       }
@@ -205,7 +202,7 @@
         }
 
         .hero {
-          padding: 34px 22px;
+          padding: 20px 4px 8px;
         }
 
         .grid {
@@ -221,6 +218,7 @@
         <nav class="nav" aria-label="Main navigation">
           <a href="#overview">Overview</a>
           <a href="Week1/jonathan-week1.html">Week 1</a>
+          <a href="Week2/week2.html">Week 2</a>
         </nav>
       </header>
 
