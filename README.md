@@ -6,10 +6,11 @@ The project combines a small interactive Cytoscape.js visualization with a Netwo
 ## Contents
 
 - `index.html` - project overview page
-- `jonathan-week1.html` - interactive Marvel character network
-- `week1_nodes.tsv` - 303 characters and their metadata
-- `week1_edges.tsv` - 1,784 directed article-link relationships
-- `Week1_Loke.ipynb` - notebook for loading and analyzing the graph
+- `Week1/jonathan-week1.html` - interactive Marvel character network
+- `Week1/week1_nodes.tsv` - 303 characters and their metadata
+- `Week1/week1_edges.tsv` - 1,784 directed article-link relationships
+- `Week1/Week1_Loke.ipynb` - notebook for loading and analyzing the graph
+- `Week2/week2.html` - placeholder for week 2's assignment
 
 ## Run
 
