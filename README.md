@@ -14,5 +14,7 @@ The project combines a small interactive Cytoscape.js visualization with a Netwo
 
 ## Run
 
-Open `https://urzasgarden.github.io/02805-Social-graphs-and-interactions/index.html` in a browser, then select **Week 1** to explore the network.
+Open `https://urzasgarden.github.io/02805-Social-graphs-and-interactions/index.html` in a browser.
 The visualization loads Cytoscape.js from a CDN, so an internet connection may be needed. 
+
+
