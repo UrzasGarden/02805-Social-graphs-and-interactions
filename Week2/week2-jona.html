@@ -72,8 +72,15 @@
     }
     .splash p { font-size: 1.2rem; font-weight: 700; max-width: 600px; margin: 0 auto; position: relative; z-index: 2; }
 
-    /* ACTION BUTTON */
-    .action-row { text-align: center; margin-bottom: 40px; }
+    /* STICKY ACTION BAR */
+    .sticky-action-bar {
+      position: sticky; top: 16px; z-index: 100;
+      display: flex; justify-content: center; align-items: center; gap: 24px;
+      margin-bottom: 40px; pointer-events: none;
+    }
+    .sticky-action-bar > * { pointer-events: auto; }
+    .uni-label-wrap { display: flex; align-items: center; }
+    .uni-label { display: block; font-family: var(--font); font-size: 1.6rem; background: #fff; padding: 4px 16px; border: 3px solid #000; box-shadow: 4px 4px 0 #000; transform: rotate(2deg); letter-spacing: 1px;}
     .btn-pow {
       font-family: var(--font); font-size: 2rem; color: #fff;
       background: var(--red); padding: 12px 32px; letter-spacing: 2px;
@@ -83,7 +90,6 @@
     }
     .btn-pow:hover { transform: translate(-2px, -2px); box-shadow: 10px 10px 0px #000; background: #dc2626; }
     .btn-pow:active { transform: translate(4px, 4px); box-shadow: 4px 4px 0px #000; }
-    .uni-label { display: block; margin-top: 24px; font-family: var(--font); font-size: 2rem; background: #fff; padding: 4px 16px; border: 3px solid #000; display: inline-block; box-shadow: 4px 4px 0 #000; transform: rotate(2deg); letter-spacing: 1px;}
 
     /* CONTENT PANELS */
     .panel {
@@ -150,6 +156,16 @@
     .bubble-rose { background: var(--yellow); }
     .bubble-rose::before { border-color: var(--yellow) transparent transparent transparent; }
     .bubble strong { color: var(--red); font-family: var(--font); font-size: 1.4rem; letter-spacing: 1px; }
+
+    /* FORGE UI */
+    #universe-forge { background: #fff; border: 4px solid #000; box-shadow: 8px 8px 0 #000; padding: 24px; max-width: 700px; margin: 0 auto 40px; position: relative; }
+    .forge-title { font-family: var(--font); font-size: 2.5rem; letter-spacing: 1px; margin-bottom: 16px; color: var(--red); text-shadow: 2px 2px 0 #000; }
+    .forge-progress { width: 100%; height: 24px; background: #000; margin-bottom: 20px; position: relative; }
+    .forge-bar { width: 0%; height: 100%; background: var(--yellow); border-right: 4px solid #000; transition: width 0.1s; }
+    .forge-ticker { height: 220px; overflow-y: auto; background: #111; color: #fff; border: 4px solid #000; padding: 16px; font-family: var(--mono); font-size: .9rem; font-weight: 700; line-height: 1.5; }
+    .forge-msg { margin-bottom: 8px; animation: slideIn 0.2s ease-out; }
+    .forge-msg-hub { color: var(--yellow); font-size: 1.1rem; }
+    @keyframes slideIn { from { transform: translateX(-20px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
   </style>
 </head>
 <body>
@@ -168,9 +184,25 @@
     <p>We grew a fake Marvel network using preferential attachment (n=303, m tuned to match). Each synthetic node gets a real hero name - but the connections are randomly generated based on popularity!</p>
   </section>
 
-  <div class="action-row">
+  <div class="sticky-action-bar">
     <button class="btn-pow" onclick="generateUniverse()"> GENERATE UNIVERSE </button>
-    <div><span id="ba-universe-label" class="uni-label" style="display:none;"></span></div>
+    <div class="uni-label-wrap">
+      <span id="ba-universe-label" class="uni-label" style="visibility:hidden;"></span>
+    </div>
+  </div>
+
+  <div id="universe-forge" style="display:none; max-width: 650px; margin: 0 auto 40px;">
+    <div style="background:#fff; border:4px solid #000; box-shadow:8px 8px 0 #000; padding:24px; position:relative;">
+      <h2 style="font-size:2rem; margin-bottom:12px; border-bottom:0;">FORGING UNIVERSE...</h2>
+      <div style="width:100%; height:20px; background:#000; border:2px solid #000; margin-bottom:16px; position:relative;">
+        <div id="forge-bar" style="width:0%; height:100%; background:var(--yellow);"></div>
+      </div>
+      <canvas id="forge-canvas" width="600" height="350" style="width:100%; height:350px; background:#fff; border:4px solid #000; margin-bottom:16px;"></canvas>
+      <div id="forge-ticker-wrapper">
+        <button class="btn-pow" style="font-size: 1rem; padding: 4px 12px; margin-bottom: 8px; width:100%; background:var(--cyan);" onclick="toggleTicker()">SHOW / HIDE UNIVERSE HISTORY</button>
+        <div class="forge-ticker" id="forge-ticker" style="display:block;"></div>
+      </div>
+    </div>
   </div>
 
   <div id="ba-universe-content" style="display:none;">
@@ -572,38 +604,67 @@ const STORYLINES=[
 
 function pickRandom(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
 
-function generateUniverse() {
+
+let isGenerating = false;
+
+async function generateUniverse() {
+  if (isGenerating) return;
+  isGenerating = true;
   universeCount++;
+
+  document.getElementById('ba-universe-content').style.display = 'none';
+  
   const ids=NODES.map(n=>n.id);
   const tds=NODES.map(n=>degTot(n.id));
   const mBA=Math.max(Math.round(M/(2*N)),1);
-  const ba=genBA(N,mBA);
+  const m0=Math.max(mBA+1,2);
   const baIds=Array.from({length:N},(_,i)=>i);
 
-  // Map BA nodes to real hero names (shuffled randomly)
   const shuffledNames=[...NODES].sort(()=>Math.random()-.5);
-  const nameMap={}; // BA node index -> {name, id}
+  const nameMap={}; 
   baIds.forEach((i,idx)=>{ nameMap[i]=shuffledNames[idx]; });
 
-  // Find hubs in BA network
+  const uniNum=Math.floor(Math.random()*9000)+1000;
+  const uniLetter=String.fromCharCode(65+Math.floor(Math.random()*26));
+  const uniName='Earth-'+uniNum+uniLetter;
+  
+  document.getElementById('ba-universe-label').textContent=' ' + uniName + ' | Universe #' + universeCount;
+  document.getElementById('ba-universe-label').style.visibility = 'visible';
+
+  const ba={adj:{},adjIn:{},degs:new Array(N).fill(0),edges:[]};
+  const urn=[];
+  for(let i=0;i<N;i++){ba.adj[i]=[];ba.adjIn[i]=[];}
+  
+  for(let i=0;i<m0;i++) {
+    for(let j=i+1;j<m0;j++) {
+      ba.adj[i].push(j);ba.adjIn[j].push(i);
+      ba.edges.push({source:i,target:j});
+      ba.degs[i]++;ba.degs[j]++;
+      urn.push(i,j);
+    }
+  }
+  
+  for(let nn=m0;nn<N;nn++){
+    const tgt=new Set();let att=0;
+    while(tgt.size<mBA&&att<mBA*100){att++;const c=urn[Math.floor(Math.random()*urn.length)];if(c!==nn)tgt.add(c);}
+    
+    tgt.forEach(t=>{
+      ba.adj[nn].push(t);ba.adjIn[t].push(nn);
+      ba.edges.push({source:nn,target:t});
+      ba.degs[nn]++;ba.degs[t]++;
+      urn.push(nn,t);
+    });
+  }
+
+  // Reveal content
+  document.getElementById('ba-universe-content').style.display = 'block';
+
   const baSorted=[...baIds].sort((a,b)=>ba.degs[b]-ba.degs[a]);
   const baHub=nameMap[baSorted[0]];
-  const baHub2=nameMap[baSorted[1]];
-  const baHub3=nameMap[baSorted[2]];
-
-  // Find hub in real network
   const realSorted=[...ids].sort((a,b)=>degTot(b)-degTot(a));
   const realHub=NODES.find(n=>n.id===realSorted[0]);
 
-  // Universe label
-  const uniNum=Math.floor(Math.random()*9000)+1000;
-  const uniLetter=String.fromCharCode(65+Math.floor(Math.random()*26));
-  const uniName=`Earth-${uniNum}${uniLetter}`;
-  document.getElementById('ba-universe-label').textContent=` ${uniName} | Universe #${universeCount}`;
-
-  // Hub face-off
   document.getElementById('ba-faceoff').innerHTML=`
-    <div class="universe-name"> Hub Showdown</div>
     <div class="faceoff">
       <div class="faceoff-side faceoff-real">
         <div class="faceoff-label"> Our Universe</div>
@@ -611,7 +672,7 @@ function generateUniverse() {
         <div class="faceoff-deg">${degTot(realHub.id)}</div>
         <div class="faceoff-label">connections</div>
       </div>
-      <div class="faceoff-vs"></div>
+      <div class="faceoff-vs">VS</div>
       <div class="faceoff-side faceoff-fake">
         <div class="faceoff-label"> ${uniName}</div>
         <div class="faceoff-name">${baHub.name}</div>
@@ -621,24 +682,19 @@ function generateUniverse() {
     </div>
   `;
 
-  // Generate comic book covers from interesting BA edges
   const comicEdges=[];
-  // Pick edges involving top hubs and some random ones
   const hubEdges=ba.edges.filter(e=>e.source===baSorted[0]||e.target===baSorted[0]).slice(0,2);
   const hub2Edges=ba.edges.filter(e=>e.source===baSorted[1]||e.target===baSorted[1]).slice(0,1);
-  // Random surprising edges (low-degree nodes connected)
   const surpriseEdges=ba.edges.filter(e=>ba.degs[e.source]<4&&ba.degs[e.target]<4).sort(()=>Math.random()-.5).slice(0,1);
-  // A real-network connection that does NOT exist in BA (or vice versa) - pick 1 random
   const randomBA=ba.edges.sort(()=>Math.random()-.5).slice(0,2);
   comicEdges.push(...hubEdges,...hub2Edges,...surpriseEdges,...randomBA);
 
-  // Deduplicate and limit to 6
   const seen=new Set();
   const uniqueComics=comicEdges.filter(e=>{
     const k=e.source+'-'+e.target;if(seen.has(k))return false;seen.add(k);return true;
   }).slice(0,6);
 
-  const comicsHTML=uniqueComics.map((e,i)=>{
+  document.getElementById('ba-comics').innerHTML=uniqueComics.map((e,i)=>{
     const hero1=nameMap[e.source]||{name:'Unknown'};
     const hero2=nameMap[e.target]||{name:'Unknown'};
     const theme=COMIC_THEMES[i%COMIC_THEMES.length];
@@ -652,7 +708,7 @@ function generateUniverse() {
         <div class="comic-bg"></div>
         <div class="comic-inner">
           <div class="comic-top">
-            <div class="comic-logo">Marvel · ${uniName}</div>
+            <div class="comic-logo">Marvel  ${uniName}</div>
             <div class="comic-issue">#${issue}</div>
           </div>
           <div class="comic-bottom">
@@ -664,25 +720,22 @@ function generateUniverse() {
       </div>
     `;
   }).join('');
-  document.getElementById('ba-comics').innerHTML=comicsHTML;
 
-  // CCDF chart (destroy old one if exists)
   if(baChart){baChart.destroy();baChart=null;}
   const realC=ccdf(tds.filter(d=>d>0));
   const baC=ccdf(ba.degs.filter(d=>d>0));
   baChart=new Chart(document.getElementById('ba-chart'),{
     type:'scatter',
     data:{datasets:[
-      {label:'Our Universe',data:realC.map(p=>({x:Math.log10(p.x),y:Math.log10(p.y)})),backgroundColor:'#818cf8',borderColor:'#818cf8',pointRadius:4},
+      {label:'Earth-Prime',data:realC.map(p=>({x:Math.log10(p.x),y:Math.log10(p.y)})),backgroundColor:'#818cf8',borderColor:'#818cf8',pointRadius:4},
       {label:uniName,data:baC.filter(p=>p.x>0).map(p=>({x:Math.log10(p.x),y:Math.log10(Math.max(p.y,1e-4))})),backgroundColor:'#34d39988',borderColor:'#34d399',pointRadius:4},
     ]},
     options:{responsive:true,maintainAspectRatio:false,
-      scales:{x:{title:{display:true,text:'log₁₀(degree)'},grid:{color:'rgba(30,41,59,.5)'}},y:{title:{display:true,text:'log₁₀ P(X≥k)'},grid:{color:'rgba(30,41,59,.5)'}}},
+      scales:{x:{title:{display:true,text:'log10(degree)'},grid:{color:'rgba(0,0,0,.1)'}},y:{title:{display:true,text:'log10 P(X>=k)'},grid:{color:'rgba(0,0,0,.1)'}}},
       plugins:{legend:{position:'top'}},
     }
   });
 
-  // Comparison table
   const realCC=clusteringFast(ADJ,ADJ_IN,ids);
   const baCC=clusteringFast(ba.adj,ba.adjIn,baIds);
   const realComp=components(ADJ,ADJ_IN,ids);
@@ -711,12 +764,9 @@ function generateUniverse() {
     BA explains <em>who gets famous</em> but not <em>who hangs out together</em>.
     ${uniName} is a lonely universe - everyone knows the hubs, but there are no Avengers, no X-Men, no real squads.
   `;
+
+  isGenerating = false;
 }
-
-function renderBA(){ generateUniverse(); }
-
-
-
 /* ── INIT ── */
 async function main(){
   await loadData();
