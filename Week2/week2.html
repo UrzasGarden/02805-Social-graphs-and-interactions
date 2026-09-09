@@ -887,7 +887,6 @@
       const MIN_NODES_FOR_HUB_CHECK = 12;
       const HUB_Z = 2.5;
       const HUB_MIN_DEGREE = 6;
-      const PAIR_MIN_DEGREE = 4;
 
       const state = {
         realNodes: new Map(), // id -> name
@@ -1141,20 +1140,36 @@
         };
       }
 
+      function realShortestPath(a, b) {
+        if (a === b) return 0;
+        const visited = new Set([a]);
+        let frontier = [a];
+        let dist = 0;
+        while (frontier.length) {
+          dist += 1;
+          const next = [];
+          for (const node of frontier) {
+            const neighbors = state.realAdj.get(node);
+            if (!neighbors) continue;
+            for (const nb of neighbors) {
+              if (nb === b) return dist;
+              if (!visited.has(nb)) {
+                visited.add(nb);
+                next.push(nb);
+              }
+            }
+          }
+          frontier = next;
+        }
+        return Infinity;
+      }
+
       function checkPairEvent(a, b) {
         const key = [a, b].sort().join("|");
         if (state.growing.alertedPairs.has(key)) return null;
-        const degA = state.growing.nodes.get(a).degree;
-        const degB = state.growing.nodes.get(b).degree;
-        if (degA < PAIR_MIN_DEGREE || degB < PAIR_MIN_DEGREE) return null;
-        const realAdjA = state.realAdj.get(a) || new Set();
-        if (realAdjA.has(b)) return null; // already directly linked in reality, not interesting
+        const realDist = realShortestPath(a, b);
+        if (!(realDist === Infinity || realDist >= 5)) return null;
         state.growing.alertedPairs.add(key);
-        const realAdjB = state.realAdj.get(b) || new Set();
-        let mutual = 0;
-        realAdjA.forEach((n) => {
-          if (realAdjB.has(n)) mutual++;
-        });
         return {
           type: "pair",
           uid: "p" + key + "-" + state.growing.issue,
@@ -1162,15 +1177,13 @@
           b,
           nameA: state.growing.nodes.get(a).name,
           nameB: state.growing.nodes.get(b).name,
-          degA,
-          degB,
-          mutual,
+          realDist,
+          newDist: 1,
           issue: state.growing.issue,
           palette: pickPalette(),
           tagline: pick(TEAM_TAGLINES),
         };
       }
-
       function growTick() {
         if (state.growing.remainingPool.length === 0) {
           finishUniverse();
@@ -1295,18 +1308,21 @@
         return 30;
       }
 
-      function badgeOrPhoto(cx, cy, r, imageUrl, initialsText, uid, slot, p) {
+      function badgeOrPhoto(rx, ry, rw, rh, imageUrl, initialsText, uid, slot, p) {
         if (imageUrl) {
           const clipId = "clip-" + uid + "-" + slot;
           return (
-            '<clipPath id="' + clipId + '"><circle cx="' + cx + '" cy="' + cy + '" r="' + r + '"/></clipPath>' +
-            '<image href="' + escapeXML(imageUrl) + '" x="' + (cx - r) + '" y="' + (cy - r) + '" width="' + r * 2 + '" height="' + r * 2 + '" preserveAspectRatio="xMidYMid slice" clip-path="url(#' + clipId + ')"/>' +
-            '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="' + p.ink + '" stroke-width="6"/>'
+            '<clipPath id="' + clipId + '"><rect x="' + rx + '" y="' + ry + '" width="' + rw + '" height="' + rh + '" rx="10"/></clipPath>' +
+            '<image href="' + escapeXML(imageUrl) + '" x="' + rx + '" y="' + ry + '" width="' + rw + '" height="' + rh + '" preserveAspectRatio="xMidYMid slice" clip-path="url(#' + clipId + ')"/>' +
+            '<rect x="' + rx + '" y="' + ry + '" width="' + rw + '" height="' + rh + '" fill="none" stroke="' + p.ink + '" stroke-width="5" rx="10"/>'
           );
         }
+        const cx = rx + rw / 2;
+        const cy = ry + rh / 2;
+        const fontSize = Math.round(Math.min(rh * 0.4, rw / (initialsText.length * 0.7)));
         return (
-          '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="url(#badgeGrad-' + uid + ')" stroke="' + p.ink + '" stroke-width="6"/>' +
-          '<text x="' + cx + '" y="' + (cy + r * 0.29) + '" font-family="Bangers, cursive" font-size="' + Math.round(r * 0.78) + '" fill="' + p.ink + '" text-anchor="middle">' + escapeXML(initialsText) + "</text>"
+          '<rect x="' + rx + '" y="' + ry + '" width="' + rw + '" height="' + rh + '" rx="10" fill="url(#badgeGrad-' + uid + ')" stroke="' + p.ink + '" stroke-width="5"/>' +
+          '<text x="' + cx + '" y="' + (cy + fontSize * 0.32) + '" font-family="Bangers, cursive" font-size="' + fontSize + '" fill="' + p.ink + '" text-anchor="middle">' + escapeXML(initialsText) + "</text>"
         );
       }
 
@@ -1318,25 +1334,30 @@
         const rawTitle = isTeam ? displayName(ev.nameA) + " & " + displayName(ev.nameB) : displayName(ev.name);
         const title = escapeXML(rawTitle);
         const fontSize = titleFontSize(rawTitle);
-        const star = starburstPoints(w / 2, h * 0.36, 150, 108, 14);
         const images = ev.images || [];
+
+        const photoTop = 36,
+          photoBottom = 336,
+          margin = 8;
 
         let badgeMarkup;
         if (isTeam) {
-          const cxA = w * 0.36,
-            cxB = w * 0.64,
-            cy = h * 0.36,
-            r = 62;
+          const gap = 6;
+          const half = (w - margin * 2 - gap) / 2;
+          const xA = margin,
+            xB = margin + half + gap;
+          const seamCx = w / 2,
+            seamCy = (photoTop + photoBottom) / 2;
           badgeMarkup =
-            badgeOrPhoto(cxA, cy, r, images[0], initials(ev.nameA), ev.uid, "a", p) +
-            badgeOrPhoto(cxB, cy, r, images[1], initials(ev.nameB), ev.uid, "b", p) +
-            '<text x="' + w / 2 + '" y="' + (cy + 12) + '" font-family="Bangers, cursive" font-size="30" fill="' + p.accent + '" text-anchor="middle" stroke="' + p.ink + '" stroke-width="0.8">&amp;</text>';
+            badgeOrPhoto(xA, photoTop, half, photoBottom - photoTop, images[0], initials(ev.nameA), ev.uid, "a", p) +
+            badgeOrPhoto(xB, photoTop, half, photoBottom - photoTop, images[1], initials(ev.nameB), ev.uid, "b", p) +
+            '<circle cx="' + seamCx + '" cy="' + seamCy + '" r="23" fill="' + p.accent + '" stroke="' + p.ink + '" stroke-width="4"/>' +
+            '<text x="' + seamCx + '" y="' + (seamCy + 8) + '" font-family="Bangers, cursive" font-size="26" fill="' + p.ink + '" text-anchor="middle">&amp;</text>';
         } else {
-          const cx = w / 2,
-            cy = h * 0.36,
-            r = 82;
-          badgeMarkup = badgeOrPhoto(cx, cy, r, images[0], initials(ev.name), ev.uid, "solo", p);
+          badgeMarkup = badgeOrPhoto(margin, photoTop, w - margin * 2, photoBottom - photoTop, images[0], initials(ev.name), ev.uid, "solo", p);
         }
+
+        const star = starburstPoints(w / 2, h - 68, 88, 62, 12);
 
         return (
           '<svg viewBox="0 0 ' + w + " " + h + '" xmlns="http://www.w3.org/2000/svg" class="comic-cover">' +
@@ -1350,29 +1371,36 @@
           '<radialGradient id="badgeGrad-' + ev.uid + '" cx="50%" cy="42%" r="65%">' +
           '<stop offset="0%" stop-color="' + p.accent + '"/><stop offset="100%" stop-color="' + p.bg2 + '"/>' +
           "</radialGradient>" +
+          '<linearGradient id="footerFade-' + ev.uid + '" x1="0" y1="0" x2="0" y2="1">' +
+          '<stop offset="0%" stop-color="' + p.ink + '" stop-opacity="0"/>' +
+          '<stop offset="42%" stop-color="' + p.ink + '" stop-opacity="0.55"/>' +
+          '<stop offset="70%" stop-color="' + p.ink + '" stop-opacity="0.93"/>' +
+          '<stop offset="100%" stop-color="' + p.ink + '" stop-opacity="0.97"/>' +
+          "</linearGradient>" +
           "</defs>" +
           '<rect x="0" y="0" width="' + w + '" height="' + h + '" fill="url(#bgGrad-' + ev.uid + ')"/>' +
           '<rect x="0" y="0" width="' + w + '" height="' + h + '" fill="url(#dots-' + ev.uid + ')"/>' +
-          '<polygon points="' + star + '" fill="' + p.accent + '" opacity="0.2" transform="rotate(8 ' + w / 2 + " " + h * 0.36 + ')"/>' +
+          '<rect x="0" y="0" width="' + w + '" height="34" fill="' + p.ink + '" opacity="0.5"/>' +
           badgeMarkup +
+          '<rect x="0" y="' + (photoBottom - 110) + '" width="' + w + '" height="' + (h - (photoBottom - 110)) + '" fill="url(#footerFade-' + ev.uid + ')"/>' +
+          '<polygon points="' + star + '" fill="' + p.accent + '" opacity="0.16"/>' +
           '<rect x="4" y="4" width="' + (w - 8) + '" height="' + (h - 8) + '" fill="none" stroke="' + p.ink + '" stroke-width="8" rx="4"/>' +
           '<g font-family="Bangers, cursive">' +
-          '<text x="20" y="34" font-size="15" fill="' + p.ink + '" stroke="' + p.accent + '" stroke-width="0.5">ISSUE #' + ev.issue + "</text>" +
-          '<text x="' + (w - 20) + '" y="34" font-size="15" fill="' + p.ink + '" text-anchor="end">25¢</text>' +
-          '<text x="' + w / 2 + '" y="' + (h - 96) + '" font-size="' + fontSize + '" fill="' + p.ink + '" stroke="' + p.accent + '" stroke-width="1" text-anchor="middle">' + title + "</text>" +
+          '<text x="20" y="24" font-size="15" fill="' + p.accent + '">ISSUE #' + ev.issue + "</text>" +
+          '<text x="' + (w - 20) + '" y="24" font-size="15" fill="' + p.accent + '" text-anchor="end">25¢</text>' +
+          '<text x="' + w / 2 + '" y="' + (h - 96) + '" font-size="' + fontSize + '" fill="#ffffff" stroke="' + p.ink + '" stroke-width="1.2" text-anchor="middle">' + title + "</text>" +
           '<text x="' + w / 2 + '" y="' + (h - 62) + '" font-size="14" fill="' + p.accent + '" text-anchor="middle" letter-spacing="1">' + escapeXML(ev.tagline) + "</text>" +
-          '<text x="' + w / 2 + '" y="' + (h - 30) + '" font-size="10" fill="' + p.ink + '" text-anchor="middle" opacity="0.85" font-family="-apple-system, sans-serif">ALT-VERSE COMICS · AI mock cover, generated live</text>' +
+          '<text x="' + w / 2 + '" y="' + (h - 30) + '" font-size="10" fill="#ffffff" text-anchor="middle" opacity="0.85" font-family="-apple-system, sans-serif">ALT-VERSE COMICS · AI mock cover, generated live</text>' +
           "</g>" +
           "</svg>"
         );
       }
-
       // ---------- modal / newsstand ----------
 
       function eventSubtitleAndTitle(ev) {
         if (ev.type === "hub") {
           const name = displayName(ev.name);
-          const title = 'In this alternative Marvel Universe, <b>' + escapeXML(name) + "</b> is a hub!";
+          const title = "In this alternative Marvel Universe, <b>" + escapeXML(name) + "</b> is a hub!";
           const text =
             "Grown purely by chance and preferential attachment, " + name +
             " has cleared this universe's live hub threshold of degree ≥ " + ev.threshold +
@@ -1383,50 +1411,39 @@
         const nameA = displayName(ev.nameA);
         const nameB = displayName(ev.nameB);
         const title =
-          'In this alternative Marvel Universe, <b>' + escapeXML(nameA) + "</b> and <b>" + escapeXML(nameB) +
+          "In this alternative Marvel Universe, <b>" + escapeXML(nameA) + "</b> and <b>" + escapeXML(nameB) +
           "</b> are strongly connected!";
         let text;
-        if (ev.mutual === 0) {
+        if (ev.realDist === Infinity) {
           text =
-            nameA + " and " + nameB + " have never once appeared together in the real Marvel wiki-network — " +
-            "no shared link, no mutual character between them. But in this growing universe, preferential " +
-            "attachment just wired them directly together.";
+            nameA + " and " + nameB + " aren't even in the same connected part of the real Marvel wiki-network — " +
+            "there's no path between them at all. In this alternate universe, chance just wired them directly together.";
         } else {
           text =
-            nameA + " and " + nameB + " aren't directly linked in the real Marvel wiki-network — they share " +
-            "only " + ev.mutual + (ev.mutual === 1 ? " mutual connection" : " mutual connections") +
-            " there. In this alternate universe, chance just made them directly, strongly connected.";
+            "In the real Marvel wiki-network, " + nameA + " and " + nameB + " are " + ev.realDist +
+            " hops apart — practically strangers. In this alternate universe, chance just wired them directly together.";
         }
         return { title, text };
       }
-
       function buildModalStatsHTML(ev) {
         if (ev.type === "hub") {
-          const multNote =
-            ev.realDegree > 0
-              ? (ev.degree / ev.realDegree).toFixed(1) + "× as connected as in the real network"
-              : "connected from scratch — zero links in the real network";
           return (
             '<div class="stat-compare">' +
             '<div class="stat-compare-box"><div class="scb-num">' + ev.realDegree + '</div><div class="scb-lbl">Real Marvel network</div></div>' +
             '<div class="stat-compare-arrow">→</div>' +
             '<div class="stat-compare-box highlight"><div class="scb-num">' + ev.degree + '</div><div class="scb-lbl">This universe</div></div>' +
-            "</div>" +
-            '<div class="stat-compare-note">' + multNote + "</div>"
+            "</div>"
           );
         }
-        const realA = state.realDegree.get(ev.a) || 0;
-        const realB = state.realDegree.get(ev.b) || 0;
+        const realNum = ev.realDist === Infinity ? "None" : String(ev.realDist);
         return (
-          '<div class="pair-stats">' +
-          '<div class="pair-stat-row"><span class="psr-name">' + escapeXML(displayName(ev.nameA)) +
-          '</span><span class="psr-nums">real ' + realA + " · here " + ev.degA + "</span></div>" +
-          '<div class="pair-stat-row"><span class="psr-name">' + escapeXML(displayName(ev.nameB)) +
-          '</span><span class="psr-nums">real ' + realB + " · here " + ev.degB + "</span></div>" +
+          '<div class="stat-compare">' +
+          '<div class="stat-compare-box"><div class="scb-num">' + realNum + '</div><div class="scb-lbl">Shortest path — real network</div></div>' +
+          '<div class="stat-compare-arrow">→</div>' +
+          '<div class="stat-compare-box highlight"><div class="scb-num">' + ev.newDist + '</div><div class="scb-lbl">Shortest path — this universe</div></div>' +
           "</div>"
         );
       }
-
       function addToNewsstand(ev) {
         state.newsstand.unshift(ev);
         document.getElementById("newsstand-panel").style.display = "block";
