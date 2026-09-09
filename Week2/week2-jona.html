@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Week 2 - Multiverse Explorer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=JetBrains+Mono:wght@400;700;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <style>
+    /* COMIC BOOK THEME */
+    :root {
+      --bg: #111;
+      --panel: #fff;
+      --text: #000;
+      --border: 5px solid #000;
+      --shadow: 8px 8px 0px #000;
+      --yellow: #fde047;
+      --red: #ef4444;
+      --blue: #3b82f6;
+      --cyan: #06b6d4;
+      --font: 'Bangers', cursive;
+      --mono: 'JetBrains Mono', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      font-family: var(--mono);
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 100px;
+      background-image: radial-gradient(#333 15%, transparent 16%), radial-gradient(#333 15%, transparent 16%);
+      background-size: 16px 16px;
+      background-position: 0 0, 8px 8px;
+    }
+
+    .page { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+
+    /* NAV */
+    .topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      background: var(--yellow);
+      border: var(--border);
+      padding: 16px 24px;
+      margin: 20px 0 40px;
+      box-shadow: var(--shadow);
+      transform: rotate(-1deg);
+    }
+    .brand { font-family: var(--font); font-size: 1.8rem; color: #000; text-decoration: none; text-shadow: 2px 2px 0 #fff; letter-spacing: 2px; }
+    .nav { display: flex; gap: 20px; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; }
+    .nav a { color: #000; text-decoration: none; padding: 4px 8px; border: 2px solid transparent; }
+    .nav a:hover { background: #000; color: #fff; }
+    .nav a.active { background: var(--red); color: #fff; border: 2px solid #000; box-shadow: 2px 2px 0 #000; }
+
+    /* HERO SPLASH */
+    .splash {
+      background: var(--panel); border: var(--border); box-shadow: var(--shadow);
+      padding: 40px 20px; text-align: center; margin-bottom: 40px;
+      position: relative; overflow: hidden;
+    }
+    .splash::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0.1;
+      background: repeating-linear-gradient(45deg, #000, #000 2px, transparent 2px, transparent 10px);
+    }
+    h1 {
+      font-family: var(--font); font-size: 5rem; line-height: 1; letter-spacing: 2px;
+      color: var(--yellow);
+      text-shadow: 4px 4px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+      margin-bottom: 12px;
+      position: relative; z-index: 2;
+    }
+    .splash p { font-size: 1.2rem; font-weight: 700; max-width: 600px; margin: 0 auto; position: relative; z-index: 2; }
+
+    /* ACTION BUTTON */
+    .action-row { text-align: center; margin-bottom: 40px; }
+    .btn-pow {
+      font-family: var(--font); font-size: 2rem; color: #fff;
+      background: var(--red); padding: 12px 32px; letter-spacing: 2px;
+      border: 4px solid #000; box-shadow: 8px 8px 0px #000; cursor: pointer;
+      transition: all 0.1s;
+      display: inline-flex; align-items: center; gap: 12px;
+    }
+    .btn-pow:hover { transform: translate(-2px, -2px); box-shadow: 10px 10px 0px #000; background: #dc2626; }
+    .btn-pow:active { transform: translate(4px, 4px); box-shadow: 4px 4px 0px #000; }
+    .uni-label { display: block; margin-top: 24px; font-family: var(--font); font-size: 2rem; background: #fff; padding: 4px 16px; border: 3px solid #000; display: inline-block; box-shadow: 4px 4px 0 #000; transform: rotate(2deg); letter-spacing: 1px;}
+
+    /* CONTENT PANELS */
+    .panel {
+      background: var(--panel); border: var(--border); box-shadow: var(--shadow);
+      padding: 32px; margin-bottom: 40px;
+    }
+    h2 { font-family: var(--font); font-size: 2.5rem; letter-spacing: 1px; color: #000; text-transform: uppercase; margin-bottom: 16px; border-bottom: 4px solid #000; padding-bottom: 8px; }
+
+    /* COMIC COVERS */
+    .comics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin: 24px 0; }
+    .comic {
+      position: relative; overflow: hidden; aspect-ratio: 2/3;
+      border: 6px solid #fff; outline: 4px solid #000; box-shadow: 8px 8px 0px #000;
+      background: #000; transition: transform .2s;
+    }
+    .comic:hover { transform: scale(1.03) rotate(-1deg); }
+    .comic-bg { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0.8; mix-blend-mode: hard-light; }
+    .comic-inner { position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 12px; background: linear-gradient(180deg, rgba(0,0,0,.1) 0%, rgba(0,0,0,.8) 100%); }
+    .comic-top { display: flex; justify-content: space-between; }
+    .comic-logo { background: var(--red); color: #fff; font-family: var(--font); font-weight: 900; font-size: 1.2rem; letter-spacing: 1px; border: 2px solid #000; padding: 4px 8px; text-transform: uppercase; box-shadow: 2px 2px 0 #000; }
+    .comic-issue { background: #fff; color: #000; font-family: var(--font); font-weight: 900; font-size: 1.2rem; border: 2px solid #000; padding: 2px 6px; box-shadow: 2px 2px 0 #000; }
+    .comic-title { font-family: var(--font); font-size: 2.2rem; color: var(--yellow); text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; line-height: 1.1; margin-bottom: 8px; letter-spacing: 1px;}
+    .comic-sub { font-family: var(--mono); font-size: .75rem; color: #fff; font-weight: 700; background: rgba(0,0,0,.7); padding: 4px; border: 2px solid #000; }
+    .comic-badge { display: inline-block; margin-top: 8px; background: var(--yellow); color: #000; border: 2px solid #000; padding: 2px 8px; font-weight: 900; font-size: .7rem; }
+    
+    .comic-red .comic-bg    { background: linear-gradient(135deg, #f87171, #7f1d1d); }
+    .comic-blue .comic-bg   { background: linear-gradient(135deg, #60a5fa, #1e3a8a); }
+    .comic-purple .comic-bg { background: linear-gradient(135deg, #c084fc, #581c87); }
+    .comic-green .comic-bg  { background: linear-gradient(135deg, #4ade80, #14532d); }
+    .comic-orange .comic-bg { background: linear-gradient(135deg, #fb923c, #7c2d12); }
+    .comic-cosmic .comic-bg { background: linear-gradient(135deg, #fcd34d, #b45309); }
+
+    /* HUB FACE-OFF */
+    .faceoff { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; background: var(--cyan); border: 4px solid #000; padding: 20px; box-shadow: 6px 6px 0 #000; margin: 24px 0; align-items: center; }
+    .faceoff-side { text-align: center; background: #fff; border: 3px solid #000; padding: 16px; transform: rotate(-1deg); }
+    .faceoff-fake { transform: rotate(1deg); background: var(--yellow); }
+    .faceoff-label { font-size: .8rem; font-weight: 900; text-transform: uppercase; background: #000; color: #fff; display: inline-block; padding: 2px 8px; margin-bottom: 8px; }
+    .faceoff-name { font-family: var(--font); font-size: 2.2rem; line-height: 1; margin-bottom: 8px; letter-spacing: 1px;}
+    .faceoff-deg { font-size: 2.5rem; font-weight: 900; color: var(--red); font-family: var(--font); letter-spacing: 2px;}
+    .faceoff-vs { font-family: var(--font); font-size: 3rem; color: #fff; text-shadow: 3px 3px 0 #000; }
+    .universe-name { display: none; } /* hide old title */
+
+    /* CHARTS & TABLES */
+    .chart-box { border: 4px solid #000; padding: 16px; background: #fff; box-shadow: inset 4px 4px 0 rgba(0,0,0,.05); margin-bottom: 24px; min-height: 350px;}
+    .dtable { width: 100%; border-collapse: collapse; font-weight: 700; font-size: .9rem; border: 4px solid #000; }
+    .dtable th { background: #000; color: #fff; text-align: left; padding: 12px; font-family: var(--font); font-size: 1.4rem; letter-spacing: 1px; }
+    .dtable td { padding: 12px; border: 2px solid #000; }
+    .dtable tr:nth-child(even) { background: #f1f5f9; }
+    .mono { color: var(--red); font-weight: 900; font-size: 1.1rem; }
+
+    /* CALLOUT BUBBLES */
+    .bubble {
+      background: #fff; border: 4px solid #000; padding: 20px; box-shadow: 6px 6px 0 #000;
+      position: relative; font-weight: 700; margin-top: 32px; font-size: 1.1rem; line-height: 1.6;
+    }
+    .bubble::after {
+      content: ''; position: absolute; bottom: -20px; left: 40px;
+      border-width: 20px 20px 0 0; border-style: solid; border-color: #000 transparent transparent transparent;
+    }
+    .bubble::before {
+      content: ''; position: absolute; bottom: -14px; left: 43px; z-index: 1;
+      border-width: 15px 15px 0 0; border-style: solid; border-color: #fff transparent transparent transparent;
+    }
+    .bubble-rose { background: var(--yellow); }
+    .bubble-rose::before { border-color: var(--yellow) transparent transparent transparent; }
+    .bubble strong { color: var(--red); font-family: var(--font); font-size: 1.4rem; letter-spacing: 1px; }
+  </style>
+</head>
+<body>
+<div class="page">
+  <header class="topbar">
+    <a class="brand" href="../index.html">MULTIVERSE</a>
+    <nav class="nav">
+      <a href="../index.html#overview">Overview</a>
+      <a href="../Week1/jonathan-week1.html">Week 1</a>
+      <a href="week2-jona.html" class="active">Week 2</a>
+    </nav>
+  </header>
+
+  <section class="splash">
+    <h1>THE MULTIVERSE EXPLORER</h1>
+    <p>We grew a fake Marvel network using preferential attachment (n=303, m tuned to match). Each synthetic node gets a real hero name - but the connections are randomly generated based on popularity!</p>
+  </section>
+
+  <div class="action-row">
+    <button class="btn-pow" onclick="generateUniverse()"> GENERATE UNIVERSE </button>
+    <div><span id="ba-universe-label" class="uni-label" style="display:none;"></span></div>
+  </div>
+
+  <div id="ba-universe-content" style="display:none;">
+    <section class="panel">
+      <h2> Hub Showdown</h2>
+      <div id="ba-faceoff"></div>
+    </section>
+
+    <section class="panel">
+      <h2> Hot Comics</h2>
+      <div class="comics-grid" id="ba-comics"></div>
+    </section>
+
+    <section class="panel">
+      <h2> Tale of the Tape</h2>
+      <div class="chart-box"><canvas id="ba-chart"></canvas></div>
+      <div style="overflow-x:auto;"><table class="dtable" id="ba-tbl"><thead><tr>
+        <th>Metric</th><th>Earth-Prime</th><th>Parallel Earth</th><th>Match?</th>
+      </tr></thead><tbody></tbody></table></div>
+      <div class="bubble bubble-rose" id="ba-callout"></div>
+    </section>
+  </div>
+</div>
+
+<script>
+Chart.defaults.font.family = "'JetBrains Mono', monospace";
+Chart.defaults.color = '#000';
+Chart.defaults.borderColor = '#000';
+Chart.defaults.plugins.legend.labels.font = { family: "'Bangers', cursive", size: 18 };
+
+/* ── GLOBALS ── */
+let NODES=[], EDGES=[], ADJ={}, ADJ_IN={}, N=0, M=0;
+
+/* ── LOAD DATA ── */
+async function loadData(){
+  const [nt, et] = await Promise.all([
+    fetch('../Week1/week1_nodes.tsv').then(r=>r.text()),
+    fetch('../Week1/week1_edges.tsv').then(r=>r.text()),
+  ]);
+  nt.split('\n').forEach(l=>{
+    if(!l.trim()||l.startsWith('#'))return;
+    const c=l.split('\t'); if(c[0]==='node_id')return;
+    NODES.push({id:c[0].trim(), name:c[1].trim(), desc:(c[4]||'').trim()});
+  });
+  et.split('\n').forEach(l=>{
+    if(!l.trim()||l.startsWith('#'))return;
+    const c=l.split('\t'); if(c[0]==='source'||c.length<2)return;
+    EDGES.push({source:c[0].trim(), target:c[1].trim()});
+  });
+  NODES.forEach(n=>{ADJ[n.id]=[];ADJ_IN[n.id]=[];});
+  EDGES.forEach(e=>{if(ADJ[e.source])ADJ[e.source].push(e.target);if(ADJ_IN[e.target])ADJ_IN[e.target].push(e.source);});
+  N=NODES.length; M=EDGES.length;
+}
+
+/* ── HELPERS ── */
+const degOut=id=>(ADJ[id]||[]).length;
+const degIn=id=>(ADJ_IN[id]||[]).length;
+const degTot=id=>degOut(id)+degIn(id);
+const mean=a=>a.reduce((s,x)=>s+x,0)/a.length;
+const std=a=>{const m=mean(a);return Math.sqrt(a.reduce((s,x)=>s+(x-m)**2,0)/a.length);};
+
+/* ── CCDF ── */
+function ccdf(degs){
+  const s=[...degs].sort((a,b)=>a-b), n=s.length, r=[];
+  for(let i=0;i<n;i++) if(!i||s[i]!==s[i-1]) r.push({x:s[i],y:(n-i)/n});
+  return r;
+}
+
+/* ── POWER LAW MLE (Clauset KS) ── */
+function fitPL(degs){
+  const uv=[...new Set(degs)].sort((a,b)=>a-b).filter(v=>v>=1);
+  let bx=1,ba=2,bks=Infinity,bn=0;
+  for(const xm of uv){
+    const tail=degs.filter(k=>k>=xm),n=tail.length;
+    if(n<10)break;
+    let sl=0;for(let i=0;i<n;i++)sl+=Math.log(tail[i]/(xm-.5));
+    const a=1+n/sl; if(a<=1||isNaN(a))continue;
+    const ts=[...tail].sort((a,b)=>a-b);let md=0;
+    for(let i=0;i<n;i++){const d=Math.abs((i+1)/n-(1-Math.pow(ts[i]/xm,-(a-1))));if(d>md)md=d;}
+    if(md<bks){bks=md;bx=xm;ba=a;bn=n;}
+  }
+  return {alpha:ba,xmin:bx,ks:bks,se:bn>0?(ba-1)/Math.sqrt(bn):0};
+}
+
+/* ── METRICS ── */
+function reciprocity(edges){
+  const s=new Set(edges.map(e=>e.source+'→'+e.target));
+  let r=0;edges.forEach(e=>{if(s.has(e.target+'→'+e.source))r++;});
+  return r/edges.length;
+}
+function clusteringFast(adj,adjIn,ids){
+  const sets={};ids.forEach(id=>{sets[id]=new Set([...(adj[id]||[]),...(adjIn[id]||[])]);});
+  let sum=0,cnt=0;
+  ids.forEach(id=>{
+    const nb=sets[id],k=nb.size;if(k<2)return;
+    let t=0;const a=[...nb];
+    for(let i=0;i<a.length;i++)for(let j=i+1;j<a.length;j++)if(sets[a[i]]&&sets[a[i]].has(a[j]))t++;
+    sum+=(2*t)/(k*(k-1));cnt++;
+  });
+  return cnt?sum/cnt:0;
+}
+function components(adj,adjIn,ids){
+  const vis=new Set();let c=0,big=0;
+  ids.forEach(s=>{
+    if(vis.has(s))return;c++;const q=[s];vis.add(s);let sz=0;
+    while(q.length){const n=q.shift();sz++;[...(adj[n]||[]),...(adjIn[n]||[])].forEach(x=>{if(!vis.has(x)){vis.add(x);q.push(x);}});}
+    if(sz>big)big=sz;
+  });
+  return {count:c,largest:big};
+}
+function assortativity(edges,adj,adjIn){
+  if(!edges.length)return 0;
+  const d={};Object.keys(adj).forEach(id=>{d[id]=(adj[id]||[]).length+(adjIn[id]||[]).length;});
+  let sxy=0,sx=0,sy=0,sx2=0,sy2=0;const m=edges.length;
+  edges.forEach(e=>{const x=d[e.source]||0,y=d[e.target]||0;sxy+=x*y;sx+=x;sy+=y;sx2+=x*x;sy2+=y*y;});
+  const den=Math.sqrt((m*sx2-sx*sx)*(m*sy2-sy*sy));
+  return den?((m*sxy-sx*sy)/den):0;
+}
+function triangles(adj,ids){
+  const sets={};ids.forEach(id=>{sets[id]=new Set(adj[id]||[]);});
+  let c=0;
+  ids.forEach(a=>{(adj[a]||[]).forEach(b=>{(adj[b]||[]).forEach(cc=>{if(cc!==a&&sets[cc].has(a))c++;});});});
+  return Math.round(c/3);
+}
+
+/* ── SHUFFLE ── */
+function shuffle(edges,adj,adjIn,ids,nSwaps){
+  const ne=edges.map(e=>({...e})),na={},ni={};
+  ids.forEach(id=>{na[id]=[...(adj[id]||[])];ni[id]=[...(adjIn[id]||[])];});
+  const es=new Set(ne.map(e=>e.source+'→'+e.target));
+  let sw=0,att=0;
+  while(sw<nSwaps&&att<nSwaps*10){
+    att++;
+    const i=Math.floor(Math.random()*ne.length),j=Math.floor(Math.random()*ne.length);
+    if(i===j)continue;
+    const s1=ne[i].source,t1=ne[i].target,s2=ne[j].source,t2=ne[j].target;
+    if(s1===t2||s2===t1)continue;
+    const k1=s1+'→'+t2,k2=s2+'→'+t1;
+    if(es.has(k1)||es.has(k2))continue;
+    es.delete(s1+'→'+t1);es.delete(s2+'→'+t2);es.add(k1);es.add(k2);
+    na[s1]=na[s1].filter(x=>x!==t1);na[s1].push(t2);
+    na[s2]=na[s2].filter(x=>x!==t2);na[s2].push(t1);
+    ni[t1]=ni[t1].filter(x=>x!==s1);ni[t1].push(s2);
+    ni[t2]=ni[t2].filter(x=>x!==s2);ni[t2].push(s1);
+    ne[i].source=s1;ne[i].target=t2;ne[j].source=s2;ne[j].target=t1;sw++;
+  }
+  return {edges:ne,adj:na,adjIn:ni};
+}
+
+/* ── BA MODEL ── */
+function genBA(n,m){
+  const m0=Math.max(m+1,2),adj={},adjIn={},degs=new Array(n).fill(0),edges=[],urn=[];
+  for(let i=0;i<n;i++){adj[i]=[];adjIn[i]=[];}
+  for(let i=0;i<m0;i++)for(let j=i+1;j<m0;j++){adj[i].push(j);adjIn[j].push(i);edges.push({source:i,target:j});degs[i]++;degs[j]++;urn.push(i,j);}
+  for(let nn=m0;nn<n;nn++){
+    const tgt=new Set();let att=0;
+    while(tgt.size<m&&att<m*100){att++;const c=urn[Math.floor(Math.random()*urn.length)];if(c!==nn)tgt.add(c);}
+    tgt.forEach(t=>{adj[nn].push(t);adjIn[t].push(nn);edges.push({source:nn,target:t});degs[nn]++;degs[t]++;urn.push(nn,t);});
+  }
+  return {adj,adjIn,edges,degs};
+}
+
+/* ── ER MODEL ── */
+function genER(n,m){
+  const p=m/(n*(n-1)),adj={};
+  for(let i=0;i<n;i++)adj[i]=[];
+  const edges=[];
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++)if(i!==j&&Math.random()<p){adj[i].push(j);edges.push({source:i,target:j});}
+  return {adj,edges};
+}
+
+/* ── CHART DEFAULTS ── */
+Chart.defaults.color='#94a3b8';
+Chart.defaults.borderColor='#1e293b';
+Chart.defaults.font.family="'Inter',sans-serif";
+Chart.defaults.plugins.legend.labels.usePointStyle=true;
+
+/* ══════════════════════════════
+   RENDER SECTIONS
+══════════════════════════════ */
+
+function renderOverview(){
+  const tds=NODES.map(n=>degTot(n.id));
+  const maxD=Math.max(...tds), topHero=NODES.find(n=>degTot(n.id)===maxD);
+  const iso=NODES.filter(n=>degTot(n.id)===0).length;
+  const comp=components(ADJ,ADJ_IN,NODES.map(n=>n.id));
+  const items=[
+    {v:N,l:'Heroes'},{v:M.toLocaleString(),l:'Hyperlinks'},{v:(M/(N*(N-1))).toFixed(4),l:'Density'},
+    {v:mean(tds).toFixed(1),l:'Mean Degree'},{v:maxD,l:'Max Degree'},
+    {v:topHero.name,l:'Biggest Hub'},{v:comp.count,l:'Components'},{v:iso,l:'Isolates'},
+  ];
+  document.getElementById('overview-stats').innerHTML=items.map(s=>`<div class="sbox"><div class="v">${s.v}</div><div class="l">${s.l}</div></div>`).join('');
+}
+
+function renderCCDF(){
+  const tds=NODES.map(n=>degTot(n.id)).filter(d=>d>0);
+  const fit=fitPL(tds);
+  const real=ccdf(tds);
+
+  // ER comparison
+  const er=genER(N,M);
+  const erDegs=er.adj ? Object.keys(er.adj).map(i=>(er.adj[i]||[]).length + er.edges.filter(e=>String(e.target)===String(i)).length) : [];
+  const erC=ccdf(erDegs.filter(d=>d>0));
+
+  new Chart(document.getElementById('ccdf-chart'),{
+    type:'scatter',
+    data:{datasets:[
+      {label:'Marvel (real)',data:real.map(p=>({x:Math.log10(p.x),y:Math.log10(p.y)})),backgroundColor:'#818cf8',borderColor:'#818cf8',pointRadius:4,pointHoverRadius:7,order:1},
+      {label:`Power-law fit (α=${fit.alpha.toFixed(2)})`,data:Array.from({length:Math.max(...tds)},(_,i)=>i+1).filter(k=>k>=fit.xmin).map(k=>({x:Math.log10(k),y:Math.log10(Math.pow(k/fit.xmin,-(fit.alpha-1)))})).filter(p=>p.y>-2.5),type:'line',borderColor:'#f472b6',borderDash:[6,4],borderWidth:2,pointRadius:0,fill:false,order:2},
+      {label:'Erdős–Rényi (random)',data:erC.map(p=>({x:Math.log10(p.x),y:Math.log10(p.y)})),backgroundColor:'#fbbf2488',borderColor:'#fbbf24',pointRadius:3,order:3},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      scales:{x:{title:{display:true,text:'log₁₀(degree)'},grid:{color:'rgba(30,41,59,.5)'}},y:{title:{display:true,text:'log₁₀ P(X ≥ k)'},grid:{color:'rgba(30,41,59,.5)'}}},
+      plugins:{legend:{position:'top'},tooltip:{callbacks:{label:c=>`deg ${Math.pow(10,c.parsed.x).toFixed(0)}, P≥ ${Math.pow(10,c.parsed.y).toFixed(3)}`}}},
+    }
+  });
+
+  document.getElementById('deg-callout').innerHTML=`
+    <strong>Verdict:</strong> The Marvel CCDF (purple) traces a roughly straight line on log-log axes - a hallmark of heavy-tailed, 
+    scale-free-like networks with <strong>α ≈ ${fit.alpha.toFixed(2)}</strong>.
+    The random graph (yellow) dies out way too fast - it can't produce mega-hubs like Spider-Man.
+    With only ${N} nodes we can't <em>prove</em> a power law, but we can confidently say: <strong>this is not random.</strong>
+  `;
+}
+
+/* ── FRIENDSHIP PARADOX ── */
+function renderFP(){
+  const ids=NODES.map(n=>n.id);
+  const nbSets={};ids.forEach(id=>{nbSets[id]=new Set([...(ADJ[id]||[]),...(ADJ_IN[id]||[])]);});
+  const degs={};ids.forEach(id=>{degs[id]=degTot(id);});
+
+  // Populate picker
+  const picker=document.getElementById('hero-pick');
+  const sorted=[...NODES].sort((a,b)=>a.name.localeCompare(b.name));
+  sorted.forEach(n=>{const o=document.createElement('option');o.value=n.id;o.textContent=`${n.name} (deg ${degs[n.id]})`;picker.appendChild(o);});
+
+  // Picker handler
+  picker.addEventListener('change', ()=>{
+    const id=picker.value;
+    if(!id){document.getElementById('fp-reveal').innerHTML=`<div style="color:var(--muted)">👆 Pick a hero above</div>`;return;}
+    const nb=[...nbSets[id]];
+    const myDeg=degs[id];
+    const name=NODES.find(n=>n.id===id).name;
+    if(!nb.length){
+      document.getElementById('fp-reveal').innerHTML=`<div class="big" style="font-size:1.6rem;"></div><div class="tag">${name} has no connections - paradox doesn't apply</div>`;
+      return;
+    }
+    const neighDegs=nb.map(n=>degs[n]||0);
+    const avgNeigh=mean(neighDegs);
+    const hit=avgNeigh>myDeg;
+    document.getElementById('fp-reveal').innerHTML=`
+      <div style="font-size:.8rem; color:var(--muted); margin-bottom:8px;">${name}</div>
+      <div style="display:flex; gap:32px; align-items:center; flex-wrap:wrap; justify-content:center;">
+        <div><div class="big" style="${hit?'':'background:linear-gradient(135deg,var(--emerald),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;'}">${myDeg}</div><div class="tag">Your degree</div></div>
+        <div style="font-size:1.8rem; font-weight:900; color:var(--muted);">${hit?'<':'>'}</div>
+        <div><div class="big" style="${hit?'background:linear-gradient(135deg,var(--rose),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;':''}">${avgNeigh.toFixed(1)}</div><div class="tag">Avg neighbor degree</div></div>
+      </div>
+      <div style="margin-top:12px; font-size:.88rem; color:${hit?'var(--rose)':'var(--emerald)'}; font-weight:600;">
+        ${hit ? ' Your friends ARE more famous than you.' : ' You beat the paradox! You\'re the popular one.'}
+      </div>
+    `;
+  });
+
+  // Scatter
+  const scatterData=[];
+  let sumD=0,sumN=0,cnt=0;
+  const pfCount={};ids.forEach(id=>{pfCount[id]=0;});
+
+  ids.forEach(id=>{
+    const nb=[...nbSets[id]];if(!nb.length)return;
+    const avg=mean(nb.map(n=>degs[n]||0));
+    scatterData.push({x:degs[id],y:avg,name:NODES.find(n=>n.id===id).name});
+    sumD+=degs[id];sumN+=avg;cnt++;
+    nb.forEach(n=>{if(degs[id]>(degs[n]||0))pfCount[id]++;});
+  });
+
+  new Chart(document.getElementById('fp-scatter'),{
+    type:'scatter',
+    data:{datasets:[{label:'Heroes',data:scatterData,backgroundColor:'#818cf899',borderColor:'#818cf8',pointRadius:3.5,pointHoverRadius:7}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      scales:{x:{title:{display:true,text:'Your degree'},grid:{color:'rgba(30,41,59,.5)'}},y:{title:{display:true,text:'Avg neighbor degree'},grid:{color:'rgba(30,41,59,.5)'}}},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.raw.name}: ${c.raw.x} vs ${c.raw.y.toFixed(1)}`}}},
+    },
+    plugins:[{id:'diag',afterDraw(chart){
+      const{ctx,scales:{x,y}}=chart;
+      const lo=Math.max(x.min,y.min),hi=Math.min(x.max,y.max);
+      ctx.save();ctx.beginPath();ctx.setLineDash([5,4]);ctx.strokeStyle='#64748b';ctx.lineWidth=1.5;
+      ctx.moveTo(x.getPixelForValue(lo),y.getPixelForValue(lo));ctx.lineTo(x.getPixelForValue(hi),y.getPixelForValue(hi));ctx.stroke();
+      ctx.font='11px Inter';ctx.fillStyle='#64748b';ctx.fillText('y = x (no paradox)',x.getPixelForValue(hi*.7)+6,y.getPixelForValue(hi*.7)-8);ctx.restore();
+    }}],
+  });
+
+  // Table: top 10
+  const top=ids.slice().sort((a,b)=>pfCount[b]-pfCount[a]).slice(0,10);
+  document.querySelector('#fp-table tbody').innerHTML=top.map((id,i)=>`<tr><td>${i+1}</td><td>${NODES.find(n=>n.id===id).name}</td><td class="mono">${degs[id]}</td><td class="mono">${pfCount[id]}</td></tr>`).join('');
+
+  const ratio=(sumN/cnt)/(sumD/cnt);
+  document.getElementById('fp-callout').innerHTML=`
+    <strong>Paradox ratio: ${ratio.toFixed(2)}×</strong> - on average, a hero's neighbors have
+    <strong>${ratio.toFixed(2)}× more connections</strong> than the hero itself.
+    Most dots sit above the dashed line. The massive hubs (Spider-Man, Wolverine, etc.)
+    appear in so many neighbor lists that they drag the average up for everyone.
+  `;
+}
+
+/* ── SHUFFLE ── */
+let shuffleCharts=[];
+async function runShuffle(){
+  const btn=document.getElementById('shuffle-btn');
+  btn.disabled=true;btn.textContent=' Shuffling…';
+  document.getElementById('prog-wrap').style.display='block';
+  document.getElementById('shuffle-out').style.display='none';
+  const ids=NODES.map(n=>n.id), nT=500, nSw=M*10;
+
+  const realR=reciprocity(EDGES), realCC=clusteringFast(ADJ,ADJ_IN,ids),
+        realTri=triangles(ADJ,ids), realComp=components(ADJ,ADJ_IN,ids).count,
+        realA=assortativity(EDGES,ADJ,ADJ_IN);
+
+  const res={r:[],cc:[],tri:[],comp:[],a:[]};
+  const batch=10;
+  for(let t=0;t<nT;t+=batch){
+    await new Promise(r=>setTimeout(r,0));
+    for(let i=t;i<Math.min(t+batch,nT);i++){
+      const sh=shuffle(EDGES,ADJ,ADJ_IN,ids,nSw);
+      res.r.push(reciprocity(sh.edges));
+      res.cc.push(clusteringFast(sh.adj,sh.adjIn,ids));
+      res.tri.push(triangles(sh.adj,ids));
+      res.comp.push(components(sh.adj,sh.adjIn,ids).count);
+      res.a.push(assortativity(sh.edges,sh.adj,sh.adjIn));
+    }
+    const pct=Math.round(Math.min(t+batch,nT)/nT*100);
+    document.getElementById('prog-bar').style.width=pct+'%';
+    document.getElementById('shuffle-status').textContent=`${pct}%`;
+  }
+
+  document.getElementById('shuffle-out').style.display='block';
+  document.getElementById('shuffle-status').textContent='Done!';
+
+  const props=[
+    {key:'r',label:'Reciprocity',real:realR,emoji:''},
+    {key:'cc',label:'Clustering',real:realCC,emoji:''},
+    {key:'tri',label:'Triangles',real:realTri,emoji:''},
+    {key:'comp',label:'Components',real:realComp,emoji:''},
+    {key:'a',label:'Assortativity',real:realA,emoji:''},
+  ];
+
+  // Stats
+  document.getElementById('shuffle-stats').innerHTML=props.map(p=>{
+    const z=std(res[p.key])>0?Math.abs((p.real-mean(res[p.key]))/std(res[p.key])):0;
+    const sig=z>2;
+    return `<div class="sbox"><div class="v">${z.toFixed(1)}σ</div><div class="l">${p.emoji} ${p.label}</div></div>`;
+  }).join('');
+
+  // Table
+  const tbody=document.querySelector('#shuffle-tbl tbody');tbody.innerHTML='';
+  const survivors=[],killed=[];
+  props.forEach(p=>{
+    const m=mean(res[p.key]),s=std(res[p.key]),z=s>0?(p.real-m)/s:0,sig=Math.abs(z)>2;
+    if(sig)killed.push(p.label);else survivors.push(p.label);
+    tbody.innerHTML+=`<tr><td>${p.emoji} ${p.label}</td><td class="mono">${p.real.toFixed(4)}</td><td class="mono">${m.toFixed(4)}</td><td class="mono">${z.toFixed(1)}</td><td>${sig?'<span class="badge badge-sig"> Killed</span>':'<span class="badge badge-safe"> Survived</span>'}</td></tr>`;
+  });
+
+  document.getElementById('shuffle-callout').innerHTML=`
+    ${survivors.length?`<strong>Survivors</strong> (just a side-effect of degree): ${survivors.join(', ')}.<br>`:''}
+    ${killed.length?`<strong>Killed by rewiring</strong> (the <em>specific wiring</em> matters): ${killed.join(', ')}.
+    ${killed.includes('Clustering')?'<br>The real network has tight-knit teams (Avengers, X-Men) - random rewiring destroys those cliques.':''}
+    ${killed.includes('Triangles')?'<br>Triangle abundance reflects narrative transitivity: shared storylines create "if A→B and B→C then A→C" patterns.':''}
+    `:'Everything survived - degree explains it all!'}
+  `;
+
+  btn.disabled=false;btn.textContent=' Shuffle Again';
+}
+
+/* ── PARALLEL UNIVERSE GENERATOR ── */
+let baChart=null, universeCount=0;
+const COMIC_THEMES=['comic-red','comic-blue','comic-purple','comic-green','comic-orange','comic-cosmic'];
+const COMIC_TITLES=[
+  'The Astonishing','The Uncanny','The Invincible','The Spectacular','The Mighty',
+  'The Incredible','The Sensational','The All-New','The Immortal','The Savage',
+  'Dark','Secret','Ultimate','Infinity','The Fearless','Web of','Tales of',
+];
+const STORYLINES=[
+  'team up against an ancient cosmic threat awakened by a forgotten Infinity Stone',
+  'discover they are actually long-lost siblings from a parallel dimension',
+  'must infiltrate a Hydra gala disguised as each other',
+  'accidentally swap powers after a lab explosion at Stark Tower',
+  'go on a road trip across the Savage Land and find a baby dinosaur',
+  'compete in the Grandmaster\'s intergalactic game show for Earth\'s fate',
+  'open a taco truck together - but villains keep attacking their customers',
+  'wake up in the Quantum Realm with no memory of how they got there',
+  'are the last two heroes standing after Galactus crashes a wedding',
+  'get stuck in a Groundhog Day time loop caused by Dr. Strange\'s sneeze',
+  'must assemble IKEA furniture from Asgard - the instructions are in runes',
+  'enter a cooking competition judged by Thanos (he\'s surprisingly fair)',
+  'accidentally create a sentient AI that only speaks in Shakespeare quotes',
+  'start a podcast reviewing villains\' evil plans - and go viral',
+  'find out they\'re both afraid of the same thing: pigeons',
+];
+
+function pickRandom(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
+
+function generateUniverse() {
+  universeCount++;
+  const ids=NODES.map(n=>n.id);
+  const tds=NODES.map(n=>degTot(n.id));
+  const mBA=Math.max(Math.round(M/(2*N)),1);
+  const ba=genBA(N,mBA);
+  const baIds=Array.from({length:N},(_,i)=>i);
+
+  // Map BA nodes to real hero names (shuffled randomly)
+  const shuffledNames=[...NODES].sort(()=>Math.random()-.5);
+  const nameMap={}; // BA node index -> {name, id}
+  baIds.forEach((i,idx)=>{ nameMap[i]=shuffledNames[idx]; });
+
+  // Find hubs in BA network
+  const baSorted=[...baIds].sort((a,b)=>ba.degs[b]-ba.degs[a]);
+  const baHub=nameMap[baSorted[0]];
+  const baHub2=nameMap[baSorted[1]];
+  const baHub3=nameMap[baSorted[2]];
+
+  // Find hub in real network
+  const realSorted=[...ids].sort((a,b)=>degTot(b)-degTot(a));
+  const realHub=NODES.find(n=>n.id===realSorted[0]);
+
+  // Universe label
+  const uniNum=Math.floor(Math.random()*9000)+1000;
+  const uniLetter=String.fromCharCode(65+Math.floor(Math.random()*26));
+  const uniName=`Earth-${uniNum}${uniLetter}`;
+  document.getElementById('ba-universe-label').textContent=` ${uniName} | Universe #${universeCount}`;
+
+  // Hub face-off
+  document.getElementById('ba-faceoff').innerHTML=`
+    <div class="universe-name"> Hub Showdown</div>
+    <div class="faceoff">
+      <div class="faceoff-side faceoff-real">
+        <div class="faceoff-label"> Our Universe</div>
+        <div class="faceoff-name">${realHub.name}</div>
+        <div class="faceoff-deg">${degTot(realHub.id)}</div>
+        <div class="faceoff-label">connections</div>
+      </div>
+      <div class="faceoff-vs"></div>
+      <div class="faceoff-side faceoff-fake">
+        <div class="faceoff-label"> ${uniName}</div>
+        <div class="faceoff-name">${baHub.name}</div>
+        <div class="faceoff-deg">${ba.degs[baSorted[0]]}</div>
+        <div class="faceoff-label">connections</div>
+      </div>
+    </div>
+  `;
+
+  // Generate comic book covers from interesting BA edges
+  const comicEdges=[];
+  // Pick edges involving top hubs and some random ones
+  const hubEdges=ba.edges.filter(e=>e.source===baSorted[0]||e.target===baSorted[0]).slice(0,2);
+  const hub2Edges=ba.edges.filter(e=>e.source===baSorted[1]||e.target===baSorted[1]).slice(0,1);
+  // Random surprising edges (low-degree nodes connected)
+  const surpriseEdges=ba.edges.filter(e=>ba.degs[e.source]<4&&ba.degs[e.target]<4).sort(()=>Math.random()-.5).slice(0,1);
+  // A real-network connection that does NOT exist in BA (or vice versa) - pick 1 random
+  const randomBA=ba.edges.sort(()=>Math.random()-.5).slice(0,2);
+  comicEdges.push(...hubEdges,...hub2Edges,...surpriseEdges,...randomBA);
+
+  // Deduplicate and limit to 6
+  const seen=new Set();
+  const uniqueComics=comicEdges.filter(e=>{
+    const k=e.source+'-'+e.target;if(seen.has(k))return false;seen.add(k);return true;
+  }).slice(0,6);
+
+  const comicsHTML=uniqueComics.map((e,i)=>{
+    const hero1=nameMap[e.source]||{name:'Unknown'};
+    const hero2=nameMap[e.target]||{name:'Unknown'};
+    const theme=COMIC_THEMES[i%COMIC_THEMES.length];
+    const title=pickRandom(COMIC_TITLES);
+    const story=pickRandom(STORYLINES);
+    const issue=Math.floor(Math.random()*400)+1;
+    const d1=ba.degs[e.source]||0, d2=ba.degs[e.target]||0;
+    const isHub=d1>15||d2>15;
+    return `
+      <div class="comic ${theme}">
+        <div class="comic-bg"></div>
+        <div class="comic-inner">
+          <div class="comic-top">
+            <div class="comic-logo">Marvel · ${uniName}</div>
+            <div class="comic-issue">#${issue}</div>
+          </div>
+          <div class="comic-bottom">
+            <div class="comic-title">${title} ${hero1.name.split('(')[0].split('/')[0].trim()}</div>
+            <div class="comic-sub">feat. <strong>${hero2.name.split('(')[0].split('/')[0].trim()}</strong> - they ${story}</div>
+            ${isHub?'<div class="comic-badge"> Hub Hero - '+Math.max(d1,d2)+' connections</div>':''}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+  document.getElementById('ba-comics').innerHTML=comicsHTML;
+
+  // CCDF chart (destroy old one if exists)
+  if(baChart){baChart.destroy();baChart=null;}
+  const realC=ccdf(tds.filter(d=>d>0));
+  const baC=ccdf(ba.degs.filter(d=>d>0));
+  baChart=new Chart(document.getElementById('ba-chart'),{
+    type:'scatter',
+    data:{datasets:[
+      {label:'Our Universe',data:realC.map(p=>({x:Math.log10(p.x),y:Math.log10(p.y)})),backgroundColor:'#818cf8',borderColor:'#818cf8',pointRadius:4},
+      {label:uniName,data:baC.filter(p=>p.x>0).map(p=>({x:Math.log10(p.x),y:Math.log10(Math.max(p.y,1e-4))})),backgroundColor:'#34d39988',borderColor:'#34d399',pointRadius:4},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      scales:{x:{title:{display:true,text:'log₁₀(degree)'},grid:{color:'rgba(30,41,59,.5)'}},y:{title:{display:true,text:'log₁₀ P(X≥k)'},grid:{color:'rgba(30,41,59,.5)'}}},
+      plugins:{legend:{position:'top'}},
+    }
+  });
+
+  // Comparison table
+  const realCC=clusteringFast(ADJ,ADJ_IN,ids);
+  const baCC=clusteringFast(ba.adj,ba.adjIn,baIds);
+  const realComp=components(ADJ,ADJ_IN,ids);
+  const baComp=components(ba.adj,ba.adjIn,baIds);
+  const rows=[
+    {m:'Edges',r:M,b:ba.edges.length},
+    {m:'Mean Degree',r:mean(tds).toFixed(1),b:mean(ba.degs).toFixed(1)},
+    {m:'Max Degree (hub)',r:Math.max(...tds)+' ('+realHub.name.split('(')[0].trim()+')',b:ba.degs[baSorted[0]]+' ('+baHub.name.split('(')[0].trim()+')'},
+    {m:'Clustering',r:realCC.toFixed(4),b:baCC.toFixed(4)},
+    {m:'Components',r:realComp.count,b:baComp.count},
+    {m:'Largest Comp.',r:realComp.largest,b:baComp.largest},
+  ];
+  document.querySelector('#ba-tbl tbody').innerHTML=rows.map(r=>{
+    const rv=parseFloat(r.r),bv=parseFloat(r.b);
+    const ratio=(!isNaN(rv)&&rv)?Math.abs(bv-rv)/Math.abs(rv):0;
+    const icon=(!isNaN(rv)&&!isNaN(bv))?(ratio<.15?'Match':ratio<.5?'Partial':'No'):'-';
+    return `<tr><td>${r.m}</td><td class="mono">${r.r}</td><td class="mono">${r.b}</td><td>${icon}</td></tr>`;
+  }).join('');
+
+  document.getElementById('ba-callout').innerHTML=`
+    <strong> What ${uniName} gets right:</strong> the overall shape - both CCDFs have a heavy tail.
+    Preferential attachment correctly predicts that a few heroes (here: <strong>${baHub.name.split('(')[0].trim()}</strong>) become mega-famous.
+    <br><strong> The glaring failure: clustering.</strong>
+    Our universe has clustering of <code>${realCC.toFixed(4)}</code> - real teams like the Avengers create dense friend-groups.
+    ${uniName} only manages <code>${baCC.toFixed(4)}</code>.
+    BA explains <em>who gets famous</em> but not <em>who hangs out together</em>.
+    ${uniName} is a lonely universe - everyone knows the hubs, but there are no Avengers, no X-Men, no real squads.
+  `;
+}
+
+function renderBA(){ generateUniverse(); }
+
+
+
+/* ── INIT ── */
+async function main(){
+  await loadData();
+  generateUniverse();
+  document.getElementById('ba-universe-content').style.display = 'block';
+  document.getElementById('ba-universe-label').style.display = 'inline-block';
+}
+main();
+</script>
+</body>
+</html>
