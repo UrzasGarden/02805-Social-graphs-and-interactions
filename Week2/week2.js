@@ -453,7 +453,8 @@ function badgeOrPhoto(rx, ry, rw, rh, imageUrl, initialsText, uid, slot, p) {
     const clipId = "clip-" + uid + "-" + slot;
     return (
       '<clipPath id="' + clipId + '"><rect x="' + rx + '" y="' + ry + '" width="' + rw + '" height="' + rh + '" rx="10"/></clipPath>' +
-      '<image href="' + escapeXML(imageUrl) + '" x="' + rx + '" y="' + ry + '" width="' + rw + '" height="' + rh + '" preserveAspectRatio="xMidYMid slice" clip-path="url(#' + clipId + ')"/>' +
+      '<rect x="' + rx + '" y="' + ry + '" width="' + rw + '" height="' + rh + '" rx="10" fill="url(#badgeGrad-' + uid + ')"/>' +
+      '<image href="' + escapeXML(imageUrl) + '" x="' + rx + '" y="' + ry + '" width="' + rw + '" height="' + rh + '" preserveAspectRatio="xMidYMid meet" clip-path="url(#' + clipId + ')"/>' +
       '<rect x="' + rx + '" y="' + ry + '" width="' + rw + '" height="' + rh + '" fill="none" stroke="' + p.ink + '" stroke-width="5" rx="10"/>'
     );
   }
@@ -476,9 +477,9 @@ function buildComicSVG(ev) {
   const fontSize = titleFontSize(rawTitle);
   const images = ev.images || [];
 
-  const photoTop = 36,
-    photoBottom = 336,
-    margin = 8;
+  const photoTop = 6,
+    photoBottom = h - 6,
+    margin = 6;
 
   let badgeMarkup;
   if (isTeam) {
@@ -511,23 +512,27 @@ function buildComicSVG(ev) {
     '<radialGradient id="badgeGrad-' + ev.uid + '" cx="50%" cy="42%" r="65%">' +
     '<stop offset="0%" stop-color="' + p.accent + '"/><stop offset="100%" stop-color="' + p.bg2 + '"/>' +
     "</radialGradient>" +
+    '<linearGradient id="headerFade-' + ev.uid + '" x1="0" y1="0" x2="0" y2="1">' +
+    '<stop offset="0%" stop-color="' + p.ink + '" stop-opacity="0.85"/>' +
+    '<stop offset="100%" stop-color="' + p.ink + '" stop-opacity="0"/>' +
+    "</linearGradient>" +
     '<linearGradient id="footerFade-' + ev.uid + '" x1="0" y1="0" x2="0" y2="1">' +
     '<stop offset="0%" stop-color="' + p.ink + '" stop-opacity="0"/>' +
-    '<stop offset="42%" stop-color="' + p.ink + '" stop-opacity="0.55"/>' +
-    '<stop offset="70%" stop-color="' + p.ink + '" stop-opacity="0.93"/>' +
+    '<stop offset="35%" stop-color="' + p.ink + '" stop-opacity="0.55"/>' +
+    '<stop offset="60%" stop-color="' + p.ink + '" stop-opacity="0.92"/>' +
     '<stop offset="100%" stop-color="' + p.ink + '" stop-opacity="0.97"/>' +
     "</linearGradient>" +
     "</defs>" +
     '<rect x="0" y="0" width="' + w + '" height="' + h + '" fill="url(#bgGrad-' + ev.uid + ')"/>' +
     '<rect x="0" y="0" width="' + w + '" height="' + h + '" fill="url(#dots-' + ev.uid + ')"/>' +
-    '<rect x="0" y="0" width="' + w + '" height="34" fill="' + p.ink + '" opacity="0.5"/>' +
     badgeMarkup +
-    '<rect x="0" y="' + (photoBottom - 110) + '" width="' + w + '" height="' + (h - (photoBottom - 110)) + '" fill="url(#footerFade-' + ev.uid + ')"/>' +
+    '<rect x="0" y="0" width="' + w + '" height="46" fill="url(#headerFade-' + ev.uid + ')"/>' +
+    '<rect x="0" y="' + (h - 150) + '" width="' + w + '" height="150" fill="url(#footerFade-' + ev.uid + ')"/>' +
     '<polygon points="' + star + '" fill="' + p.accent + '" opacity="0.16"/>' +
     '<rect x="4" y="4" width="' + (w - 8) + '" height="' + (h - 8) + '" fill="none" stroke="' + p.ink + '" stroke-width="8" rx="4"/>' +
     '<g font-family="Bangers, cursive">' +
-    '<text x="20" y="24" font-size="15" fill="' + p.accent + '">ISSUE #' + ev.issue + "</text>" +
-    '<text x="' + (w - 20) + '" y="24" font-size="15" fill="' + p.accent + '" text-anchor="end">25¢</text>' +
+    '<text x="20" y="26" font-size="15" fill="' + p.accent + '" stroke="' + p.ink + '" stroke-width="0.5">ISSUE #' + ev.issue + "</text>" +
+    '<text x="' + (w - 20) + '" y="26" font-size="15" fill="' + p.accent + '" stroke="' + p.ink + '" stroke-width="0.5" text-anchor="end">25¢</text>' +
     '<text x="' + w / 2 + '" y="' + (h - 96) + '" font-size="' + fontSize + '" fill="#ffffff" stroke="' + p.ink + '" stroke-width="1.2" text-anchor="middle">' + title + "</text>" +
     '<text x="' + w / 2 + '" y="' + (h - 62) + '" font-size="14" fill="' + p.accent + '" text-anchor="middle" letter-spacing="1">' + escapeXML(ev.tagline) + "</text>" +
     '<text x="' + w / 2 + '" y="' + (h - 30) + '" font-size="10" fill="#ffffff" text-anchor="middle" opacity="0.85" font-family="-apple-system, sans-serif">ALT-VERSE COMICS · AI mock cover, generated live</text>' +
