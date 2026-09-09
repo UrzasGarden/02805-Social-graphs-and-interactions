@@ -148,6 +148,34 @@
         margin-top: 28px;
       }
 
+      .week-groups {
+        display: flex;
+        gap: 20px;
+        overflow-x: auto;
+        margin-top: 28px;
+        padding: 0 4px 18px;
+        scroll-snap-type: x mandatory;
+        scrollbar-color: var(--accent) var(--panel-soft);
+      }
+
+      .week-group {
+        flex: 0 0 min(420px, 82vw);
+        scroll-snap-align: start;
+      }
+
+      .week-group > h2 {
+        margin: 0 0 14px;
+        font-size: 1.05rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .week-group .grid {
+        margin-top: 0;
+        display: block;
+      }
+
       .card {
         background: rgba(22, 29, 43, 0.72);
         border: 1px solid var(--line);
@@ -238,31 +266,41 @@
           </div>
         </section>
 
-        <section class="grid" aria-label="Project highlights">
-          <article class="card">
-            <div class="label">Current</div>
-            <h2>Week 1</h2>
-            <p>Exploring a Marvel superhero link graph and the first network-based analysis.</p>
-          </article>
+        <section class="week-groups" aria-label="Course weeks">
+          <div class="week-group">
+            <h2>Earlier weeks</h2>
+            <div class="grid">
+              <article class="card">
+                <div class="label">Complete</div>
+                <h2>Week 1</h2>
+                <p>Exploring a Marvel superhero link graph and the first network-based analysis.</p>
+                <a class="button secondary" href="Week1/jonathan-week1.html">Open Week 1</a>
+              </article>
+            </div>
+          </div>
 
-        <section class="grid" aria-label="Project highlights">
-          <article class="card">
-            <div class="label">Current</div>
-            <h2>Week 2</h2>
-            <p>placeholder</p>
-          </article>
+          <div class="week-group">
+            <h2>Current</h2>
+            <div class="grid">
+              <article class="card">
+                <div class="label">In progress</div>
+                <h2>Week 2</h2>
+                <p>Analysis of the next set of social graph concepts and interactions.</p>
+                <a class="button primary" href="Week2/week2.html">Open Week 2</a>
+              </article>
+            </div>
+          </div>
 
-          <article class="card">
-            <div class="label">Focus</div>
-            <h2>Structure</h2>
-            <p>Looking at connections, communities, and how actors relate across the network.</p>
-          </article>
-
-          <article class="card">
-            <div class="label">Next</div>
-            <h2>Future work</h2>
-            <p>More analyses, visualizations, and project updates will be added here over time.</p>
-          </article>
+          <div class="week-group">
+            <h2>Next</h2>
+            <div class="grid">
+              <article class="card">
+                <div class="label">Coming soon</div>
+                <h2>Future work</h2>
+                <p>More analyses, visualizations, and project updates will be added here over time.</p>
+              </article>
+            </div>
+          </div>
         </section>
 
         <section class="note" id="more" aria-label="Future updates">
