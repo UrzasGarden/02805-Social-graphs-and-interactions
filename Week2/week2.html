@@ -601,11 +601,62 @@
         margin: 0 0 18px;
       }
 
+      .modal-text:empty {
+        display: none;
+      }
+
+      .hub-headline {
+        text-align: center;
+        padding: 16px 12px;
+        border-radius: 14px;
+        margin-bottom: 12px;
+        background: linear-gradient(135deg, rgba(108, 141, 255, 0.2), rgba(127, 208, 255, 0.12));
+        border: 1px solid var(--accent);
+      }
+
+      .hub-headline-num {
+        font-size: 2rem;
+        font-weight: 800;
+        line-height: 1.15;
+        letter-spacing: 0.01em;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: var(--accent);
+      }
+
+      .hub-headline-sub {
+        margin-top: 4px;
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+
       .stat-compare {
         display: flex;
         align-items: center;
         gap: 12px;
         margin-bottom: 8px;
+      }
+
+      .stat-compare.secondary {
+        margin-bottom: 18px;
+      }
+
+      .stat-compare.secondary .stat-compare-box {
+        padding: 7px 10px;
+      }
+
+      .stat-compare.secondary .scb-num {
+        font-size: 1.1rem;
+      }
+
+      .stat-compare.secondary .scb-lbl {
+        font-size: 0.6rem;
+      }
+
+      .stat-compare.secondary .stat-compare-arrow {
+        font-size: 1rem;
       }
 
       .stat-compare-box {
@@ -1401,12 +1452,7 @@
         if (ev.type === "hub") {
           const name = displayName(ev.name);
           const title = "In this alternative Marvel Universe, <b>" + escapeXML(name) + "</b> is a hub!";
-          const text =
-            "Grown purely by chance and preferential attachment, " + name +
-            " has cleared this universe's live hub threshold of degree ≥ " + ev.threshold +
-            " — the same mean + k·σ outlier test from today's null-model section, run live " +
-            "against this universe's own growing degree distribution.";
-          return { title, text };
+          return { title, text: "" };
         }
         const nameA = displayName(ev.nameA);
         const nameB = displayName(ev.nameB);
@@ -1427,8 +1473,15 @@
       }
       function buildModalStatsHTML(ev) {
         if (ev.type === "hub") {
+          const multiplier = ev.realDegree > 0 ? ev.degree / ev.realDegree : null;
+          const headline = multiplier === null ? "CONNECTED FROM SCRATCH" : multiplier.toFixed(1) + "× MORE CONNECTED";
+          const headlineSub = multiplier === null ? "zero links in the real network" : "than in the real Marvel network";
           return (
-            '<div class="stat-compare">' +
+            '<div class="hub-headline">' +
+            '<div class="hub-headline-num">' + headline + '</div>' +
+            '<div class="hub-headline-sub">' + headlineSub + '</div>' +
+            "</div>" +
+            '<div class="stat-compare secondary">' +
             '<div class="stat-compare-box"><div class="scb-num">' + ev.realDegree + '</div><div class="scb-lbl">Real Marvel network</div></div>' +
             '<div class="stat-compare-arrow">→</div>' +
             '<div class="stat-compare-box highlight"><div class="scb-num">' + ev.degree + '</div><div class="scb-lbl">This universe</div></div>' +
