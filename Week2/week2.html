@@ -601,6 +601,83 @@
         margin: 0 0 18px;
       }
 
+      .stat-compare {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 8px;
+      }
+
+      .stat-compare-box {
+        flex: 1;
+        background: var(--panel-soft);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 10px 12px;
+        text-align: center;
+      }
+
+      .stat-compare-box.highlight {
+        border-color: var(--accent);
+        background: linear-gradient(135deg, rgba(108, 141, 255, 0.16), rgba(127, 208, 255, 0.1));
+      }
+
+      .scb-num {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--text);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .scb-lbl {
+        font-size: 0.66rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-top: 2px;
+      }
+
+      .stat-compare-arrow {
+        font-size: 1.3rem;
+        color: var(--accent-2);
+        flex: none;
+      }
+
+      .stat-compare-note {
+        font-size: 0.78rem;
+        color: var(--accent-2);
+        margin: 0 0 16px;
+      }
+
+      .pair-stats {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 16px;
+      }
+
+      .pair-stat-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-size: 0.82rem;
+        background: var(--panel-soft);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 6px 10px;
+      }
+
+      .pair-stat-row .psr-name {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      .pair-stat-row .psr-nums {
+        color: var(--muted);
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+      }
+
       .modal-actions {
         margin-top: auto;
         display: flex;
@@ -771,6 +848,7 @@
         <div class="modal-body">
           <div class="modal-eyebrow" id="modal-eyebrow">Breaking news from the multiverse</div>
           <h3 class="modal-title" id="modal-title"></h3>
+          <div class="modal-stats" id="modal-stats"></div>
           <p class="modal-text" id="modal-text"></p>
           <div class="modal-actions">
             <button class="btn primary" id="modal-continue">Continue growing</button>
@@ -833,6 +911,8 @@
         newsstand: [],
         timerId: null,
         cy: null,
+        imageCache: new Map(),
+        currentModalUid: null,
       };
 
       function displayName(rawName) {
@@ -877,6 +957,27 @@
           .split("\n")
           .filter((line) => line.trim() !== "" && !line.startsWith("#"))
           .map((line) => line.split("\t"));
+      }
+
+      // ---------- Wikipedia character art ----------
+      // node_id in the Week 1 dataset is the literal Wikipedia page title (e.g. "Abomination_(character)"),
+      // so it doubles as the path segment for the public REST summary endpoint.
+
+      function fetchWikipediaImage(id) {
+        const endpoint = "https://en.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(id);
+        const timeout = new Promise((resolve) => setTimeout(() => resolve(null), 6000));
+        const req = fetch(endpoint, { headers: { accept: "application/json" } })
+          .then((res) => (res.ok ? res.json() : null))
+          .then((data) => (data && data.thumbnail && data.thumbnail.source) || null)
+          .catch(() => null);
+        return Promise.race([req, timeout]);
+      }
+
+      function getCharacterImage(id) {
+        if (!state.imageCache.has(id)) {
+          state.imageCache.set(id, fetchWikipediaImage(id));
+        }
+        return state.imageCache.get(id);
       }
 
       // ---------- data loading ----------
@@ -1006,6 +1107,7 @@
       function addGrowingNode(id, name) {
         state.growing.nodes.set(id, { id, name, degree: 0 });
         state.cy.add({ group: "nodes", data: { id, label: displayName(name), degree: 0 } });
+        getCharacterImage(id); // pre-warm so any later pop-up has art ready
       }
 
       function addGrowingEdge(a, b) {
@@ -1060,6 +1162,8 @@
           b,
           nameA: state.growing.nodes.get(a).name,
           nameB: state.growing.nodes.get(b).name,
+          degA,
+          degB,
           mutual,
           issue: state.growing.issue,
           palette: pickPalette(),
@@ -1191,6 +1295,21 @@
         return 30;
       }
 
+      function badgeOrPhoto(cx, cy, r, imageUrl, initialsText, uid, slot, p) {
+        if (imageUrl) {
+          const clipId = "clip-" + uid + "-" + slot;
+          return (
+            '<clipPath id="' + clipId + '"><circle cx="' + cx + '" cy="' + cy + '" r="' + r + '"/></clipPath>' +
+            '<image href="' + escapeXML(imageUrl) + '" x="' + (cx - r) + '" y="' + (cy - r) + '" width="' + r * 2 + '" height="' + r * 2 + '" preserveAspectRatio="xMidYMid slice" clip-path="url(#' + clipId + ')"/>' +
+            '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="' + p.ink + '" stroke-width="6"/>'
+          );
+        }
+        return (
+          '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="url(#badgeGrad-' + uid + ')" stroke="' + p.ink + '" stroke-width="6"/>' +
+          '<text x="' + cx + '" y="' + (cy + r * 0.29) + '" font-family="Bangers, cursive" font-size="' + Math.round(r * 0.78) + '" fill="' + p.ink + '" text-anchor="middle">' + escapeXML(initialsText) + "</text>"
+        );
+      }
+
       function buildComicSVG(ev) {
         const p = ev.palette;
         const w = 340,
@@ -1200,6 +1319,7 @@
         const title = escapeXML(rawTitle);
         const fontSize = titleFontSize(rawTitle);
         const star = starburstPoints(w / 2, h * 0.36, 150, 108, 14);
+        const images = ev.images || [];
 
         let badgeMarkup;
         if (isTeam) {
@@ -1208,18 +1328,14 @@
             cy = h * 0.36,
             r = 62;
           badgeMarkup =
-            '<circle cx="' + cxA + '" cy="' + cy + '" r="' + r + '" fill="url(#badgeGrad-' + ev.uid + ')" stroke="' + p.ink + '" stroke-width="5"/>' +
-            '<text x="' + cxA + '" y="' + (cy + 18) + '" font-family="Bangers, cursive" font-size="46" fill="' + p.ink + '" text-anchor="middle">' + escapeXML(initials(ev.nameA)) + "</text>" +
-            '<circle cx="' + cxB + '" cy="' + cy + '" r="' + r + '" fill="url(#badgeGrad-' + ev.uid + ')" stroke="' + p.ink + '" stroke-width="5"/>' +
-            '<text x="' + cxB + '" y="' + (cy + 18) + '" font-family="Bangers, cursive" font-size="46" fill="' + p.ink + '" text-anchor="middle">' + escapeXML(initials(ev.nameB)) + "</text>" +
+            badgeOrPhoto(cxA, cy, r, images[0], initials(ev.nameA), ev.uid, "a", p) +
+            badgeOrPhoto(cxB, cy, r, images[1], initials(ev.nameB), ev.uid, "b", p) +
             '<text x="' + w / 2 + '" y="' + (cy + 12) + '" font-family="Bangers, cursive" font-size="30" fill="' + p.accent + '" text-anchor="middle" stroke="' + p.ink + '" stroke-width="0.8">&amp;</text>';
         } else {
           const cx = w / 2,
             cy = h * 0.36,
             r = 82;
-          badgeMarkup =
-            '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="url(#badgeGrad-' + ev.uid + ')" stroke="' + p.ink + '" stroke-width="6"/>' +
-            '<text x="' + cx + '" y="' + (cy + 24) + '" font-family="Bangers, cursive" font-size="64" fill="' + p.ink + '" text-anchor="middle">' + escapeXML(initials(ev.name)) + "</text>";
+          badgeMarkup = badgeOrPhoto(cx, cy, r, images[0], initials(ev.name), ev.uid, "solo", p);
         }
 
         return (
@@ -1257,19 +1373,11 @@
         if (ev.type === "hub") {
           const name = displayName(ev.name);
           const title = 'In this alternative Marvel Universe, <b>' + escapeXML(name) + "</b> is a hub!";
-          let text;
-          if (ev.realDegree === 0) {
-            text =
-              name + " doesn't even appear connected to anyone in the real Marvel wiki-network. " +
-              "Here, grown purely by chance and preferential attachment, they've collected " + ev.degree +
-              " links — clearing this universe's live hub threshold of degree ≥ " + ev.threshold + ".";
-          } else {
-            text =
-              "In the real Marvel wiki-network, " + name + " has " + ev.realDegree +
-              (ev.realDegree === 1 ? " link" : " links") + ". In this alternate universe they've already gathered " +
-              ev.degree + " — clearing the live hub threshold of degree ≥ " + ev.threshold +
-              ", the same mean + k·σ test from today's null-model section.";
-          }
+          const text =
+            "Grown purely by chance and preferential attachment, " + name +
+            " has cleared this universe's live hub threshold of degree ≥ " + ev.threshold +
+            " — the same mean + k·σ outlier test from today's null-model section, run live " +
+            "against this universe's own growing degree distribution.";
           return { title, text };
         }
         const nameA = displayName(ev.nameA);
@@ -1292,6 +1400,33 @@
         return { title, text };
       }
 
+      function buildModalStatsHTML(ev) {
+        if (ev.type === "hub") {
+          const multNote =
+            ev.realDegree > 0
+              ? (ev.degree / ev.realDegree).toFixed(1) + "× as connected as in the real network"
+              : "connected from scratch — zero links in the real network";
+          return (
+            '<div class="stat-compare">' +
+            '<div class="stat-compare-box"><div class="scb-num">' + ev.realDegree + '</div><div class="scb-lbl">Real Marvel network</div></div>' +
+            '<div class="stat-compare-arrow">→</div>' +
+            '<div class="stat-compare-box highlight"><div class="scb-num">' + ev.degree + '</div><div class="scb-lbl">This universe</div></div>' +
+            "</div>" +
+            '<div class="stat-compare-note">' + multNote + "</div>"
+          );
+        }
+        const realA = state.realDegree.get(ev.a) || 0;
+        const realB = state.realDegree.get(ev.b) || 0;
+        return (
+          '<div class="pair-stats">' +
+          '<div class="pair-stat-row"><span class="psr-name">' + escapeXML(displayName(ev.nameA)) +
+          '</span><span class="psr-nums">real ' + realA + " · here " + ev.degA + "</span></div>" +
+          '<div class="pair-stat-row"><span class="psr-name">' + escapeXML(displayName(ev.nameB)) +
+          '</span><span class="psr-nums">real ' + realB + " · here " + ev.degB + "</span></div>" +
+          "</div>"
+        );
+      }
+
       function addToNewsstand(ev) {
         state.newsstand.unshift(ev);
         document.getElementById("newsstand-panel").style.display = "block";
@@ -1303,8 +1438,9 @@
         grid.insertBefore(item, grid.firstChild);
       }
 
-      function openModal(ev, isNew) {
+      async function openModal(ev, isNew) {
         state.modalOpen = true;
+        state.currentModalUid = ev.uid;
         document.getElementById("grow-toggle").disabled = true;
         document.getElementById("step-btn").disabled = true;
 
@@ -1312,9 +1448,17 @@
         document.getElementById("modal-eyebrow").textContent =
           ev.type === "hub" ? "New hub detected · Issue #" + ev.issue : "Unlikely alliance · Issue #" + ev.issue;
         document.getElementById("modal-title").innerHTML = title;
+        document.getElementById("modal-stats").innerHTML = buildModalStatsHTML(ev);
         document.getElementById("modal-text").textContent = text;
-        document.getElementById("modal-cover").innerHTML = buildComicSVG(ev);
+        document.getElementById("modal-cover").innerHTML = buildComicSVG(ev); // monogram fallback while art loads
         document.getElementById("modal-overlay").classList.add("open");
+
+        const ids = ev.type === "hub" ? [ev.id] : [ev.a, ev.b];
+        const images = await Promise.all(ids.map((id) => getCharacterImage(id)));
+        ev.images = images;
+        if (state.currentModalUid === ev.uid) {
+          document.getElementById("modal-cover").innerHTML = buildComicSVG(ev);
+        }
 
         if (isNew) addToNewsstand(ev);
       }
