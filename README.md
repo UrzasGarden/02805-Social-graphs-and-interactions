@@ -10,7 +10,7 @@ The project combines a small interactive Cytoscape.js visualization with a Netwo
 - `Week1/week1_nodes.tsv` - 303 characters and their metadata
 - `Week1/week1_edges.tsv` - 1,784 directed article-link relationships
 - `Week1/Week1_Loke.ipynb` - notebook for loading and analyzing the graph
-- `Week2/week2.html` - "Grow your Marvel", an interactive Barabási–Albert growth model built on the Week 1 network
+- `Week2/week2.html` / `week2.css` / `week2.js` - "Grow your Marvel", an interactive Barabási–Albert growth model built on the Week 1 network
 
 ## Run
 
