@@ -3,132 +3,88 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Week 2 - Social Graphs and Interactions</title>
+    <title>Week 2 - Watch the Universe Grow</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=JetBrains+Mono:wght@400;700;900&display=swap" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.26.0/cytoscape.min.js"></script>
     <link rel="stylesheet" href="week2.css" />
   </head>
   <body>
     <div class="page">
       <header class="topbar">
-        <a class="brand" href="../index.html">Social Graphs and Interactions</a>
+        <a class="brand" href="../index.html">MULTIVERSE</a>
         <nav class="nav" aria-label="Main navigation">
           <a href="../index.html#overview">Overview</a>
           <a href="../Week1/jonathan-week1.html">Week 1</a>
-          <a href="week2.html">Week 2</a>
+          <a href="week2.html" class="active">Week 2</a>
         </nav>
       </header>
 
-      <main>
-        <section class="hero">
-          <div class="eyebrow">Week 2 &middot; Models &amp; null models</div>
-          <h1>Grow your Marvel</h1>
-          <p>
-            The same 303 characters from Week 1's real Wikipedia network, wired up all over again &mdash;
-            one arrival at a time, under <b>preferential attachment</b> (the Barab&aacute;si&ndash;Albert
-            growth model). Characters join in random order and link to whoever already has the most
-            connections. No editors, no citations &mdash; just chance and the rich-get-richer rule.
-          </p>
-          <p>
-            Toggle the growth on, and watch a brand new alternate universe assemble. When a character
-            becomes a statistically significant hub here &mdash; or two characters who barely know each
-            other in the real network suddenly get wired directly together &mdash; you'll get a pop-up
-            with a mock comic cover for the moment. The side panel always shows the biggest hubs in
-            <b>both</b> universes, real and alternate, so you can compare.
-          </p>
+      <div style="text-align:center; margin-bottom: 20px;">
+        <a href="week2.html" class="btn-pow" style="text-decoration:none; font-size:1.3rem; background: var(--red); color:#ffffff;">&larr; BACK TO THE UNIVERSE EXPLORER</a>
+      </div>
+
+      <section class="splash" style="margin-top: 34px;">
+        <span id="universe-label" class="uni-label splash-sticker"></span>
+        <h1>HOW THE UNIVERSE GROWS</h1>
+        <p>
+          See how the universe you just generated grows one character at a time, under <b>preferential attachment</b> rules. Watch the rich-get-richer effect happen live and check out the hubs and unlikely alliances that exist at any given time of the growth.
+        </p>
+      </section>
+
+      <div id="fallback-panel" class="panel" style="display:none; text-align:center; max-width: 640px; margin: 0 auto 40px;">
+        <h2 style="border-bottom:0;">NO UNIVERSE FOUND</h2>
+        <p style="font-size:1.1rem; font-weight:700; margin-bottom: 20px;">
+          Head back to the main Week 2 page and generate a universe first &mdash; then hit
+          &ldquo;See the universe grow&rdquo; again to watch this one come alive.
+        </p>
+        <a href="week2.html" class="btn-pow" style="text-decoration:none;">GO GENERATE ONE</a>
+      </div>
+
+      <main id="main-content" style="display:none;">
+        <section class="panel timebar-panel">
+          <div class="timebar">
+            <button class="timebar-play" id="play-btn" aria-label="Play" aria-pressed="false">&#9654;</button>
+            <div class="speed-toggles" role="group" aria-label="Playback speed">
+              <button class="speed-btn" id="speed-btn-med" type="button" aria-label="Normal speed" aria-pressed="false" title="Normal speed">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+                  <path d="M2 5v14l9-7z"/>
+                  <path d="M12 5v14l9-7z"/>
+                </svg>
+              </button>
+              <button class="speed-btn" id="speed-btn-fast" type="button" aria-label="Fast speed" aria-pressed="false" title="Fast speed">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+                  <path d="M1 5v14l6.5-7z"/>
+                  <path d="M9 5v14l6.5-7z"/>
+                  <path d="M17 5v14l6.5-7z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="timebar-track" id="timebar-track">
+              <div class="timebar-fill" id="timebar-fill"></div>
+              <div class="timebar-thumb" id="timebar-thumb" tabindex="0" role="slider" aria-label="Growth progress" aria-valuemin="0" aria-valuemax="303" aria-valuenow="0"></div>
+            </div>
+          </div>
+          <div class="timebar-readout" id="timebar-readout">0 / 303 characters arrived</div>
         </section>
 
-        <section class="app-shell">
-          <!-- controls -->
-          <div class="panel-card" id="controls-panel">
-            <h2>Controls</h2>
-            <p class="panel-sub">Grow the alternate universe, node by node.</p>
-
-            <div class="toggle-row">
-              <span class="toggle-label" id="toggle-label">
-                Grow
-                <span class="toggle-sub" id="toggle-sub">Loading data&hellip;</span>
-              </span>
-              <label class="switch">
-                <input type="checkbox" id="grow-toggle" disabled />
-                <span class="slider"></span>
-              </label>
-            </div>
-
-            <div class="btn-row">
-              <button class="btn" id="step-btn" disabled>Step once</button>
-              <button class="btn" id="reset-btn" disabled>Reset</button>
-            </div>
-
-            <div class="field-row">
-              <label for="speed-range">Growth speed &mdash; <span id="speed-val">1.0</span> arrivals / sec</label>
-              <input type="range" id="speed-range" min="0.2" max="4" step="0.2" value="1" />
-            </div>
-
-            <div class="field-row">
-              <label>Links per newcomer (m)</label>
-              <div class="segmented" id="m-segmented">
-                <button data-m="1">1</button>
-                <button data-m="2" class="active">2</button>
-                <button data-m="3">3</button>
-              </div>
-            </div>
-
-            <div class="field-row">
-              <label>Attachment rule</label>
-              <div class="segmented" id="mode-segmented">
-                <button data-mode="preferential" class="active">Preferential</button>
-                <button data-mode="uniform">Uniform (random)</button>
-              </div>
-            </div>
-
-            <div class="stat-grid">
-              <div class="stat-box">
-                <div class="num" id="stat-nodes">0 / 303</div>
-                <div class="lbl">Characters arrived</div>
-              </div>
-              <div class="stat-box">
-                <div class="num" id="stat-links">0</div>
-                <div class="lbl">Links formed</div>
-              </div>
-            </div>
-
-            <div class="threshold-note">
-              A character is flagged as a <b>significant hub</b> once their degree clears
-              <b><span id="threshold-val">&mdash;</span></b> here &mdash; the same
-              mean&nbsp;+&nbsp;<i>k</i>&middot;&sigma; outlier test from today's null-model section,
-              just run live against this universe's own growing degree distribution.
-            </div>
+        <section class="panel graph-panel">
+          <div id="cy">
+            <div id="cy-empty">Hit play, or drag the dot above, to grow this universe.</div>
           </div>
+        </section>
 
-          <!-- graph -->
-          <div class="panel-card graph-panel">
-            <div class="graph-toolbar">
-              <h2>This alternate universe</h2>
-              <span class="status" id="graph-status">Loading the real Marvel network&hellip;</span>
+        <section class="panel">
+          <h2>Hub Showdown</h2>
+          <p style="margin-bottom: 20px; font-size: 1.05rem; font-weight: 700;">The 5 biggest hubs in the real Marvel network vs. this alternate universe, right now.</p>
+          <div class="hub-showdown">
+            <div class="hub-col">
+              <div class="hub-col-title">Earth-Prime (real)</div>
+              <ul class="hub-list" id="real-hub-list"></ul>
             </div>
-            <div id="cy">
-              <div id="cy-empty">Flip the switch to start growing this universe.</div>
-            </div>
-            <p class="complete-banner" id="complete-banner">
-              &#127881; All 303 characters have joined this universe. Hit Reset to grow a new one.
-            </p>
-          </div>
-
-          <!-- hub side panel -->
-          <div class="panel-card" id="side-panel">
-            <div class="hub-panel">
-              <h2>Real Marvel &mdash; biggest hubs</h2>
-              <p class="panel-sub">Wikipedia's actual Category:Marvel Comics superheroes network (Week 1).</p>
-              <ul class="hub-list" id="real-hub-list">
-                <li class="empty-note">Loading&hellip;</li>
-              </ul>
-            </div>
-            <div class="hub-panel">
-              <h2>This universe &mdash; biggest hubs</h2>
-              <p class="panel-sub">Rebuilt live from scratch by preferential attachment.</p>
+            <div class="hub-col hub-col-alt">
+              <div class="hub-col-title" id="hub-col-alt-title">This universe</div>
               <ul class="hub-list" id="growing-hub-list">
                 <li class="empty-note">Nobody has arrived yet.</li>
               </ul>
@@ -136,25 +92,34 @@
           </div>
         </section>
 
-        <section class="newsstand panel-card" id="newsstand-panel" style="display: none">
-          <h2>Newsstand</h2>
-          <p class="panel-sub">Every hub and every unlikely alliance this universe has produced so far. Click a cover to reopen it.</p>
-          <div class="newsstand-grid" id="newsstand-grid"></div>
+        <section class="panel newsstand-section">
+          <h2>Hub Newsstand</h2>
+          <p style="margin-bottom: 16px; font-size: 1.05rem; font-weight: 700;">Every character who became a significant hub in this universe so far &mdash; newest first.</p>
+          <div class="comics-grid-scroll" id="hub-newsstand-grid">
+            <p class="empty-note" id="hub-newsstand-empty">No hubs have emerged yet.</p>
+          </div>
+        </section>
+
+        <section class="panel newsstand-section">
+          <h2>Unlikely Alliances</h2>
+          <p style="margin-bottom: 16px; font-size: 1.05rem; font-weight: 700;">Pairs of characters wired directly together here despite being strangers (or worse) in the real network.</p>
+          <div class="comics-grid-scroll" id="alliance-newsstand-grid">
+            <p class="empty-note" id="alliance-newsstand-empty">No unlikely alliances yet.</p>
+          </div>
         </section>
       </main>
     </div>
 
     <div class="modal-overlay" id="modal-overlay">
       <div class="modal-box">
+        <button class="modal-close" id="modal-close" type="button" aria-label="Close">&times;</button>
         <div class="modal-cover-wrap" id="modal-cover"></div>
         <div class="modal-body">
-          <div class="modal-eyebrow" id="modal-eyebrow">Breaking news from the multiverse</div>
+          <div class="modal-eyebrow" id="modal-eyebrow"></div>
           <h3 class="modal-title" id="modal-title"></h3>
+          <div class="modal-headline" id="modal-headline"></div>
           <div class="modal-stats" id="modal-stats"></div>
           <p class="modal-text" id="modal-text"></p>
-          <div class="modal-actions">
-            <button class="btn primary" id="modal-continue">Continue growing</button>
-          </div>
         </div>
       </div>
     </div>

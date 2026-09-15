@@ -27,31 +27,30 @@ const TEAM_TAGLINES = [
 const MIN_NODES_FOR_HUB_CHECK = 12;
 const HUB_Z = 2.5;
 const HUB_MIN_DEGREE = 6;
+// Slowest first: base is half the old default speed (1300ms/arrival), the old default
+// (650ms) now sits in the middle as "normal" speed, and the old fixed speed (200ms) stays fastest.
+const SPEED_LEVELS_MS = [1300, 650, 200];
 
 const state = {
-  realNodes: new Map(), // id -> name
-  realDegree: new Map(), // id -> number
-  realAdj: new Map(), // id -> Set(id)
+  realNodes: new Map(), // characterId -> name
+  realDegree: new Map(), // characterId -> number
+  realAdj: new Map(), // characterId -> Set(characterId)
   realTopHubs: [],
-  growing: {
-    nodes: new Map(), // id -> {id, name, degree}
-    endpointPool: [],
-    remainingPool: [],
-    issue: 0,
-    alertedHubs: new Set(),
-    alertedPairs: new Set(),
-  },
-  m: 2,
-  mode: "preferential",
-  speed: 1,
-  isPlaying: false,
-  modalOpen: false,
-  pendingEvents: [],
-  newsstand: [],
-  timerId: null,
+  universe: null, // { uniName, edges:[{source,target}], nodeOrder:[{characterId,name}] }
+  timeline: [], // index -> { index, characterId, name, targetIndices:[] }
+  hubEvents: [], // { step, index, characterId, name, degree, realDegree, threshold, uid, palette, tagline, images }
+  pairEvents: [], // { step, aIndex, bIndex, characterIdA, characterIdB, nameA, nameB, realDist, uid, palette, tagline, images }
+  N: 0,
+  currentT: 0,
+  renderedT: 0, // how many nodes are currently present in the live cy graph
+  playing: false,
+  playTimer: null,
+  speedLevel: 0, // index into SPEED_LEVELS_MS
+  centerSettleTimer: null,
+  renderRAF: null,
   cy: null,
   imageCache: new Map(),
-  currentModalUid: null,
+  modalUid: null,
 };
 
 function displayName(rawName) {
@@ -82,15 +81,6 @@ function pick(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-function shuffle(arr) {
-  const a = arr.slice();
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
 function parseTSV(text) {
   return text
     .split("\n")
@@ -119,7 +109,7 @@ function getCharacterImage(id) {
   return state.imageCache.get(id);
 }
 
-// ---------- data loading ----------
+// ---------- data loading (the real Week 1 network, for comparison) ----------
 
 async function loadData() {
   const [nodesRes, edgesRes] = await Promise.all([
@@ -152,132 +142,7 @@ async function loadData() {
 
   state.realTopHubs = Array.from(state.realDegree.entries())
     .sort((x, y) => y[1] - x[1])
-    .slice(0, 8);
-}
-
-// ---------- cytoscape ----------
-
-function initCytoscape() {
-  state.cy = cytoscape({
-    container: document.getElementById("cy"),
-    elements: [],
-    style: [
-      {
-        selector: "node",
-        style: {
-          label: "data(label)",
-          color: "#e7ecf5",
-          "font-size": "11px",
-          "text-valign": "bottom",
-          "text-margin-y": 5,
-          "text-outline-width": 2,
-          "text-outline-color": "#0f1420",
-          "background-color": "mapData(degree, 0, 26, #6c8dff, #ff5b7f)",
-          width: "mapData(degree, 0, 26, 12, 56)",
-          height: "mapData(degree, 0, 26, 12, 56)",
-          "border-width": 2,
-          "border-color": "#0f1420",
-        },
-      },
-      {
-        selector: "edge",
-        style: {
-          width: 1.4,
-          "line-color": "#2a3346",
-          "curve-style": "haystack",
-          "haystack-radius": 0,
-          opacity: 0.55,
-        },
-      },
-      { selector: "node.hub-flag", style: { "border-color": "#ffd23f", "border-width": 4 } },
-      { selector: "node.highlight", style: { "border-color": "#7fd0ff", "border-width": 4 } },
-      { selector: "edge.highlight", style: { "line-color": "#7fd0ff", opacity: 1, width: 2.4 } },
-      { selector: ".fade", style: { opacity: 0.12 } },
-    ],
-    layout: { name: "grid" },
-    wheelSensitivity: 0.25,
-  });
-
-  state.cy.on("tap", "node", (evt) => {
-    const node = evt.target;
-    state.cy.elements().removeClass("highlight fade");
-    state.cy.elements().addClass("fade");
-    node.removeClass("fade").addClass("highlight");
-    node.connectedEdges().removeClass("fade").addClass("highlight");
-    node.connectedEdges().connectedNodes().removeClass("fade");
-  });
-  state.cy.on("tap", (evt) => {
-    if (evt.target === state.cy) state.cy.elements().removeClass("highlight fade");
-  });
-}
-
-// ---------- growth mechanics ----------
-
-function sampleTargets(mWanted) {
-  const existingIds = Array.from(state.growing.nodes.keys());
-  const k = Math.min(mWanted, existingIds.length);
-  const chosen = new Set();
-  let guard = 0;
-  while (chosen.size < k && guard < 4000) {
-    guard++;
-    let candidate;
-    if (state.mode === "uniform" || state.growing.endpointPool.length === 0) {
-      candidate = existingIds[Math.floor(Math.random() * existingIds.length)];
-    } else {
-      candidate = state.growing.endpointPool[Math.floor(Math.random() * state.growing.endpointPool.length)];
-    }
-    chosen.add(candidate);
-  }
-  return Array.from(chosen);
-}
-
-function degreeStats() {
-  const degrees = Array.from(state.growing.nodes.values()).map((n) => n.degree);
-  const mean = degrees.reduce((s, d) => s + d, 0) / (degrees.length || 1);
-  const variance = degrees.reduce((s, d) => s + (d - mean) ** 2, 0) / (degrees.length || 1);
-  return { mean, std: Math.sqrt(variance) };
-}
-
-function hubThreshold() {
-  const { mean, std } = degreeStats();
-  return Math.max(HUB_MIN_DEGREE, Math.round(mean + HUB_Z * std));
-}
-
-function addGrowingNode(id, name) {
-  state.growing.nodes.set(id, { id, name, degree: 0 });
-  state.cy.add({ group: "nodes", data: { id, label: displayName(name), degree: 0 } });
-  getCharacterImage(id); // pre-warm so any later pop-up has art ready
-}
-
-function addGrowingEdge(a, b) {
-  state.cy.add({ group: "edges", data: { id: a + "__" + b, source: a, target: b } });
-  state.growing.nodes.get(a).degree += 1;
-  state.growing.nodes.get(b).degree += 1;
-  state.cy.getElementById(a).data("degree", state.growing.nodes.get(a).degree);
-  state.cy.getElementById(b).data("degree", state.growing.nodes.get(b).degree);
-  state.growing.endpointPool.push(a, b);
-}
-
-function checkHubEvent(id) {
-  if (state.growing.nodes.size < MIN_NODES_FOR_HUB_CHECK) return null;
-  if (state.growing.alertedHubs.has(id)) return null;
-  const node = state.growing.nodes.get(id);
-  const threshold = hubThreshold();
-  if (node.degree < threshold) return null;
-  state.growing.alertedHubs.add(id);
-  state.cy.getElementById(id).addClass("hub-flag");
-  return {
-    type: "hub",
-    uid: "h" + id + "-" + state.growing.issue,
-    id,
-    name: node.name,
-    degree: node.degree,
-    realDegree: state.realDegree.get(id) || 0,
-    threshold,
-    issue: state.growing.issue,
-    palette: pickPalette(),
-    tagline: pick(SOLO_TAGLINES),
-  };
+    .slice(0, 5);
 }
 
 function realShortestPath(a, b) {
@@ -304,89 +169,202 @@ function realShortestPath(a, b) {
   return Infinity;
 }
 
-function checkPairEvent(a, b) {
-  const key = [a, b].sort().join("|");
-  if (state.growing.alertedPairs.has(key)) return null;
-  const realDist = realShortestPath(a, b);
-  if (!(realDist === Infinity || realDist >= 5)) return null;
-  state.growing.alertedPairs.add(key);
-  return {
-    type: "pair",
-    uid: "p" + key + "-" + state.growing.issue,
-    a,
-    b,
-    nameA: state.growing.nodes.get(a).name,
-    nameB: state.growing.nodes.get(b).name,
-    realDist,
-    newDist: 1,
-    issue: state.growing.issue,
-    palette: pickPalette(),
-    tagline: pick(TEAM_TAGLINES),
-  };
-}
-function growTick() {
-  if (state.growing.remainingPool.length === 0) {
-    finishUniverse();
-    return;
-  }
-  const id = state.growing.remainingPool.pop();
-  const name = state.realNodes.get(id);
-  const existingCount = state.growing.nodes.size;
-  const mWanted = existingCount === 0 ? 0 : state.m;
-  const targets = existingCount === 0 ? [] : sampleTargets(mWanted);
+// ---------- cytoscape ----------
 
-  addGrowingNode(id, name);
-  const touched = [id];
-  targets.forEach((t) => {
-    addGrowingEdge(id, t);
-    touched.push(t);
+// Cytoscape draws style sizes in graph space, so by default they scale up
+// with zoom — zoom in and nodes/text/edges all get proportionally bigger
+// together, which is what makes a zoomed-in view feel like a handful of
+// giant blobs rather than more legible detail. Style values can be given as
+// functions that Cytoscape re-evaluates per render, so dividing every size
+// by the current zoom cancels that scaling out and keeps each one a fixed
+// number of screen pixels regardless of zoom level — zooming acts purely as
+// a magnifying glass on layout/position, not on the ink itself.
+const NODE_MIN_PX = 12;
+const NODE_MAX_PX = 56;
+const NODE_MAX_DEGREE_FOR_SIZE = 26;
+
+function nodeDiameterPx(ele) {
+  const deg = ele.data("degree") || 0;
+  const t = Math.max(0, Math.min(1, deg / NODE_MAX_DEGREE_FOR_SIZE));
+  return NODE_MIN_PX + t * (NODE_MAX_PX - NODE_MIN_PX);
+}
+
+function zoomFixed(basePx) {
+  return (ele) => basePx / ele.cy().zoom();
+}
+
+function initCytoscape() {
+  state.cy = cytoscape({
+    container: document.getElementById("cy"),
+    elements: [],
+    style: [
+      {
+        selector: "node",
+        style: {
+          label: "data(label)",
+          color: "#111",
+          "font-size": (ele) => 11 / ele.cy().zoom(),
+          "font-family": "JetBrains Mono, monospace",
+          "text-valign": "bottom",
+          "text-margin-y": zoomFixed(5),
+          "text-outline-width": zoomFixed(2),
+          "text-outline-color": "#fff",
+          "background-color": "mapData(degree, 0, 26, #3b82f6, #ef4444)",
+          width: (ele) => nodeDiameterPx(ele) / ele.cy().zoom(),
+          height: (ele) => nodeDiameterPx(ele) / ele.cy().zoom(),
+          "border-width": zoomFixed(2),
+          "border-color": "#000",
+        },
+      },
+      {
+        selector: "edge",
+        style: {
+          width: zoomFixed(1.4),
+          "line-color": "#000",
+          "curve-style": "haystack",
+          "haystack-radius": 0,
+          opacity: 0.55,
+        },
+      },
+      { selector: "node.hub-flag", style: { "border-color": "#fde047", "border-width": zoomFixed(4) } },
+      { selector: "node.highlight", style: { "border-color": "#06b6d4", "border-width": zoomFixed(4) } },
+      { selector: "edge.highlight", style: { "line-color": "#06b6d4", opacity: 1, width: zoomFixed(2.4) } },
+      { selector: ".fade", style: { opacity: 0.1 } },
+    ],
+    layout: { name: "grid" },
+    wheelSensitivity: 0.25,
   });
-  state.growing.issue += 1;
 
-  const events = [];
-  touched.forEach((nid) => {
-    const ev = checkHubEvent(nid);
-    if (ev) events.push(ev);
+  // Function-valued styles are re-evaluated when Cytoscape recomputes an
+  // element's style, which a plain zoom (no element data/class change)
+  // doesn't otherwise trigger — nudge it explicitly so sizing updates live
+  // while the user is actively zooming, not just on the next unrelated
+  // render.
+  state.cy.on("zoom", () => state.cy.style().update());
+
+  state.cy.on("tap", "node", (evt) => {
+    const node = evt.target;
+    state.cy.elements().removeClass("highlight fade");
+    state.cy.elements().addClass("fade");
+    node.removeClass("fade").addClass("highlight");
+    node.connectedEdges().removeClass("fade").addClass("highlight");
+    node.connectedEdges().connectedNodes().removeClass("fade");
   });
-  targets.forEach((t) => {
-    const ev = checkPairEvent(id, t);
-    if (ev) events.push(ev);
+  state.cy.on("tap", (evt) => {
+    if (evt.target === state.cy) state.cy.elements().removeClass("highlight fade");
+  });
+}
+
+// ---------- timeline construction ----------
+// week2.html builds its BA graph so that in every {source,target} edge, the
+// higher-index endpoint is always the node that was attaching (the "newcomer")
+// and the lower-index endpoint already existed. That lets us replay the exact
+// same universe as a node-by-node arrival sequence with no new randomness.
+
+function buildTimeline() {
+  const nodeOrder = state.universe.nodeOrder;
+  const edges = state.universe.edges;
+  const N = nodeOrder.length;
+  state.N = N;
+
+  const targetsByIndex = Array.from({ length: N }, () => []);
+  edges.forEach((e) => {
+    const hi = Math.max(e.source, e.target);
+    const lo = Math.min(e.source, e.target);
+    if (hi >= 0 && hi < N) targetsByIndex[hi].push(lo);
   });
 
-  document.getElementById("cy-empty").style.display = "none";
-  updateStats();
-  renderGrowingHubList();
+  const degree = new Array(N).fill(0);
+  const alertedHubs = new Set();
+  const alertedPairs = new Set();
+  state.timeline = [];
+  state.hubEvents = [];
+  state.pairEvents = [];
 
-  if (state.growing.nodes.size < 60 || state.growing.issue % 3 === 0) {
-    state.cy
-      .layout({ name: "cose", animate: true, animationDuration: 350, randomize: false, fit: false, nodeRepulsion: 6000, idealEdgeLength: 70 })
-      .run();
+  for (let i = 0; i < N; i++) {
+    const targets = targetsByIndex[i];
+    targets.forEach((t) => {
+      degree[i]++;
+      degree[t]++;
+    });
+    const issue = i + 1;
+    state.timeline.push({ index: i, characterId: nodeOrder[i].characterId, name: nodeOrder[i].name, targetIndices: targets });
+
+    const arrivedCount = i + 1;
+    if (arrivedCount >= MIN_NODES_FOR_HUB_CHECK) {
+      let sum = 0;
+      for (let k = 0; k <= i; k++) sum += degree[k];
+      const mean = sum / arrivedCount;
+      let variance = 0;
+      for (let k = 0; k <= i; k++) variance += (degree[k] - mean) ** 2;
+      const std = Math.sqrt(variance / arrivedCount);
+      const threshold = Math.max(HUB_MIN_DEGREE, Math.round(mean + HUB_Z * std));
+
+      [i, ...targets].forEach((nid) => {
+        if (alertedHubs.has(nid)) return;
+        if (degree[nid] < threshold) return;
+        alertedHubs.add(nid);
+        const characterId = nodeOrder[nid].characterId;
+        state.hubEvents.push({
+          type: "hub",
+          step: i,
+          uid: "h" + nid + "-" + issue,
+          index: nid,
+          characterId,
+          name: nodeOrder[nid].name,
+          degree: degree[nid],
+          realDegree: state.realDegree.get(characterId) || 0,
+          threshold,
+          issue,
+          palette: pickPalette(),
+          tagline: pick(SOLO_TAGLINES),
+        });
+      });
+    }
+
+    targets.forEach((t) => {
+      const key = [i, t].sort((a, b) => a - b).join("|");
+      if (alertedPairs.has(key)) return;
+      const idA = nodeOrder[i].characterId;
+      const idB = nodeOrder[t].characterId;
+      const realDist = realShortestPath(idA, idB);
+      if (!(realDist === Infinity || realDist >= 5)) return;
+      alertedPairs.add(key);
+      state.pairEvents.push({
+        type: "pair",
+        step: i,
+        uid: "p" + key + "-" + issue,
+        aIndex: i,
+        bIndex: t,
+        characterIdA: idA,
+        characterIdB: idB,
+        nameA: nodeOrder[i].name,
+        nameB: nodeOrder[t].name,
+        realDist,
+        newDist: 1,
+        issue,
+        palette: pickPalette(),
+        tagline: pick(TEAM_TAGLINES),
+      });
+    });
   }
+}
 
-  if (events.length) {
-    state.pendingEvents.push(...events);
-    showNextEvent();
+function replayUpTo(t) {
+  const degree = new Array(t).fill(0);
+  const nodesPresent = [];
+  for (let i = 0; i < t; i++) {
+    const step = state.timeline[i];
+    nodesPresent.push(step);
+    step.targetIndices.forEach((tg) => {
+      degree[i]++;
+      degree[tg]++;
+    });
   }
+  return { nodesPresent, degree };
 }
 
-function finishUniverse() {
-  stopGrowth();
-  document.getElementById("grow-toggle").disabled = true;
-  document.getElementById("step-btn").disabled = true;
-  document.getElementById("complete-banner").style.display = "block";
-  document.getElementById("graph-status").textContent = "Universe complete — 303 / 303";
-}
-
-// ---------- UI: stats & hub lists ----------
-
-function updateStats() {
-  document.getElementById("stat-nodes").textContent = state.growing.nodes.size + " / 303";
-  document.getElementById("stat-links").textContent = state.growing.endpointPool.length / 2;
-  document.getElementById("threshold-val").textContent =
-    state.growing.nodes.size < MIN_NODES_FOR_HUB_CHECK ? "—" : "degree ≥ " + hubThreshold();
-  document.getElementById("graph-status").textContent =
-    state.growing.nodes.size + " / 303 characters · " + state.growing.endpointPool.length / 2 + " links";
-}
+// ---------- rendering ----------
 
 function renderHubRow(rank, name, degree, maxDegree, isHub) {
   const li = document.createElement("li");
@@ -414,20 +392,19 @@ function renderRealHubList() {
   });
 }
 
-function renderGrowingHubList() {
+function renderGrowingHubList(nodesPresent, degree, t) {
   const list = document.getElementById("growing-hub-list");
-  const top = Array.from(state.growing.nodes.values())
-    .sort((a, b) => b.degree - a.degree)
-    .slice(0, 8);
+  const entries = nodesPresent.map((n, i) => ({ idx: i, name: n.name, degree: degree[i] }));
+  entries.sort((a, b) => b.degree - a.degree);
+  const top = entries.slice(0, 5);
   if (!top.length) {
     list.innerHTML = '<li class="empty-note">Nobody has arrived yet.</li>';
     return;
   }
   list.innerHTML = "";
   const max = top[0].degree;
-  top.forEach((n, i) => {
-    list.appendChild(renderHubRow(i + 1, n.name, n.degree, max, state.growing.alertedHubs.has(n.id)));
-  });
+  const hubIndexSet = new Set(state.hubEvents.filter((ev) => ev.step < t).map((ev) => ev.index));
+  top.forEach((n, i) => list.appendChild(renderHubRow(i + 1, n.name, n.degree, max, hubIndexSet.has(n.idx))));
 }
 
 // ---------- comic cover ----------
@@ -532,211 +509,382 @@ function buildComicSVG(ev) {
     '<rect x="4" y="4" width="' + (w - 8) + '" height="' + (h - 8) + '" fill="none" stroke="' + p.ink + '" stroke-width="8" rx="4"/>' +
     '<g font-family="Bangers, cursive">' +
     '<text x="20" y="26" font-size="15" fill="' + p.accent + '" stroke="' + p.ink + '" stroke-width="0.5">ISSUE #' + ev.issue + "</text>" +
-    '<text x="' + (w - 20) + '" y="26" font-size="15" fill="' + p.accent + '" stroke="' + p.ink + '" stroke-width="0.5" text-anchor="end">25¢</text>' +
+    '<text x="' + (w - 20) + '" y="26" font-size="15" fill="' + p.accent + '" stroke="' + p.ink + '" stroke-width="0.5" text-anchor="end">25&cent;</text>' +
     '<text x="' + w / 2 + '" y="' + (h - 96) + '" font-size="' + fontSize + '" fill="#ffffff" stroke="' + p.ink + '" stroke-width="1.2" text-anchor="middle">' + title + "</text>" +
     '<text x="' + w / 2 + '" y="' + (h - 62) + '" font-size="14" fill="' + p.accent + '" text-anchor="middle" letter-spacing="1">' + escapeXML(ev.tagline) + "</text>" +
-    '<text x="' + w / 2 + '" y="' + (h - 30) + '" font-size="10" fill="#ffffff" text-anchor="middle" opacity="0.85" font-family="-apple-system, sans-serif">ALT-VERSE COMICS · AI mock cover, generated live</text>' +
+    '<text x="' + w / 2 + '" y="' + (h - 30) + '" font-size="10" fill="#ffffff" text-anchor="middle" opacity="0.85" font-family="-apple-system, sans-serif">ALT-VERSE COMICS &middot; AI mock cover, generated live</text>' +
     "</g>" +
     "</svg>"
   );
 }
-// ---------- modal / newsstand ----------
 
-function eventSubtitleAndTitle(ev) {
-  if (ev.type === "hub") {
-    const name = displayName(ev.name);
-    const title = "In this alternative Marvel Universe, <b>" + escapeXML(name) + "</b> is a hub!";
-    return { title, text: "" };
-  }
-  const nameA = displayName(ev.nameA);
-  const nameB = displayName(ev.nameB);
-  const title =
-    "In this alternative Marvel Universe, <b>" + escapeXML(nameA) + "</b> and <b>" + escapeXML(nameB) +
-    "</b> are strongly connected!";
-  let text;
-  if (ev.realDist === Infinity) {
-    text =
-      nameA + " and " + nameB + " aren't even in the same connected part of the real Marvel wiki-network — " +
-      "there's no path between them at all. In this alternate universe, chance just wired them directly together.";
-  } else {
-    text =
-      "In the real Marvel wiki-network, " + nameA + " and " + nameB + " are " + ev.realDist +
-      " hops apart — practically strangers. In this alternate universe, chance just wired them directly together.";
-  }
-  return { title, text };
+// ---------- newsstand sections (click a cover to pop it open) ----------
+
+function ensureEventImages(ev) {
+  if (ev.images) return;
+  const ids = ev.type === "hub" ? [ev.characterId] : [ev.characterIdA, ev.characterIdB];
+  Promise.all(ids.map((id) => getCharacterImage(id))).then((images) => {
+    ev.images = images;
+    const el = document.querySelector('.newsstand-item[data-uid="' + ev.uid + '"]');
+    if (el) {
+      const captionEl = el.querySelector(".caption");
+      const captionHTML = captionEl ? captionEl.outerHTML : "";
+      el.innerHTML = buildComicSVG(ev) + captionHTML;
+    }
+    if (state.modalUid === ev.uid) {
+      document.getElementById("modal-cover").innerHTML = buildComicSVG(ev);
+    }
+  });
 }
-function buildModalStatsHTML(ev) {
-  if (ev.type === "hub") {
-    const multiplier = ev.realDegree > 0 ? ev.degree / ev.realDegree : null;
-    const headline = multiplier === null ? "CONNECTED FROM SCRATCH" : multiplier.toFixed(1) + "× MORE CONNECTED";
-    const headlineSub = multiplier === null ? "zero links in the real network" : "than in the real Marvel network";
-    return (
-      '<div class="hub-headline">' +
-      '<div class="hub-headline-num">' + headline + '</div>' +
-      '<div class="hub-headline-sub">' + headlineSub + '</div>' +
-      "</div>" +
-      '<div class="stat-compare secondary">' +
-      '<div class="stat-compare-box"><div class="scb-num">' + ev.realDegree + '</div><div class="scb-lbl">Real Marvel network</div></div>' +
-      '<div class="stat-compare-arrow">→</div>' +
-      '<div class="stat-compare-box highlight"><div class="scb-num">' + ev.degree + '</div><div class="scb-lbl">This universe</div></div>' +
-      "</div>"
-    );
-  }
-  const realNum = ev.realDist === Infinity ? "None" : String(ev.realDist);
-  return (
-    '<div class="stat-compare">' +
-    '<div class="stat-compare-box"><div class="scb-num">' + realNum + '</div><div class="scb-lbl">Shortest path — real network</div></div>' +
-    '<div class="stat-compare-arrow">→</div>' +
-    '<div class="stat-compare-box highlight"><div class="scb-num">' + ev.newDist + '</div><div class="scb-lbl">Shortest path — this universe</div></div>' +
-    "</div>"
-  );
-}
-function addToNewsstand(ev) {
-  state.newsstand.unshift(ev);
-  document.getElementById("newsstand-panel").style.display = "block";
-  const grid = document.getElementById("newsstand-grid");
+
+function buildNewsstandItem(ev) {
   const item = document.createElement("div");
   item.className = "newsstand-item";
-  item.innerHTML = buildComicSVG(ev) + '<div class="caption">' + (ev.type === "hub" ? escapeXML(displayName(ev.name)) : escapeXML(displayName(ev.nameA) + " & " + displayName(ev.nameB))) + "</div>";
-  item.addEventListener("click", () => openModal(ev, false));
-  grid.insertBefore(item, grid.firstChild);
+  item.dataset.uid = ev.uid;
+  const caption = ev.type === "hub" ? displayName(ev.name) : displayName(ev.nameA) + " & " + displayName(ev.nameB);
+  item.innerHTML = buildComicSVG(ev) + '<div class="caption">' + escapeXML(caption) + "</div>";
+  item.addEventListener("click", () => openModal(ev));
+  ensureEventImages(ev);
+  return item;
 }
 
-async function openModal(ev, isNew) {
-  state.modalOpen = true;
-  state.currentModalUid = ev.uid;
-  document.getElementById("grow-toggle").disabled = true;
-  document.getElementById("step-btn").disabled = true;
+// ---------- modal (enlarged comic cover) ----------
 
-  const { title, text } = eventSubtitleAndTitle(ev);
-  document.getElementById("modal-eyebrow").textContent =
-    ev.type === "hub" ? "New hub detected · Issue #" + ev.issue : "Unlikely alliance · Issue #" + ev.issue;
-  document.getElementById("modal-title").innerHTML = title;
-  document.getElementById("modal-stats").innerHTML = buildModalStatsHTML(ev);
-  document.getElementById("modal-text").textContent = text;
-  document.getElementById("modal-cover").innerHTML = buildComicSVG(ev); // monogram fallback while art loads
-  document.getElementById("modal-overlay").classList.add("open");
+// realDegree 0 has no ratio to take — the character is going from "unconnected"
+// to ev.degree connections, so ev.degree itself is how many times bigger that is.
+function hubGrowthMultiplier(ev) {
+  return ev.realDegree > 0 ? ev.degree / ev.realDegree : ev.degree;
+}
 
-  const ids = ev.type === "hub" ? [ev.id] : [ev.a, ev.b];
-  const images = await Promise.all(ids.map((id) => getCharacterImage(id)));
-  ev.images = images;
-  if (state.currentModalUid === ev.uid) {
-    document.getElementById("modal-cover").innerHTML = buildComicSVG(ev);
+function formatMultiplier(n) {
+  const rounded = Math.round(n * 10) / 10;
+  return rounded % 1 === 0 ? String(rounded) : rounded.toFixed(1);
+}
+
+function buildModalHeadlineHTML(ev) {
+  if (ev.type !== "hub") return "";
+  return (
+    '<span class="modal-headline-num">' + formatMultiplier(hubGrowthMultiplier(ev)) + "&times;</span>" +
+    '<span class="modal-headline-label">bigger than in the real network</span>'
+  );
+}
+
+function buildModalStatsHTML(ev) {
+  if (ev.type === "hub") {
+    return (
+      '<div class="modal-stat"><span>Degree in this universe</span><b>' + ev.degree + "</b></div>" +
+      '<div class="modal-stat"><span>Degree in the real network</span><b>' + ev.realDegree + "</b></div>"
+    );
   }
-
-  if (isNew) addToNewsstand(ev);
+  return (
+    '<div class="modal-stat"><span>Steps apart, this universe</span><b>' + ev.newDist + "</b></div>" +
+    '<div class="modal-stat"><span>Steps apart, real network</span><b>' + (ev.realDist === Infinity ? "unconnected" : ev.realDist) + "</b></div>"
+  );
 }
 
-function closeModalControlsIfIdle() {
-  const disable = state.growing.remainingPool.length === 0;
-  document.getElementById("grow-toggle").disabled = disable;
-  document.getElementById("step-btn").disabled = disable;
+function buildModalText(ev) {
+  if (ev.type === "hub") {
+    return (
+      displayName(ev.name) +
+      " became a hub of this universe on issue #" +
+      ev.issue +
+      ", racking up " +
+      ev.degree +
+      " connections versus just " +
+      ev.realDegree +
+      " in the real Marvel network."
+    );
+  }
+  const realBit = ev.realDist === Infinity ? "completely unconnected" : ev.realDist + " steps apart";
+  return displayName(ev.nameA) + " and " + displayName(ev.nameB) + " got wired directly together on issue #" + ev.issue + " — despite being " + realBit + " in the real network.";
 }
 
-function showNextEvent() {
-  if (!state.pendingEvents.length) return;
-  const ev = state.pendingEvents.shift();
-  openModal(ev, true);
+function openModal(ev) {
+  state.modalUid = ev.uid;
+  const title = ev.type === "hub" ? displayName(ev.name) : displayName(ev.nameA) + " & " + displayName(ev.nameB);
+  document.getElementById("modal-eyebrow").textContent = ev.type === "hub" ? "Hub alert — issue #" + ev.issue : "Unlikely alliance — issue #" + ev.issue;
+  document.getElementById("modal-title").textContent = title;
+  document.getElementById("modal-headline").innerHTML = buildModalHeadlineHTML(ev);
+  document.getElementById("modal-stats").innerHTML = buildModalStatsHTML(ev);
+  document.getElementById("modal-text").textContent = buildModalText(ev);
+  document.getElementById("modal-cover").innerHTML = buildComicSVG(ev);
+  document.getElementById("modal-overlay").classList.add("open");
+  ensureEventImages(ev);
 }
-
-document.getElementById("modal-continue").addEventListener("click", closeModal);
-document.getElementById("modal-overlay").addEventListener("click", (e) => {
-  if (e.target.id === "modal-overlay") closeModal();
-});
 
 function closeModal() {
   document.getElementById("modal-overlay").classList.remove("open");
-  if (state.pendingEvents.length) {
-    showNextEvent();
-    return;
+  state.modalUid = null;
+}
+
+function wireModal() {
+  document.getElementById("modal-close").addEventListener("click", closeModal);
+  document.getElementById("modal-overlay").addEventListener("click", (e) => {
+    if (e.target.id === "modal-overlay") closeModal();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && state.modalUid) closeModal();
+  });
+}
+
+function renderNewsstands(t) {
+  const hubGrid = document.getElementById("hub-newsstand-grid");
+  const visibleHubs = state.hubEvents.filter((ev) => ev.step < t).sort((a, b) => b.step - a.step);
+  hubGrid.innerHTML = "";
+  if (!visibleHubs.length) {
+    hubGrid.innerHTML = '<p class="empty-note">No hubs have emerged yet.</p>';
+  } else {
+    visibleHubs.forEach((ev) => hubGrid.appendChild(buildNewsstandItem(ev)));
   }
-  state.modalOpen = false;
-  closeModalControlsIfIdle();
+
+  const allianceGrid = document.getElementById("alliance-newsstand-grid");
+  const visiblePairs = state.pairEvents.filter((ev) => ev.step < t).sort((a, b) => b.step - a.step);
+  allianceGrid.innerHTML = "";
+  if (!visiblePairs.length) {
+    allianceGrid.innerHTML = '<p class="empty-note">No unlikely alliances yet.</p>';
+  } else {
+    visiblePairs.forEach((ev) => allianceGrid.appendChild(buildNewsstandItem(ev)));
+  }
 }
 
-// ---------- growth loop control ----------
+// ---------- main render: universe state at time t ----------
 
-function tickLoop() {
-  if (!state.modalOpen) growTick();
-}
+// Diff the live cytoscape graph against target index t instead of tearing it
+// down and rebuilding every call — that destroyed node identity/position on
+// every tick (visible as layout "ghosting") and a forced fit() re-zoomed to
+// fit all nodes on every render, fighting any manual pan/zoom. Growing nodes
+// are added incrementally (keeping their positions) and only the nodes past t
+// are removed when scrubbing backward; the view is never auto-fit, so the
+// user can pan/zoom around the graph exactly like before.
+function syncCyToIndex(t, opts) {
+  const prevT = state.renderedT;
 
-function startGrowth() {
-  state.isPlaying = true;
-  clearInterval(state.timerId);
-  state.timerId = setInterval(tickLoop, 1000 / state.speed);
-  document.getElementById("toggle-sub").textContent = "Growing…";
-}
-
-function stopGrowth() {
-  state.isPlaying = false;
-  clearInterval(state.timerId);
-  state.timerId = null;
-  document.getElementById("toggle-sub").textContent = "Paused";
-}
-
-// ---------- wiring ----------
-
-function wireControls() {
-  const growToggle = document.getElementById("grow-toggle");
-  growToggle.addEventListener("change", () => {
-    if (growToggle.checked) startGrowth();
-    else stopGrowth();
-  });
-
-  document.getElementById("step-btn").addEventListener("click", () => {
-    if (state.modalOpen) return;
-    if (state.isPlaying) {
-      growToggle.checked = false;
-      stopGrowth();
+  if (t > prevT) {
+    const toAdd = [];
+    for (let i = prevT; i < t; i++) {
+      const step = state.timeline[i];
+      toAdd.push({ group: "nodes", data: { id: "n" + i, label: displayName(step.name), degree: 0 } });
     }
-    growTick();
+    for (let i = prevT; i < t; i++) {
+      state.timeline[i].targetIndices.forEach((tg) => {
+        toAdd.push({ group: "edges", data: { id: "e" + i + "_" + tg, source: "n" + i, target: "n" + tg } });
+      });
+    }
+    state.cy.add(toAdd);
+  } else if (t < prevT) {
+    const toRemove = [];
+    for (let i = t; i < prevT; i++) toRemove.push("#n" + i);
+    if (toRemove.length) state.cy.remove(toRemove.join(","));
+  }
+  state.renderedT = t;
+
+  // Degree can change for already-present nodes too (later arrivals attach
+  // back to them), so refresh degree + hub-flag on everything still present.
+  const degree = new Array(t).fill(0);
+  for (let i = 0; i < t; i++) {
+    state.timeline[i].targetIndices.forEach((tg) => {
+      degree[i]++;
+      degree[tg]++;
+    });
+  }
+  const hubIndexSet = new Set(state.hubEvents.filter((ev) => ev.step < t).map((ev) => ev.index));
+  for (let i = 0; i < t; i++) {
+    const el = state.cy.getElementById("n" + i);
+    if (!el || !el.length) continue;
+    el.data("degree", degree[i]);
+    if (hubIndexSet.has(i)) el.addClass("hub-flag");
+    else el.removeClass("hub-flag");
+  }
+
+  document.getElementById("cy-empty").style.display = t === 0 ? "flex" : "none";
+
+  const grew = t > prevT;
+  const jumped = t - prevT > 1; // scrubbing ahead adds several nodes in one call — always lay those out, don't wait for the periodic tick below
+  let layout = null;
+  if (grew && (jumped || t < 60 || t % 3 === 0)) {
+    layout = state.cy.layout({ name: "cose", animate: opts.animate !== false, animationDuration: 350, randomize: false, fit: false, nodeRepulsion: 6000, idealEdgeLength: 70 });
+  }
+
+  // Keep the current single biggest hub anchored in the middle of the view.
+  // The cose layout recomputes the whole graph's positions as it grows, so
+  // without an anchor the content drifts under a viewport that isn't moving
+  // — this gives growth a stable center to radiate out from instead. Only
+  // pan is touched, so any zoom level the user has set is left alone.
+  //
+  // A layout with animate:true computes final positions synchronously but
+  // only *tweens* node.position() to them over the animation, so centering
+  // immediately after starting it uses a stale, pre-animation position and
+  // drifts off by however far that run moved the hub (more visible the
+  // further the user is zoomed in). Centering now covers live tracking
+  // while ticks keep coming; the debounced settle timer below guarantees
+  // one more correct recenter ~400ms after the *last* render call (i.e.
+  // once growth actually stops, whether paused or between drag events),
+  // using the final settled position instead of racing any one layout's
+  // own animation-complete event.
+  centerOnCurrentHub();
+  if (layout) layout.run();
+  clearTimeout(state.centerSettleTimer);
+  state.centerSettleTimer = setTimeout(centerOnCurrentHub, 400);
+}
+
+function centerOnCurrentHub() {
+  const nodes = state.cy.nodes();
+  if (!nodes.length) return;
+  let best = null;
+  let bestDeg = -1;
+  nodes.forEach((n) => {
+    const d = n.data("degree") || 0;
+    if (d > bestDeg) {
+      bestDeg = d;
+      best = n;
+    }
   });
+  if (best) state.cy.center(best);
+}
 
-  document.getElementById("reset-btn").addEventListener("click", resetUniverse);
+function renderAtIndex(t, opts) {
+  opts = opts || {};
+  t = Math.max(0, Math.min(state.N, Math.round(t)));
+  state.currentT = t;
 
-  document.getElementById("speed-range").addEventListener("input", (e) => {
-    state.speed = parseFloat(e.target.value);
-    document.getElementById("speed-val").textContent = state.speed.toFixed(1);
-    if (state.isPlaying) startGrowth();
-  });
+  syncCyToIndex(t, opts);
+  const { nodesPresent, degree } = replayUpTo(t);
 
-  document.getElementById("m-segmented").addEventListener("click", (e) => {
-    const btn = e.target.closest("button[data-m]");
-    if (!btn) return;
-    document.querySelectorAll("#m-segmented button").forEach((b) => b.classList.remove("active"));
-    btn.classList.add("active");
-    state.m = parseInt(btn.dataset.m, 10);
-  });
+  const pct = state.N ? (t / state.N) * 100 : 0;
+  document.getElementById("timebar-fill").style.width = pct + "%";
+  document.getElementById("timebar-thumb").style.left = pct + "%";
+  document.getElementById("timebar-thumb").setAttribute("aria-valuenow", String(t));
+  document.getElementById("timebar-readout").textContent = t + " / " + state.N + " characters arrived" + (t >= state.N && state.N > 0 ? " — complete!" : "");
 
-  document.getElementById("mode-segmented").addEventListener("click", (e) => {
-    const btn = e.target.closest("button[data-mode]");
-    if (!btn) return;
-    document.querySelectorAll("#mode-segmented button").forEach((b) => b.classList.remove("active"));
-    btn.classList.add("active");
-    state.mode = btn.dataset.mode;
+  renderGrowingHubList(nodesPresent, degree, t);
+  renderNewsstands(t);
+}
+
+function scheduleRenderAtIndex(t, opts) {
+  if (state.renderRAF) cancelAnimationFrame(state.renderRAF);
+  state.renderRAF = requestAnimationFrame(() => {
+    state.renderRAF = null;
+    renderAtIndex(t, opts);
   });
 }
 
-function resetUniverse() {
-  stopGrowth();
-  document.getElementById("grow-toggle").checked = false;
-  state.cy.elements().remove();
-  state.growing.nodes = new Map();
-  state.growing.endpointPool = [];
-  state.growing.issue = 0;
-  state.growing.alertedHubs = new Set();
-  state.growing.alertedPairs = new Set();
-  state.growing.remainingPool = shuffle(Array.from(state.realNodes.keys()));
-  state.pendingEvents = [];
-  state.newsstand = [];
-  document.getElementById("newsstand-grid").innerHTML = "";
-  document.getElementById("newsstand-panel").style.display = "none";
-  document.getElementById("complete-banner").style.display = "none";
-  document.getElementById("cy-empty").style.display = "flex";
-  document.getElementById("grow-toggle").disabled = false;
-  document.getElementById("step-btn").disabled = false;
-  updateStats();
-  renderGrowingHubList();
+// ---------- play / pause ----------
+
+function setPlayButtonState(playing) {
+  const btn = document.getElementById("play-btn");
+  btn.innerHTML = playing ? "&#10074;&#10074;" : "&#9654;";
+  btn.setAttribute("aria-label", playing ? "Pause" : "Play");
+  btn.setAttribute("aria-pressed", String(playing));
+}
+
+function startPlaying() {
+  if (state.currentT >= state.N) state.currentT = 0;
+  state.playing = true;
+  setPlayButtonState(true);
+  clearInterval(state.playTimer);
+  state.playTimer = setInterval(() => {
+    const next = state.currentT + 1;
+    if (next >= state.N) {
+      renderAtIndex(state.N);
+      stopPlaying();
+      return;
+    }
+    renderAtIndex(next);
+  }, SPEED_LEVELS_MS[state.speedLevel]);
+}
+
+function stopPlaying() {
+  state.playing = false;
+  setPlayButtonState(false);
+  clearInterval(state.playTimer);
+  state.playTimer = null;
+}
+
+function togglePlay() {
+  if (state.playing) stopPlaying();
+  else startPlaying();
+}
+
+function setSpeedLevel(level) {
+  state.speedLevel = level;
+  const medBtn = document.getElementById("speed-btn-med");
+  const fastBtn = document.getElementById("speed-btn-fast");
+  medBtn.classList.toggle("active", level === 1);
+  medBtn.setAttribute("aria-pressed", String(level === 1));
+  fastBtn.classList.toggle("active", level === 2);
+  fastBtn.setAttribute("aria-pressed", String(level === 2));
+  if (state.playing) startPlaying(); // restart the timer at the new speed, keeps currentT
+}
+
+function toggleSpeedLevel(level) {
+  setSpeedLevel(state.speedLevel === level ? 0 : level);
+}
+
+// ---------- time bar wiring ----------
+
+function wireTimebar() {
+  const track = document.getElementById("timebar-track");
+  const thumb = document.getElementById("timebar-thumb");
+  const playBtn = document.getElementById("play-btn");
+
+  playBtn.addEventListener("click", togglePlay);
+
+  document.getElementById("speed-btn-med").addEventListener("click", () => toggleSpeedLevel(1));
+  document.getElementById("speed-btn-fast").addEventListener("click", () => toggleSpeedLevel(2));
+
+  function tFromClientX(clientX) {
+    const rect = track.getBoundingClientRect();
+    const frac = rect.width ? Math.max(0, Math.min(1, (clientX - rect.left) / rect.width)) : 0;
+    return Math.round(frac * state.N);
+  }
+
+  let dragging = false;
+
+  function onPointerDown(e) {
+    dragging = true;
+    if (state.playing) stopPlaying();
+    if (thumb.setPointerCapture && e.pointerId != null) {
+      try {
+        thumb.setPointerCapture(e.pointerId);
+      } catch (err) {}
+    }
+    renderAtIndex(tFromClientX(e.clientX), { animate: false });
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  function onPointerMove(e) {
+    if (!dragging) return;
+    scheduleRenderAtIndex(tFromClientX(e.clientX), { animate: false });
+  }
+
+  function onPointerUp() {
+    if (!dragging) return;
+    dragging = false;
+    renderAtIndex(state.currentT, { animate: true });
+  }
+
+  thumb.addEventListener("pointerdown", onPointerDown);
+  track.addEventListener("pointerdown", onPointerDown);
+  window.addEventListener("pointermove", onPointerMove);
+  window.addEventListener("pointerup", onPointerUp);
+
+  thumb.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight" || e.key === "ArrowUp") {
+      renderAtIndex(state.currentT + 1);
+      e.preventDefault();
+    } else if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
+      renderAtIndex(state.currentT - 1);
+      e.preventDefault();
+    }
+  });
+}
+
+// ---------- boot ----------
+
+function showFallback() {
+  document.getElementById("fallback-panel").style.display = "block";
+  document.getElementById("main-content").style.display = "none";
 }
 
 async function boot() {
@@ -744,21 +892,34 @@ async function boot() {
     initCytoscape();
     await loadData();
     renderRealHubList();
-    state.growing.remainingPool = shuffle(Array.from(state.realNodes.keys()));
-    wireControls();
-    updateStats();
-    renderGrowingHubList();
 
-    document.getElementById("grow-toggle").disabled = false;
-    document.getElementById("step-btn").disabled = false;
-    document.getElementById("reset-btn").disabled = false;
-    document.getElementById("toggle-sub").textContent = "Paused";
-    document.getElementById("graph-status").textContent = "0 / 303 characters · 0 links";
+    const raw = sessionStorage.getItem("marvelGrowUniverse");
+    if (!raw) return showFallback();
+
+    let parsed;
+    try {
+      parsed = JSON.parse(raw);
+    } catch (err) {
+      return showFallback();
+    }
+    if (!parsed || !Array.isArray(parsed.edges) || !Array.isArray(parsed.nodeOrder) || !parsed.nodeOrder.length) {
+      return showFallback();
+    }
+
+    state.universe = parsed;
+    buildTimeline();
+
+    document.getElementById("universe-label").textContent = " " + (parsed.uniName || "Unknown universe");
+    document.getElementById("fallback-panel").style.display = "none";
+    document.getElementById("main-content").style.display = "block";
+
+    wireTimebar();
+    renderAtIndex(0, { animate: false });
   } catch (err) {
-    document.getElementById("graph-status").textContent = "Error: " + err.message;
-    document.getElementById("toggle-sub").textContent = "Failed to load data";
     console.error(err);
+    showFallback();
   }
 }
 
+wireModal();
 boot();
