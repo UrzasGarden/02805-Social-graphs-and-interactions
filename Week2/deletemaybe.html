@@ -210,7 +210,7 @@
     <nav class="nav">
       <a href="../index.html#overview">Overview</a>
       <a href="../Week1/jonathan-week1.html">Week 1</a>
-      <a href="week2-jona.html" class="active">Week 2</a>
+      <a href="week2.html" class="active">Week 2</a>
     </nav>
   </header>
 
@@ -220,10 +220,14 @@
   </section>
 
   <div class="sticky-action-bar">
-    <button class="btn-pow" onclick="generateUniverse()"> GENERATE UNIVERSE </button>
+    <button class="btn-pow" onclick="generateUniverse()"> GENERATE NEW UNIVERSE </button>
     <div class="uni-label-wrap">
       <span id="ba-universe-label" class="uni-label" style="visibility:hidden;"></span>
     </div>
+  </div>
+
+  <div style="text-align:center; margin: -16px auto 40px;">
+    <a href="growuniverse.html" class="btn-pow" style="text-decoration:none; background: var(--yellow); color: #000;" onmouseover="this.style.background='#facc15'" onmouseout="this.style.background='var(--yellow)'">SEE THE UNIVERSE GROW</a>
   </div>
 
   <div id="universe-forge" style="display:none; max-width: 650px; margin: 0 auto 40px;">
@@ -776,14 +780,27 @@ async function generateUniverse() {
     "The Next-Men", "The Text-Men", "The Complex-Men", "The Perplex-Men", "Generation X-hausted",
     "The Uncanny Why-Men", "The Astonishing Z-Men"
   ];
-  const PARODY_TEAMS = [
-    "The Helpers", "The Adequate Four", "Guardians of the Neighborhood", "The Inhumans (but like, socially)", 
+  const PARODY_TEAMS_GENERIC = [
+    "The Helpers", "Guardians of the Neighborhood", "The Inhumans (but like, socially)",
     "The Midnight Sons-in-Law", "The Web-Runners", "Illuminati (Book Club Edition)",
-    "The Mediocre Four", "The Fantastic Five (Plus Dave)", "Guardians of the Wi-Fi Password", 
-    "The Midnight Snacks", "The Sinister Six (Minus Two)", "The Thunder-Bolts (From Ikea)", 
-    "The Runaways (from Responsibility)", "The New Mutants (Now Slightly Older)", "The West Coast Revengers", 
+    "Guardians of the Wi-Fi Password", "The Midnight Snacks", "The Thunder-Bolts (From Ikea)",
+    "The Runaways (from Responsibility)", "The New Mutants (Now Slightly Older)", "The West Coast Revengers",
     "The Web-Warriors (Dial-Up Edition)", "The Defenders of the Tri-State Area", "The Brotherhood of Mild Inconveniences"
   ];
+  const PARODY_TEAMS_NUMBERED = {
+    3: ["The Terrific Trio", "The Odd Threesome", "The Not-Quite-A-Team Three"],
+    4: ["The Adequate Four", "The Mediocre Four", "The Fantastic Four (Understudies)"],
+    5: ["The Fantastic Five (Plus Dave)", "The High Five", "The Adequate Four"],
+    6: ["The Sinister Six (All Present)", "The Sensible Six"],
+    7: ["The Magnificent Seven (Discount Version)", "The Lucky Seven"]
+  };
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+  function pickTeamName(order, totalSize) {
+    if (order === 0) return pick(AVENGERS_VARIANTS);
+    if (order === 1) return pick(XMEN_VARIANTS);
+    const numbered = PARODY_TEAMS_NUMBERED[totalSize] || [];
+    return pick(numbered.concat(PARODY_TEAMS_GENERIC));
+  }
 
   const drafted = new Set();
   const squads = [];
@@ -797,27 +814,20 @@ async function generateUniverse() {
     const available = connections.filter(c => !drafted.has(c));
     
     if (available.length >= 2) {
-      const maxToDraft = Math.min(available.length, 9);
+      const maxToDraft = Math.min(available.length, 6);
       const minToDraft = 2;
       const teamSize = Math.floor(Math.random() * (maxToDraft - minToDraft + 1)) + minToDraft;
-      
+
       const rosterIds = available.sort(()=>Math.random()-.5).slice(0, teamSize);
-      
+
       drafted.add(hubId);
       rosterIds.forEach(r => drafted.add(r));
-      
+
       const leaderName = nameMap[hubId].name.split('(')[0].trim();
       const rosterNames = rosterIds.map(r => nameMap[r].name.split('(')[0].trim());
-      
-      let teamName = "";
-      if (squads.length === 0) {
-        teamName = AVENGERS_VARIANTS.sort(()=>Math.random()-.5)[0];
-      } else if (squads.length === 1) {
-        teamName = XMEN_VARIANTS.sort(()=>Math.random()-.5)[0];
-      } else {
-        teamName = PARODY_TEAMS.sort(()=>Math.random()-.5)[0];
-      }
-      
+
+      const teamName = pickTeamName(squads.length, rosterIds.length + 1);
+
       squads.push({
         teamName: teamName,
         leader: leaderName,
