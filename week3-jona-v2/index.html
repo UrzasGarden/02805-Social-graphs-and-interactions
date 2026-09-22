@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Graphle — Network Deduction Game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ─── Global Nav ────────────────────────────────────────────── -->
+  <nav class="global-nav">
+    <div class="global-nav-brand">SOCIAL GRAPHS AND INTERACTIONS</div>
+    <div class="global-nav-links">
+      <a href="../index.html">Overview</a>
+      <a href="../Week1/jonathan-week1.html">Week 1</a>
+      <a href="../Week2/week2.html">Week 2</a>
+      <a href="index.html" class="active">Week 3</a>
+    </div>
+  </nav>
+
+  <!-- ─── Top Nav ─────────────────────────────────────────────── -->
+  <nav id="navbar">
+    <button id="btn-help" class="nav-icon" title="How to Play">?</button>
+    <div class="nav-title">
+      <h1>GRAPHLE</h1>
+    </div>
+    <div class="nav-right">
+      <span id="node-count" class="badge"></span>
+      <button id="btn-new-game" class="nav-icon" title="New Game">↻</button>
+    </div>
+  </nav>
+
+  <!-- ─── How-to-Play Modal ──────────────────────────────────── -->
+  <div id="help-overlay" class="overlay hidden">
+    <div class="modal help-modal">
+      <button class="modal-close" id="help-close">✕</button>
+      <h2>How To Play</h2>
+      <p>Guess the <strong>mystery character</strong> in 6 tries using network topology clues.</p>
+
+      <div class="help-section">
+        <h3>After each guess, 4 tiles reveal clues:</h3>
+        <div class="help-tiles">
+          <div class="help-tile-row">
+            <div class="mini-tile dist-0">2</div>
+            <span><strong>Distance</strong> — BFS shortest path (hops) from your guess to the target.
+              <em class="color-key">🟩 = 0 (found!), 🟨 = 1, 🟧 = 2, 🟥 = 3+</em></span>
+          </div>
+          <div class="help-tile-row">
+            <div class="mini-tile neutral">⬆️</div>
+            <span><strong>Degree Centrality</strong> — Arrow tells you if the target's degree is higher ⬆️ or lower ⬇️ than your guess.</span>
+          </div>
+          <div class="help-tile-row">
+            <div class="mini-tile neutral">⬇️</div>
+            <span><strong>Betweenness Centrality</strong> — Same arrow logic for betweenness.</span>
+          </div>
+          <div class="help-tile-row">
+            <div class="mini-tile neutral">4</div>
+            <span><strong>Shared Neighbors</strong> — How many neighbors your guess and the target have in common.</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="help-hint">💡 Use centrality arrows to narrow down, and shared neighbors to triangulate!</p>
+    </div>
+  </div>
+
+  <!-- ─── Main Game Area ──────────────────────────────────────── -->
+  <main id="game">
+
+    <!-- Graph Visualization -->
+    <div id="graph-container">
+      <canvas id="graph-canvas"></canvas>
+      <div id="graph-legend">
+        <span class="gl-item"><span class="gl-dot gl-target"></span>Target (?)</span>
+        <span class="gl-item"><span class="gl-dot gl-guess-close"></span>Close guess</span>
+        <span class="gl-item"><span class="gl-dot gl-guess-far"></span>Far guess</span>
+        <span class="gl-item"><span class="gl-line"></span>BFS path</span>
+      </div>
+      <div id="graph-loading">Computing layout…</div>
+    </div>
+
+    <!-- Guess Board -->
+    <div id="board-container">
+      <div id="board"></div>
+    </div>
+    
+    <!-- Toast Notifications -->
+    <div id="toast-container"></div>
+    <div id="hover-tooltip" class="hidden"></div>
+
+    <!-- Search Bar -->
+    <div id="input-area">
+      <div class="search-wrapper">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Type a character name…"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <ul id="autocomplete-list" class="hidden"></ul>
+      </div>
+      <button id="btn-guess" disabled>GUESS</button>
+    </div>
+    <p id="guess-label">Guess <span id="guess-num">1</span> of 6</p>
+  </main>
+
+  <!-- ─── Result Modal (Win / Lose) ──────────────────────────── -->
+  <div id="result-overlay" class="overlay hidden">
+    <div class="modal result-modal">
+      <div id="result-emoji"></div>
+      <h2 id="result-title"></h2>
+      <p id="result-body"></p>
+      <div id="result-stats"></div>
+      <button id="result-btn" class="btn-primary">Play Again</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
