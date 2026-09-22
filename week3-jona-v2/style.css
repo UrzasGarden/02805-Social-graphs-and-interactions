@@ -86,9 +86,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 12px 16px 24px;
+  width: 100%;
+  max-width: 680px;
   gap: 10px;
-  overflow-y: auto;
 }
 
 /* ── Graph Visualization ───────────────────────────────────────── */
@@ -720,5 +720,78 @@ body {
     flex-direction: column;
     padding: 12px 16px;
     gap: 12px;
+  }
+}
+
+/* ── Page Layout (Sidebar + Game) ──────────────────────────────── */
+.page-layout {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 32px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  flex: 1;
+}
+
+.sidebar-help {
+  width: 280px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border: 1px solid var(--tile-empty);
+  border-radius: 12px;
+  padding: 20px;
+  position: sticky;
+  top: 24px;
+}
+
+.sidebar-help h2 {
+  margin-bottom: 8px;
+  font-size: 1.25rem;
+}
+
+.sidebar-help p {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+}
+
+.sidebar-help .help-section h3 {
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+.sidebar-help .help-section ul {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin-left: 20px;
+  margin-bottom: 16px;
+}
+
+.sidebar-help .help-hint {
+  background: rgba(124, 77, 255, 0.15);
+  border: 1px solid rgba(124, 77, 255, 0.4);
+  padding: 12px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.85rem;
+  margin-top: 16px;
+  margin-bottom: 0;
+}
+
+@media (max-width: 900px) {
+  .page-layout {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  .sidebar-help {
+    width: 100%;
+    max-width: 680px;
+    position: static;
   }
 }

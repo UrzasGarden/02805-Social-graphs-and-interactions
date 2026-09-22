@@ -24,7 +24,7 @@
 
   <!-- ─── Top Nav ─────────────────────────────────────────────── -->
   <nav id="navbar">
-    <button id="btn-help" class="nav-icon" title="How to Play">?</button>
+    <div style="width: 36px"></div>
     <div class="nav-title">
       <h1>GRAPHLE</h1>
     </div>
@@ -34,42 +34,34 @@
     </div>
   </nav>
 
-  <!-- ─── How-to-Play Modal ──────────────────────────────────── -->
-  <div id="help-overlay" class="overlay hidden">
-    <div class="modal help-modal">
-      <button class="modal-close" id="help-close">✕</button>
+  <!-- ─── Page Layout ─────────────────────────────────────────── -->
+  <div class="page-layout">
+    
+    <!-- ─── Sidebar Help ────────────────────────────────────────── -->
+    <aside class="sidebar-help">
       <h2>How To Play</h2>
-      <p>Guess the <strong>mystery character</strong> in 6 tries using network topology clues.</p>
+      <p>Guess the <strong>mystery Marvel character</strong> in 6 tries.</p>
 
-      <div class="help-section">
-        <h3>After each guess, 4 tiles reveal clues:</h3>
-        <div class="help-tiles">
-          <div class="help-tile-row">
-            <div class="mini-tile dist-0">2</div>
-            <span><strong>Distance</strong> — BFS shortest path (hops) from your guess to the target.
-              <em class="color-key">🟩 = 0 (found!), 🟨 = 1, 🟧 = 2, 🟥 = 3+</em></span>
-          </div>
-          <div class="help-tile-row">
-            <div class="mini-tile neutral">⬆️</div>
-            <span><strong>Degree Centrality</strong> — Arrow tells you if the target's degree is higher ⬆️ or lower ⬇️ than your guess.</span>
-          </div>
-          <div class="help-tile-row">
-            <div class="mini-tile neutral">⬇️</div>
-            <span><strong>Betweenness Centrality</strong> — Same arrow logic for betweenness.</span>
-          </div>
-          <div class="help-tile-row">
-            <div class="mini-tile neutral">4</div>
-            <span><strong>Shared Neighbors</strong> — How many neighbors your guess and the target have in common.</span>
-          </div>
-        </div>
+      <div class="help-section" style="text-align: left;">
+        <h3 style="margin-top: 10px;">The Clues</h3>
+        <ul style="color: var(--text-dim); font-size: 0.85rem; line-height: 1.5; margin-left: 20px; margin-bottom: 16px;">
+          <li><strong>Distance:</strong> Network hops to the target.</li>
+          <li><strong>Arrows:</strong> Show if the target's Degree, Betweenness, and Closeness are higher ⬆️ or lower ⬇️.</li>
+        </ul>
+        
+        <h3>The Board</h3>
+        <ul style="color: var(--text-dim); font-size: 0.85rem; line-height: 1.5; margin-left: 20px; margin-bottom: 16px;">
+          <li><strong>Grey dots:</strong> Eliminated characters.</li>
+          <li><strong>Purple dots:</strong> Possible answers left.</li>
+          <li><strong>Dot size:</strong> Bigger dots have more connections (higher Degree).</li>
+        </ul>
       </div>
 
-      <p class="help-hint">💡 Use centrality arrows to narrow down, and shared neighbors to triangulate!</p>
-    </div>
-  </div>
+      <p class="help-hint">💡 <strong>Pro Tip:</strong> Hover over the purple dots to see their exact stats before you guess!</p>
+    </aside>
 
-  <!-- ─── Main Game Area ──────────────────────────────────────── -->
-  <main id="game">
+    <!-- ─── Main Game Area ──────────────────────────────────────── -->
+    <main id="game">
 
     <!-- Graph Visualization -->
     <div id="graph-container">
@@ -98,7 +90,7 @@
         <input
           type="text"
           id="search-input"
-          placeholder="Type a character name…"
+          placeholder="Type a Marvel character…"
           autocomplete="off"
           spellcheck="false"
         />
@@ -108,6 +100,7 @@
     </div>
     <p id="guess-label">Guess <span id="guess-num">1</span> of 6</p>
   </main>
+  </div>
 
   <!-- ─── Result Modal (Win / Lose) ──────────────────────────── -->
   <div id="result-overlay" class="overlay hidden">

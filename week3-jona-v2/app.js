@@ -55,9 +55,7 @@ const nodeCount      = document.getElementById("node-count");
 const toastContainer = document.getElementById("toast-container");
 const hoverTooltip   = document.getElementById("hover-tooltip");
 
-const helpOverlay    = document.getElementById("help-overlay");
-const btnHelp        = document.getElementById("btn-help");
-const helpClose      = document.getElementById("help-close");
+
 
 const resultOverlay  = document.getElementById("result-overlay");
 const resultEmoji    = document.getElementById("result-emoji");
@@ -608,7 +606,6 @@ function startNewGame() {
   searchInput.disabled = false;
   btnGuess.disabled = true;
   hideOverlay(resultOverlay);
-  hideOverlay(helpOverlay);
   updateGuessLabel();
   renderEmptyBoard();
   startRenderLoop();
@@ -1090,11 +1087,7 @@ function endGame(won) {
 function showOverlay(el) { el.classList.remove("hidden"); }
 function hideOverlay(el) { el.classList.add("hidden"); }
 
-btnHelp.addEventListener("click", () => showOverlay(helpOverlay));
-helpClose.addEventListener("click", () => hideOverlay(helpOverlay));
-helpOverlay.addEventListener("click", (e) => {
-  if (e.target === helpOverlay) hideOverlay(helpOverlay);
-});
+
 resultOverlay.addEventListener("click", (e) => {
   if (e.target === resultOverlay) hideOverlay(resultOverlay);
 });
