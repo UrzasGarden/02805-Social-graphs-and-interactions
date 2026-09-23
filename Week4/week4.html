@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Week 4 — Communities &amp; Backbones</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="week4.css" />
+</head>
+<body>
+
+  <!-- ─── Global Nav ────────────────────────────────────────────── -->
+  <nav class="global-nav">
+    <div class="global-nav-brand">SOCIAL GRAPHS AND INTERACTIONS</div>
+    <div class="global-nav-links">
+      <a href="../index.html">Overview</a>
+      <a href="../Week1/jonathan-week1.html">Week 1</a>
+      <a href="../Week2/week2.html">Week 2</a>
+      <a href="../Week3/week3.html">Week 3</a>
+      <a href="week4.html" class="active">Week 4</a>
+    </div>
+  </nav>
+
+  <!-- ─── Page Header ─────────────────────────────────────────── -->
+  <header class="page-header">
+    <span class="eyebrow">Week 4 · Communities &amp; backbones</span>
+    <h1>Disparity filter &amp; cutting bridges</h1>
+    <p>
+      1,444 pre-1900 philosophers from English Wikipedia, linked by article references
+      (weight = link count, summed over both directions). Drag <strong>α</strong> to extract
+      the statistically significant backbone with the disparity filter, then cut the
+      backbone's edges in order of edge betweenness — Girvan&ndash;Newman style — to watch it
+      fall apart into communities. Nodes are colored by Louvain community (computed once on
+      the full unweighted network) so you can see how the two views of "community" agree.
+    </p>
+  </header>
+
+  <!-- ─── App Layout ──────────────────────────────────────────── -->
+  <div class="app-layout">
+
+    <!-- ─── Left Sidebar: Disparity Filter ───────────────────── -->
+    <aside class="sidebar">
+      <div class="panel">
+        <h2><span class="step-num">1</span> Disparity filter</h2>
+        <p class="sub">
+          Keeps a link if it is a statistically significant share of either endpoint's
+          strength: (1&minus;p<sub>ij</sub>)<sup>k<sub>i</sub>&minus;1</sup> &lt; α.
+          Lower α → stricter → fewer, stronger links survive.
+        </p>
+
+        <div class="slider-row">
+          <input type="range" id="alpha-slider" min="0.01" max="1" step="0.01" value="0.2" />
+          <span class="alpha-value" id="alpha-value">0.20</span>
+        </div>
+
+        <div class="preset-row" id="preset-row">
+          <button class="preset-btn" data-alpha="0.05">0.05</button>
+          <button class="preset-btn" data-alpha="0.1">0.10</button>
+          <button class="preset-btn active" data-alpha="0.2">0.20</button>
+          <button class="preset-btn" data-alpha="0.3">0.30</button>
+          <button class="preset-btn" data-alpha="0.5">0.50</button>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-box">
+            <div class="stat-label">Nodes kept</div>
+            <div class="stat-value big" id="stat-nodes">—</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Edges kept</div>
+            <div class="stat-value big" id="stat-edges">—</div>
+          </div>
+        </div>
+
+        <div class="caption-box" id="filter-caption">Loading network…</div>
+
+        <div class="layout-toggle">
+          <button id="layout-fixed" class="active">Fixed full-map layout</button>
+          <button id="layout-backbone">Reflow backbone only</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2 style="font-size:0.85rem; color: var(--muted);">Legend — Louvain community</h2>
+        <p class="sub" style="margin-bottom:8px;">Computed once on the full unweighted network.</p>
+        <div class="legend-list" id="legend-list"></div>
+      </div>
+    </aside>
+
+    <!-- ─── Center: Graph Canvas ──────────────────────────────── -->
+    <main class="panel graph-panel">
+      <div class="graph-toolbar">
+        <span id="toolbar-title">Backbone at α = 0.20</span>
+        <span class="hint">
+          <span>scroll: zoom</span>
+          <span>drag: pan</span>
+          <span>drag node: reposition</span>
+        </span>
+      </div>
+      <div id="graph-container">
+        <canvas id="graph-canvas"></canvas>
+        <div id="graph-loading">Loading network &amp; computing layout…</div>
+        <div id="hover-tooltip" class="hidden"></div>
+        <div class="zoom-controls">
+          <button id="zoom-in" title="Zoom in">+</button>
+          <button id="zoom-out" title="Zoom out">&minus;</button>
+          <button id="zoom-reset" title="Reset view">⤾</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- ─── Right Sidebar: Bridge Cutting ─────────────────────── -->
+    <aside class="sidebar">
+      <div class="panel">
+        <h2><span class="step-num">2</span> Cut bridges</h2>
+        <p class="sub">
+          Runs on the <strong>current backbone</strong> from step 1. Each step recomputes
+          unweighted edge betweenness (Brandes' algorithm) on the remaining edges and removes
+          the highest-scoring one — the classic Girvan&ndash;Newman step.
+        </p>
+
+        <div class="btn-row">
+          <button class="btn" id="btn-cut-one">Cut 1 bridge</button>
+          <button class="btn secondary" id="btn-cut-n">Cut N</button>
+          <button class="btn danger" id="btn-reset-cuts">Reset cuts</button>
+        </div>
+
+        <div class="num-input-row">
+          <label for="cut-n-input">N =</label>
+          <input type="number" id="cut-n-input" min="1" max="200" value="10" />
+          <button class="btn secondary" id="btn-stop-auto" disabled>Stop</button>
+        </div>
+
+        <div class="components-readout">
+          <span class="big-num" id="stat-components">1</span>
+          <span class="lbl">connected components<br />among backbone nodes</span>
+        </div>
+
+        <svg id="sparkline" viewBox="0 0 280 46" preserveAspectRatio="none"></svg>
+
+        <div class="cut-log" id="cut-log">
+          <div class="cut-log-empty">No bridges cut yet.</div>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="week4.js"></script>
+</body>
+</html>
