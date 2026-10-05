@@ -1,0 +1,444 @@
+{
+ "Spider-Man": {
+  "node_id": "Spider-Man",
+  "target_words": 1365,
+  "ok": true,
+  "error": null,
+  "clean_words": 1361,
+  "ratio": 0.997,
+  "headings": [
+   "Creation and development",
+   "1960s and 1970s",
+   "1980s and 1990s",
+   "2000s and 2010s"
+  ]
+ },
+ "She-Hulk": {
+  "node_id": "She-Hulk",
+  "target_words": 1439,
+  "ok": true,
+  "error": null,
+  "clean_words": 1405,
+  "ratio": 0.976,
+  "headings": [
+   "Creation",
+   "1980s",
+   "1990s and 2000s",
+   "2010s and 2020s",
+   "Origin",
+   "Avengers and Fantastic Four"
+  ]
+ },
+ "Quasar__character_": {
+  "node_id": "Quasar_(character)",
+  "target_words": 973,
+  "ok": true,
+  "error": null,
+  "clean_words": 1022,
+  "ratio": 1.05,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions",
+   "In other media"
+  ]
+ },
+ "Black_Widow__Natasha_Romanova_": {
+  "node_id": "Black_Widow_(Natasha_Romanova)",
+  "target_words": 1403,
+  "ok": true,
+  "error": null,
+  "clean_words": 1429,
+  "ratio": 1.019,
+  "headings": [
+   "1960s",
+   "1970s",
+   "1980s and 1990s",
+   "2000s",
+   "2010s and 2020s"
+  ]
+ },
+ "Black_Cat__Marvel_Comics_": {
+  "node_id": "Black_Cat_(Marvel_Comics)",
+  "target_words": 1477,
+  "ok": true,
+  "error": null,
+  "clean_words": 1352,
+  "ratio": 0.915,
+  "headings": [
+   "Publication history",
+   "Fictional character biography"
+  ]
+ },
+ "Deathlok": {
+  "node_id": "Deathlok",
+  "target_words": 1441,
+  "ok": true,
+  "error": null,
+  "clean_words": 1493,
+  "ratio": 1.036,
+  "headings": [
+   "Publication history",
+   "Luther Manning",
+   "John Kelly",
+   "Michael Collins"
+  ]
+ },
+ "Misty_Knight": {
+  "node_id": "Misty_Knight",
+  "target_words": 1487,
+  "ok": true,
+  "error": null,
+  "clean_words": 1322,
+  "ratio": 0.889,
+  "headings": [
+   "Publication history",
+   "Early life",
+   "Iron Fist and the X-Men",
+   "Daughters of the Dragon",
+   "\"Civil War\" and Heroes for Hire"
+  ]
+ },
+ "Black_Bolt": {
+  "node_id": "Black_Bolt",
+  "target_words": 1486,
+  "ok": true,
+  "error": null,
+  "clean_words": 1500,
+  "ratio": 1.009,
+  "headings": [
+   "Publication history",
+   "Fictional character biography"
+  ]
+ },
+ "Mockingbird__Marvel_Comics_": {
+  "node_id": "Mockingbird_(Marvel_Comics)",
+  "target_words": 1403,
+  "ok": true,
+  "error": null,
+  "clean_words": 1344,
+  "ratio": 0.958,
+  "headings": [
+   "Publication history",
+   "Fictional character biography"
+  ]
+ },
+ "Moondragon": {
+  "node_id": "Moondragon",
+  "target_words": 1445,
+  "ok": true,
+  "error": null,
+  "clean_words": 1475,
+  "ratio": 1.021,
+  "headings": [
+   "Publication history",
+   "Origin",
+   "Thanos and the Avengers",
+   "Ba-Bani and the Defenders",
+   "Infinity Watch",
+   "Captain Marvel and Phyla-Vell",
+   "\"Annihilation\" and death"
+  ]
+ },
+ "Rocket_Raccoon": {
+  "node_id": "Rocket_Raccoon",
+  "target_words": 1472,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Captain_Marvel__Marvel_Comics_": {
+  "node_id": "Captain_Marvel_(Marvel_Comics)",
+  "target_words": 1500,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Vulcan__Marvel_Comics_": {
+  "node_id": "Vulcan_(Marvel_Comics)",
+  "target_words": 1429,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Scarlet_Spider": {
+  "node_id": "Scarlet_Spider",
+  "target_words": 881,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Betsy_Braddock": {
+  "node_id": "Betsy_Braddock",
+  "target_words": 1409,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Hyperion__character_": {
+  "node_id": "Hyperion_(character)",
+  "target_words": 1482,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Werewolf_by_Night": {
+  "node_id": "Werewolf_by_Night",
+  "target_words": 1349,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Guardian__Marvel_Comics_": {
+  "node_id": "Guardian_(Marvel_Comics)",
+  "target_words": 1435,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Tarantula__Marvel_Comics_": {
+  "node_id": "Tarantula_(Marvel_Comics)",
+  "target_words": 1479,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Vance_Astrovik": {
+  "node_id": "Vance_Astrovik",
+  "target_words": 1404,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Abomination__character_": {
+  "node_id": "Abomination_(character)",
+  "target_words": 1455,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Delroy_Garrett": {
+  "node_id": "Delroy_Garrett",
+  "target_words": 1498,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Gorgon__Inhuman_": {
+  "node_id": "Gorgon_(Inhuman)",
+  "target_words": 764,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Paladin__comics_": {
+  "node_id": "Paladin_(comics)",
+  "target_words": 1183,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Ch_od": {
+  "node_id": "Ch'od",
+  "target_words": 488,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Guardsman__character_": {
+  "node_id": "Guardsman_(character)",
+  "target_words": 1444,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Kristoff_Vernard": {
+  "node_id": "Kristoff_Vernard",
+  "target_words": 1049,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Ronin__Marvel_Comics_": {
+  "node_id": "Ronin_(Marvel_Comics)",
+  "target_words": 986,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Balder_the_Brave": {
+  "node_id": "Balder_the_Brave",
+  "target_words": 1276,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Gauntlet__Joseph_Green_": {
+  "node_id": "Gauntlet_(Joseph_Green)",
+  "target_words": 550,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Lei_Kung__character_": {
+  "node_id": "Lei_Kung_(character)",
+  "target_words": 419,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Rockslide__character_": {
+  "node_id": "Rockslide_(character)",
+  "target_words": 968,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Shuri__character_": {
+  "node_id": "Shuri_(character)",
+  "target_words": 1421,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Turbo__comics_": {
+  "node_id": "Turbo_(comics)",
+  "target_words": 1206,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Frankenstein_s_Monster__Marvel_Comics_": {
+  "node_id": "Frankenstein's_Monster_(Marvel_Comics)",
+  "target_words": 1480,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Iron_Lad": {
+  "node_id": "Iron_Lad",
+  "target_words": 892,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Marvel_Boy__Robert_Grayson_": {
+  "node_id": "Marvel_Boy_(Robert_Grayson)",
+  "target_words": 794,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Ricochet__comics_": {
+  "node_id": "Ricochet_(comics)",
+  "target_words": 736,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Spider-Bitch__Ashley_Barton_": {
+  "node_id": "Spider-Bitch_(Ashley_Barton)",
+  "target_words": 1434,
+  "ok": false,
+  "error": "missing file"
+ },
+ "The_Union__Marvel_": {
+  "node_id": "The_Union_(Marvel)",
+  "target_words": 1044,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Blackthorn__character_": {
+  "node_id": "Blackthorn_(character)",
+  "target_words": 1077,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Citizen_V": {
+  "node_id": "Citizen_V",
+  "target_words": 669,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Ajak": {
+  "node_id": "Ajak",
+  "target_words": 620,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Box__comics_": {
+  "node_id": "Box_(comics)",
+  "target_words": 829,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Darkdevil": {
+  "node_id": "Darkdevil",
+  "target_words": 555,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Fandral": {
+  "node_id": "Fandral",
+  "target_words": 1469,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Golem__Marvel_Comics_": {
+  "node_id": "Golem_(Marvel_Comics)",
+  "target_words": 721,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Janice_Lincoln": {
+  "node_id": "Janice_Lincoln",
+  "target_words": 1028,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Motormouth__comics_": {
+  "node_id": "Motormouth_(comics)",
+  "target_words": 1170,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Skull_the_Slayer": {
+  "node_id": "Skull_the_Slayer",
+  "target_words": 530,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Typeface__character_": {
+  "node_id": "Typeface_(character)",
+  "target_words": 420,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Blackwulf": {
+  "node_id": "Blackwulf",
+  "target_words": 1005,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Captain_Midlands": {
+  "node_id": "Captain_Midlands",
+  "target_words": 620,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Digitek__character_": {
+  "node_id": "Digitek_(character)",
+  "target_words": 476,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Gremlin__comics_": {
+  "node_id": "Gremlin_(comics)",
+  "target_words": 600,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Mahr_Vehl": {
+  "node_id": "Mahr_Vehl",
+  "target_words": 652,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Oya__comics_": {
+  "node_id": "Oya_(comics)",
+  "target_words": 631,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Sean_and_Chris": {
+  "node_id": "Sean_and_Chris",
+  "target_words": 529,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Solomon_Kane__comics_": {
+  "node_id": "Solomon_Kane_(comics)",
+  "target_words": 746,
+  "ok": false,
+  "error": "missing file"
+ },
+ "Thunderbolt__Marvel_Comics_": {
+  "node_id": "Thunderbolt_(Marvel_Comics)",
+  "target_words": 514,
+  "ok": false,
+  "error": "missing file"
+ }
+}

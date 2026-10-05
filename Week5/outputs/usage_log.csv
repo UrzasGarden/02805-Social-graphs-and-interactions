@@ -2,3 +2,13 @@ label,slug,node_id,agent_file,model,api_calls,input_tokens,cache_creation_input_
 pilot_round1,She-Hulk,She-Hulk,agent-a68aff6ae152f65d5.jsonl,claude-fable-5-1,2,34,67506,45640,28,2042,240,PASS,2026-10-05T08:49:11Z
 pilot_round1,Kristoff_Vernard,Kristoff_Vernard,agent-a015a4dd0e655faee.jsonl,claude-fable-5-1,2,34,61842,45476,30,1347,190,PASS,2026-10-05T08:49:11Z
 pilot_round1,Mahr_Vehl,Mahr_Vehl,agent-aacb1fd81d23b0107.jsonl,claude-fable-5-1,2,34,68131,45474,32,901,228,PASS,2026-10-05T08:49:11Z
+round1,Spider-Man,Spider-Man,agent-adac4b31d4f3f1035.jsonl,claude-fable-5-1,2,34,51098,42202,32,1856,88,PASS,2026-10-05T09:09:08Z
+round1,She-Hulk,She-Hulk,agent-afef30bddadcc09c5.jsonl,claude-fable-5-1,2,34,48083,42305,28,1927,64,PASS,2026-10-05T09:09:08Z
+round1,Quasar__character_,Quasar_(character),agent-a28ffbc2dbda22f05.jsonl,claude-fable-5-1,2,34,47419,42143,29,1395,58,PASS,2026-10-05T09:09:08Z
+round1,Black_Widow__Natasha_Romanova_,Black_Widow_(Natasha_Romanova),agent-ae6cc6f1e093c873c.jsonl,claude-fable-5-1,2,34,48656,42207,28,1950,73,PASS,2026-10-05T09:09:08Z
+round1,Black_Cat__Marvel_Comics_,Black_Cat_(Marvel_Comics),agent-ad46def09e6752c0a.jsonl,claude-fable-5-1,2,34,50057,42249,28,1833,91,PASS,2026-10-05T09:09:08Z
+round1,Deathlok,Deathlok,agent-ab01bf56af3467b35.jsonl,claude-fable-5-1,2,34,52782,42180,28,2035,130,PASS,2026-10-05T09:09:08Z
+round1,Misty_Knight,Misty_Knight,agent-a2d4b6450641c72e8.jsonl,claude-fable-5-1,2,34,50999,42252,28,1807,104,PASS,2026-10-05T09:09:08Z
+round1,Black_Bolt,Black_Bolt,agent-a5d821573a339b8ef.jsonl,claude-fable-5-1,2,34,50756,42227,28,2033,97,PASS,2026-10-05T09:09:08Z
+round1,Mockingbird__Marvel_Comics_,Mockingbird_(Marvel_Comics),agent-ad8b56cfb51d3d175.jsonl,claude-fable-5-1,2,34,53286,42248,28,1822,126,PASS,2026-10-05T09:09:08Z
+round1,Moondragon,Moondragon,agent-a9f6ebc88e52b2a71.jsonl,claude-fable-5-1,2,34,56508,42182,28,2019,162,PASS,2026-10-05T09:09:08Z
