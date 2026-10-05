@@ -1,0 +1,19 @@
+A cleaned real article is plain text with this shape.
+
+Headings: each section heading sits on its own line written as == Heading == (two equals signs, a space, the heading, a space, two equals signs). There is one blank line before and after every heading. There is no heading above the opening paragraphs. Subsections use the same == Heading == form; there is no deeper level.
+
+Paragraphs: one blank line between paragraphs. A paragraph is a few sentences long, typically 40 to 90 words. No bullet points, numbered lists, tables, images, citation markers, URLs or markup of any kind.
+
+Opening: one to three paragraphs with no heading. The first sentence names the character and says they are a fictional character or superhero appearing in American comic books published by Marvel Comics. The opening then gives the creators and the first appearance (title, issue number, cover date in parentheses), the character's alter ego and affiliations, and often a sentence on adaptations in other media.
+
+Typical section order:
+== Publication history ==  (creation, first appearance, creators, later series and notable runs, in the past tense; sometimes titled Creation or split by decade such as == 1970s ==)
+== Fictional character biography ==  (the character's story told as fiction, in the present tense; longer articles split this into storyline subsections such as == "Secret Invasion" == or == Death ==)
+== Powers and abilities ==  (one or two paragraphs)
+== Other versions ==  (alternate-universe versions, e.g. Ultimate Marvel, Marvel Zombies, House of M)
+== In other media ==  (often split into == Television ==, == Film ==, == Video games ==; each appearance is one short sentence stating the work and the voice or screen actor)
+== Reception ==  (rankings and critical response, e.g. "In 2019, CBR.com ranked X 8th in their ... list.")
+
+Not every article has every section. Short articles usually have only Publication history, Fictional character biography and Powers and abilities. Wikipedia's References, External links and See also sections are not part of the cleaned text, so do not write them.
+
+Register: neutral encyclopedic prose. Comic issue references look like The Avengers #57 (October 1968). Storyline names are in double quotes ("Civil War"). En dashes appear in ranges such as 2012–2014; em dashes are rare. Parentheses are common for dates and real names, e.g. Robert Frank (Whizzer).
