@@ -598,62 +598,144 @@
  "Blackthorn__character_": {
   "node_id": "Blackthorn_(character)",
   "target_words": 1077,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 1009,
+  "ratio": 0.937,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Reception"
+  ]
  },
  "Citizen_V": {
   "node_id": "Citizen_V",
   "target_words": 669,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 657,
+  "ratio": 0.982,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "In other media",
+   "Reception"
+  ]
  },
  "Ajak": {
   "node_id": "Ajak",
   "target_words": 620,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 639,
+  "ratio": 1.031,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions",
+   "In other media"
+  ]
  },
  "Box__comics_": {
   "node_id": "Box_(comics)",
   "target_words": 829,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 884,
+  "ratio": 1.066,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions"
+  ]
  },
  "Darkdevil": {
   "node_id": "Darkdevil",
   "target_words": 555,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 593,
+  "ratio": 1.068,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Reception"
+  ]
  },
  "Fandral": {
   "node_id": "Fandral",
   "target_words": 1469,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 1373,
+  "ratio": 0.935,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities"
+  ]
  },
  "Golem__Marvel_Comics_": {
   "node_id": "Golem_(Marvel_Comics)",
   "target_words": 721,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 769,
+  "ratio": 1.067,
+  "headings": [
+   "Publication history",
+   "Adamson's Golem",
+   "Jacob Goldstein",
+   "Powers and abilities",
+   "Other versions"
+  ]
  },
  "Janice_Lincoln": {
   "node_id": "Janice_Lincoln",
   "target_words": 1028,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 966,
+  "ratio": 0.94,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Reception"
+  ]
  },
  "Motormouth__comics_": {
   "node_id": "Motormouth_(comics)",
   "target_words": 1170,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 1165,
+  "ratio": 0.996,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions",
+   "Reception"
+  ]
  },
  "Skull_the_Slayer": {
   "node_id": "Skull_the_Slayer",
   "target_words": 530,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 562,
+  "ratio": 1.06,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities"
+  ]
  },
  "Typeface__character_": {
   "node_id": "Typeface_(character)",
