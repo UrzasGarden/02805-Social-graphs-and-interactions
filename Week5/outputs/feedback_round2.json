@@ -1,8 +1,8 @@
 {
  "caught": 54,
  "total": 60,
- "feature_table": "- mean sentence length (tokens): real 20.08, forgeries 24.49\n- parentheses per 100 tokens: real 0.61, forgeries 1.05\n- share of word pairs never seen in real articles: real 32.1%, forgeries 28.0%\n- hapax ratio (per 400-token window): real 0.40, forgeries 0.41\n- dashes per 100 tokens: real 0.11, forgeries 0.36",
- "impossible_bigrams": "\"2011 2012\", \"mobile game\", \"period the\", \"crossover secret\", \"character headlined\", \"regular in\", \"supplied by\", \"paired her\", \"2010 by\", \"a working\", \"2011 by\", \"hulk's warbound\", \"that follow\", \"forearms and\", \"has generally\"",
+ "feature_table": "- mean sentence length (tokens): real 20.08, forgeries 24.49\n- parentheses per 100 tokens: real 0.61, forgeries 1.05\n- share of word pairs never seen in real articles: real 32.1%, forgeries 28.0%\n- hapax ratio (per 400-token window): real 0.396, forgeries 0.415\n- dashes per 100 tokens: real 0.11, forgeries 0.36",
+ "impossible_bigrams": "\"2011 2012\", \"mobile game\", \"period the\", \"crossover secret\", \"character headlined\", \"regular in\", \"paired her\", \"supplied by\", \"2010 by\", \"a working\", \"2011 by\", \"hulk's warbound\", \"that follow\", \"forearms and\", \"has generally\"",
  "bigram_counts": [
   [
    "2011 2012",
@@ -29,11 +29,11 @@
    4
   ],
   [
-   "supplied by",
+   "paired her",
    4
   ],
   [
-   "paired her",
+   "supplied by",
    4
   ],
   [

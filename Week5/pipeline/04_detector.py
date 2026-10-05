@@ -134,7 +134,12 @@ def feedback(df: pd.DataFrame, oof: np.ndarray, single: pd.DataFrame, corpus: ts
     lines = []
     for f in top.index:
         r, g = df.loc[df.label == 0, f].median(), forg[f].median()
-        fmt = (lambda x: f"{x:.1%}") if f in ("unseen_bigram_rate", "stopword_rate") else (lambda x: f"{x:.2f}")
+        if f in ("unseen_bigram_rate", "stopword_rate"):
+            fmt = lambda x: f"{x:.1%}"  # noqa: E731
+        elif f in ("hapax_ratio", "ttr", "cos_corpus", "cos_neighbors"):
+            fmt = lambda x: f"{x:.3f}"  # noqa: E731
+        else:
+            fmt = lambda x: f"{x:.2f}"  # noqa: E731
         lines.append(f"- {ts.FEATURE_LABELS[f]}: real {fmt(r)}, forgeries {fmt(g)}")
     counts: Counter = Counter()
     for nid, text in forged.items():

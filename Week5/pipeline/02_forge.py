@@ -455,4 +455,6 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    import signal
+    signal.signal(signal.SIGPIPE, signal.SIG_DFL)   # quiet when piped into head
     main()

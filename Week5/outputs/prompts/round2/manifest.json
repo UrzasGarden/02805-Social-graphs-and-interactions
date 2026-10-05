@@ -1,0 +1,602 @@
+{
+ "Spider-Man": {
+  "node_id": "Spider-Man",
+  "name": "Spider-Man",
+  "tier": "high",
+  "in_degree": 106,
+  "target_words": 1365,
+  "prompt_path": "outputs/prompts/round2/Spider-Man.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Spider-Man.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "She-Hulk": {
+  "node_id": "She-Hulk",
+  "name": "She-Hulk",
+  "tier": "high",
+  "in_degree": 29,
+  "target_words": 1439,
+  "prompt_path": "outputs/prompts/round2/She-Hulk.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/She-Hulk.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Quasar__character_": {
+  "node_id": "Quasar_(character)",
+  "name": "Quasar (character)",
+  "tier": "high",
+  "in_degree": 24,
+  "target_words": 973,
+  "prompt_path": "outputs/prompts/round2/Quasar__character_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Quasar__character_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Black_Widow__Natasha_Romanova_": {
+  "node_id": "Black_Widow_(Natasha_Romanova)",
+  "name": "Black Widow (Natasha Romanova)",
+  "tier": "high",
+  "in_degree": 22,
+  "target_words": 1403,
+  "prompt_path": "outputs/prompts/round2/Black_Widow__Natasha_Romanova_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Black_Widow__Natasha_Romanova_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Black_Cat__Marvel_Comics_": {
+  "node_id": "Black_Cat_(Marvel_Comics)",
+  "name": "Black Cat (Marvel Comics)",
+  "tier": "high",
+  "in_degree": 21,
+  "target_words": 1477,
+  "prompt_path": "outputs/prompts/round2/Black_Cat__Marvel_Comics_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Black_Cat__Marvel_Comics_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Deathlok": {
+  "node_id": "Deathlok",
+  "name": "Deathlok",
+  "tier": "high",
+  "in_degree": 17,
+  "target_words": 1441,
+  "prompt_path": "outputs/prompts/round2/Deathlok.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Deathlok.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Misty_Knight": {
+  "node_id": "Misty_Knight",
+  "name": "Misty Knight",
+  "tier": "high",
+  "in_degree": 15,
+  "target_words": 1487,
+  "prompt_path": "outputs/prompts/round2/Misty_Knight.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Misty_Knight.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Black_Bolt": {
+  "node_id": "Black_Bolt",
+  "name": "Black Bolt",
+  "tier": "high",
+  "in_degree": 13,
+  "target_words": 1486,
+  "prompt_path": "outputs/prompts/round2/Black_Bolt.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Black_Bolt.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Mockingbird__Marvel_Comics_": {
+  "node_id": "Mockingbird_(Marvel_Comics)",
+  "name": "Mockingbird (Marvel Comics)",
+  "tier": "high",
+  "in_degree": 13,
+  "target_words": 1403,
+  "prompt_path": "outputs/prompts/round2/Mockingbird__Marvel_Comics_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Mockingbird__Marvel_Comics_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Moondragon": {
+  "node_id": "Moondragon",
+  "name": "Moondragon",
+  "tier": "high",
+  "in_degree": 11,
+  "target_words": 1445,
+  "prompt_path": "outputs/prompts/round2/Moondragon.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Moondragon.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Rocket_Raccoon": {
+  "node_id": "Rocket_Raccoon",
+  "name": "Rocket Raccoon",
+  "tier": "high",
+  "in_degree": 10,
+  "target_words": 1472,
+  "prompt_path": "outputs/prompts/round2/Rocket_Raccoon.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Rocket_Raccoon.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Captain_Marvel__Marvel_Comics_": {
+  "node_id": "Captain_Marvel_(Marvel_Comics)",
+  "name": "Captain Marvel (Marvel Comics)",
+  "tier": "high",
+  "in_degree": 9,
+  "target_words": 1500,
+  "prompt_path": "outputs/prompts/round2/Captain_Marvel__Marvel_Comics_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Captain_Marvel__Marvel_Comics_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Vulcan__Marvel_Comics_": {
+  "node_id": "Vulcan_(Marvel_Comics)",
+  "name": "Vulcan (Marvel Comics)",
+  "tier": "high",
+  "in_degree": 9,
+  "target_words": 1429,
+  "prompt_path": "outputs/prompts/round2/Vulcan__Marvel_Comics_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Vulcan__Marvel_Comics_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Scarlet_Spider": {
+  "node_id": "Scarlet_Spider",
+  "name": "Scarlet Spider",
+  "tier": "high",
+  "in_degree": 8,
+  "target_words": 881,
+  "prompt_path": "outputs/prompts/round2/Scarlet_Spider.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Scarlet_Spider.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Betsy_Braddock": {
+  "node_id": "Betsy_Braddock",
+  "name": "Betsy Braddock",
+  "tier": "high",
+  "in_degree": 7,
+  "target_words": 1409,
+  "prompt_path": "outputs/prompts/round2/Betsy_Braddock.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Betsy_Braddock.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Hyperion__character_": {
+  "node_id": "Hyperion_(character)",
+  "name": "Hyperion (character)",
+  "tier": "high",
+  "in_degree": 7,
+  "target_words": 1482,
+  "prompt_path": "outputs/prompts/round2/Hyperion__character_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Hyperion__character_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Werewolf_by_Night": {
+  "node_id": "Werewolf_by_Night",
+  "name": "Werewolf by Night",
+  "tier": "high",
+  "in_degree": 7,
+  "target_words": 1349,
+  "prompt_path": "outputs/prompts/round2/Werewolf_by_Night.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Werewolf_by_Night.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Guardian__Marvel_Comics_": {
+  "node_id": "Guardian_(Marvel_Comics)",
+  "name": "Guardian (Marvel Comics)",
+  "tier": "high",
+  "in_degree": 6,
+  "target_words": 1435,
+  "prompt_path": "outputs/prompts/round2/Guardian__Marvel_Comics_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Guardian__Marvel_Comics_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Tarantula__Marvel_Comics_": {
+  "node_id": "Tarantula_(Marvel_Comics)",
+  "name": "Tarantula (Marvel Comics)",
+  "tier": "high",
+  "in_degree": 6,
+  "target_words": 1479,
+  "prompt_path": "outputs/prompts/round2/Tarantula__Marvel_Comics_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Tarantula__Marvel_Comics_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Vance_Astrovik": {
+  "node_id": "Vance_Astrovik",
+  "name": "Vance Astrovik",
+  "tier": "high",
+  "in_degree": 5,
+  "target_words": 1404,
+  "prompt_path": "outputs/prompts/round2/Vance_Astrovik.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Vance_Astrovik.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Abomination__character_": {
+  "node_id": "Abomination_(character)",
+  "name": "Abomination (character)",
+  "tier": "middle",
+  "in_degree": 5,
+  "target_words": 1455,
+  "prompt_path": "outputs/prompts/round2/Abomination__character_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Abomination__character_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Delroy_Garrett": {
+  "node_id": "Delroy_Garrett",
+  "name": "Delroy Garrett",
+  "tier": "middle",
+  "in_degree": 5,
+  "target_words": 1498,
+  "prompt_path": "outputs/prompts/round2/Delroy_Garrett.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Delroy_Garrett.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Gorgon__Inhuman_": {
+  "node_id": "Gorgon_(Inhuman)",
+  "name": "Gorgon (Inhuman)",
+  "tier": "middle",
+  "in_degree": 5,
+  "target_words": 764,
+  "prompt_path": "outputs/prompts/round2/Gorgon__Inhuman_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Gorgon__Inhuman_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Paladin__comics_": {
+  "node_id": "Paladin_(comics)",
+  "name": "Paladin (comics)",
+  "tier": "middle",
+  "in_degree": 5,
+  "target_words": 1183,
+  "prompt_path": "outputs/prompts/round2/Paladin__comics_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Paladin__comics_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Ch_od": {
+  "node_id": "Ch'od",
+  "name": "Ch'od",
+  "tier": "middle",
+  "in_degree": 4,
+  "target_words": 488,
+  "prompt_path": "outputs/prompts/round2/Ch_od.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Ch_od.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Guardsman__character_": {
+  "node_id": "Guardsman_(character)",
+  "name": "Guardsman (character)",
+  "tier": "middle",
+  "in_degree": 4,
+  "target_words": 1444,
+  "prompt_path": "outputs/prompts/round2/Guardsman__character_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Guardsman__character_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Kristoff_Vernard": {
+  "node_id": "Kristoff_Vernard",
+  "name": "Kristoff Vernard",
+  "tier": "middle",
+  "in_degree": 4,
+  "target_words": 1049,
+  "prompt_path": "outputs/prompts/round2/Kristoff_Vernard.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Kristoff_Vernard.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Ronin__Marvel_Comics_": {
+  "node_id": "Ronin_(Marvel_Comics)",
+  "name": "Ronin (Marvel Comics)",
+  "tier": "middle",
+  "in_degree": 4,
+  "target_words": 986,
+  "prompt_path": "outputs/prompts/round2/Ronin__Marvel_Comics_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Ronin__Marvel_Comics_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Balder_the_Brave": {
+  "node_id": "Balder_the_Brave",
+  "name": "Balder the Brave",
+  "tier": "middle",
+  "in_degree": 3,
+  "target_words": 1276,
+  "prompt_path": "outputs/prompts/round2/Balder_the_Brave.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Balder_the_Brave.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Gauntlet__Joseph_Green_": {
+  "node_id": "Gauntlet_(Joseph_Green)",
+  "name": "Gauntlet (Joseph Green)",
+  "tier": "middle",
+  "in_degree": 3,
+  "target_words": 550,
+  "prompt_path": "outputs/prompts/round2/Gauntlet__Joseph_Green_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Gauntlet__Joseph_Green_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Lei_Kung__character_": {
+  "node_id": "Lei_Kung_(character)",
+  "name": "Lei Kung (character)",
+  "tier": "middle",
+  "in_degree": 3,
+  "target_words": 419,
+  "prompt_path": "outputs/prompts/round2/Lei_Kung__character_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Lei_Kung__character_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Rockslide__character_": {
+  "node_id": "Rockslide_(character)",
+  "name": "Rockslide (character)",
+  "tier": "middle",
+  "in_degree": 3,
+  "target_words": 968,
+  "prompt_path": "outputs/prompts/round2/Rockslide__character_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Rockslide__character_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Shuri__character_": {
+  "node_id": "Shuri_(character)",
+  "name": "Shuri (character)",
+  "tier": "middle",
+  "in_degree": 3,
+  "target_words": 1421,
+  "prompt_path": "outputs/prompts/round2/Shuri__character_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Shuri__character_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Turbo__comics_": {
+  "node_id": "Turbo_(comics)",
+  "name": "Turbo (comics)",
+  "tier": "middle",
+  "in_degree": 3,
+  "target_words": 1206,
+  "prompt_path": "outputs/prompts/round2/Turbo__comics_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Turbo__comics_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Frankenstein_s_Monster__Marvel_Comics_": {
+  "node_id": "Frankenstein's_Monster_(Marvel_Comics)",
+  "name": "Frankenstein's Monster (Marvel Comics)",
+  "tier": "middle",
+  "in_degree": 2,
+  "target_words": 1480,
+  "prompt_path": "outputs/prompts/round2/Frankenstein_s_Monster__Marvel_Comics_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Frankenstein_s_Monster__Marvel_Comics_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Iron_Lad": {
+  "node_id": "Iron_Lad",
+  "name": "Iron Lad",
+  "tier": "middle",
+  "in_degree": 2,
+  "target_words": 892,
+  "prompt_path": "outputs/prompts/round2/Iron_Lad.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Iron_Lad.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Marvel_Boy__Robert_Grayson_": {
+  "node_id": "Marvel_Boy_(Robert_Grayson)",
+  "name": "Marvel Boy (Robert Grayson)",
+  "tier": "middle",
+  "in_degree": 2,
+  "target_words": 794,
+  "prompt_path": "outputs/prompts/round2/Marvel_Boy__Robert_Grayson_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Marvel_Boy__Robert_Grayson_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Ricochet__comics_": {
+  "node_id": "Ricochet_(comics)",
+  "name": "Ricochet (comics)",
+  "tier": "middle",
+  "in_degree": 2,
+  "target_words": 736,
+  "prompt_path": "outputs/prompts/round2/Ricochet__comics_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Ricochet__comics_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Spider-Bitch__Ashley_Barton_": {
+  "node_id": "Spider-Bitch_(Ashley_Barton)",
+  "name": "Spider-Bitch (Ashley Barton)",
+  "tier": "middle",
+  "in_degree": 2,
+  "target_words": 1434,
+  "prompt_path": "outputs/prompts/round2/Spider-Bitch__Ashley_Barton_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Spider-Bitch__Ashley_Barton_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "The_Union__Marvel_": {
+  "node_id": "The_Union_(Marvel)",
+  "name": "The Union (Marvel)",
+  "tier": "middle",
+  "in_degree": 2,
+  "target_words": 1044,
+  "prompt_path": "outputs/prompts/round2/The_Union__Marvel_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/The_Union__Marvel_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Blackthorn__character_": {
+  "node_id": "Blackthorn_(character)",
+  "name": "Blackthorn (character)",
+  "tier": "low",
+  "in_degree": 2,
+  "target_words": 1077,
+  "prompt_path": "outputs/prompts/round2/Blackthorn__character_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Blackthorn__character_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Citizen_V": {
+  "node_id": "Citizen_V",
+  "name": "Citizen V",
+  "tier": "low",
+  "in_degree": 2,
+  "target_words": 669,
+  "prompt_path": "outputs/prompts/round2/Citizen_V.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Citizen_V.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Ajak": {
+  "node_id": "Ajak",
+  "name": "Ajak",
+  "tier": "low",
+  "in_degree": 1,
+  "target_words": 620,
+  "prompt_path": "outputs/prompts/round2/Ajak.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Ajak.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Box__comics_": {
+  "node_id": "Box_(comics)",
+  "name": "Box (comics)",
+  "tier": "low",
+  "in_degree": 1,
+  "target_words": 829,
+  "prompt_path": "outputs/prompts/round2/Box__comics_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Box__comics_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Darkdevil": {
+  "node_id": "Darkdevil",
+  "name": "Darkdevil",
+  "tier": "low",
+  "in_degree": 1,
+  "target_words": 555,
+  "prompt_path": "outputs/prompts/round2/Darkdevil.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Darkdevil.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Fandral": {
+  "node_id": "Fandral",
+  "name": "Fandral",
+  "tier": "low",
+  "in_degree": 1,
+  "target_words": 1469,
+  "prompt_path": "outputs/prompts/round2/Fandral.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Fandral.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Golem__Marvel_Comics_": {
+  "node_id": "Golem_(Marvel_Comics)",
+  "name": "Golem (Marvel Comics)",
+  "tier": "low",
+  "in_degree": 1,
+  "target_words": 721,
+  "prompt_path": "outputs/prompts/round2/Golem__Marvel_Comics_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Golem__Marvel_Comics_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Janice_Lincoln": {
+  "node_id": "Janice_Lincoln",
+  "name": "Janice Lincoln",
+  "tier": "low",
+  "in_degree": 1,
+  "target_words": 1028,
+  "prompt_path": "outputs/prompts/round2/Janice_Lincoln.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Janice_Lincoln.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Motormouth__comics_": {
+  "node_id": "Motormouth_(comics)",
+  "name": "Motormouth (comics)",
+  "tier": "low",
+  "in_degree": 1,
+  "target_words": 1170,
+  "prompt_path": "outputs/prompts/round2/Motormouth__comics_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Motormouth__comics_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Skull_the_Slayer": {
+  "node_id": "Skull_the_Slayer",
+  "name": "Skull the Slayer",
+  "tier": "low",
+  "in_degree": 1,
+  "target_words": 530,
+  "prompt_path": "outputs/prompts/round2/Skull_the_Slayer.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Skull_the_Slayer.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Typeface__character_": {
+  "node_id": "Typeface_(character)",
+  "name": "Typeface (character)",
+  "tier": "low",
+  "in_degree": 1,
+  "target_words": 420,
+  "prompt_path": "outputs/prompts/round2/Typeface__character_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Typeface__character_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Blackwulf": {
+  "node_id": "Blackwulf",
+  "name": "Blackwulf",
+  "tier": "low",
+  "in_degree": 0,
+  "target_words": 1005,
+  "prompt_path": "outputs/prompts/round2/Blackwulf.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Blackwulf.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Captain_Midlands": {
+  "node_id": "Captain_Midlands",
+  "name": "Captain Midlands",
+  "tier": "low",
+  "in_degree": 0,
+  "target_words": 620,
+  "prompt_path": "outputs/prompts/round2/Captain_Midlands.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Captain_Midlands.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Digitek__character_": {
+  "node_id": "Digitek_(character)",
+  "name": "Digitek (character)",
+  "tier": "low",
+  "in_degree": 0,
+  "target_words": 476,
+  "prompt_path": "outputs/prompts/round2/Digitek__character_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Digitek__character_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Gremlin__comics_": {
+  "node_id": "Gremlin_(comics)",
+  "name": "Gremlin (comics)",
+  "tier": "low",
+  "in_degree": 0,
+  "target_words": 600,
+  "prompt_path": "outputs/prompts/round2/Gremlin__comics_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Gremlin__comics_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Mahr_Vehl": {
+  "node_id": "Mahr_Vehl",
+  "name": "Mahr Vehl",
+  "tier": "low",
+  "in_degree": 0,
+  "target_words": 652,
+  "prompt_path": "outputs/prompts/round2/Mahr_Vehl.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Mahr_Vehl.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Oya__comics_": {
+  "node_id": "Oya_(comics)",
+  "name": "Oya (comics)",
+  "tier": "low",
+  "in_degree": 0,
+  "target_words": 631,
+  "prompt_path": "outputs/prompts/round2/Oya__comics_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Oya__comics_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Sean_and_Chris": {
+  "node_id": "Sean_and_Chris",
+  "name": "Sean and Chris",
+  "tier": "low",
+  "in_degree": 0,
+  "target_words": 529,
+  "prompt_path": "outputs/prompts/round2/Sean_and_Chris.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Sean_and_Chris.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Solomon_Kane__comics_": {
+  "node_id": "Solomon_Kane_(comics)",
+  "name": "Solomon Kane (comics)",
+  "tier": "low",
+  "in_degree": 0,
+  "target_words": 746,
+  "prompt_path": "outputs/prompts/round2/Solomon_Kane__comics_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Solomon_Kane__comics_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ },
+ "Thunderbolt__Marvel_Comics_": {
+  "node_id": "Thunderbolt_(Marvel_Comics)",
+  "name": "Thunderbolt (Marvel Comics)",
+  "tier": "low",
+  "in_degree": 0,
+  "target_words": 514,
+  "prompt_path": "outputs/prompts/round2/Thunderbolt__Marvel_Comics_.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round2/Thunderbolt__Marvel_Comics_.txt",
+  "rendered_at": "2026-10-05T10:24:36Z"
+ }
+}
