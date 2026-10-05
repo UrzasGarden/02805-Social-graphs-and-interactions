@@ -1,0 +1,9 @@
+<style_references>
+Two real Wikipedia articles about other Marvel characters, for style reference only. Do not copy their wording or their facts.
+<reference name="{REF1_NAME}">
+{REF1_TEXT}
+</reference>
+<reference name="{REF2_NAME}">
+{REF2_TEXT}
+</reference>
+</style_references>

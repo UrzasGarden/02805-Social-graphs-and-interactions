@@ -1,0 +1,9 @@
+<detector_feedback>
+In the previous round, a detector built only from simple word counts caught {CAUGHT} of {TOTAL} forgeries. These statistics gave the forgeries away (typical real-article value vs. typical forgery value):
+{FEATURE_TABLE}
+
+Examples of word pairs the forgeries used that never occur anywhere in about 300 real Marvel Wikipedia articles:
+{IMPOSSIBLE_BIGRAMS}
+
+Write so that these statistics look like those of a real article, without making the text worse to read.
+</detector_feedback>

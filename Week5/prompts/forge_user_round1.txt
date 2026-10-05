@@ -1,0 +1,9 @@
+<character>
+Name: {NAME}
+Short description: {DESCRIPTION}
+The real article links to these characters (mention them where it is natural): {OUT_NEIGHBORS}
+</character>
+
+<length>
+Write about {TARGET_WORDS} words. {LENGTH_NOTE}
+</length>
