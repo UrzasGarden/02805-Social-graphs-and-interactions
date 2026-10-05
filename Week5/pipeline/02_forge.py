@@ -25,9 +25,9 @@ from __future__ import annotations
 import argparse
 import csv
 import difflib
+import hashlib
 import json
 import re
-import shutil
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -37,8 +37,12 @@ import config  # noqa: E402
 from cleaning import clean_article, word_count  # noqa: E402
 
 ARTICLE_RE = re.compile(r"<article>(.*?)</article>", re.S)
-PROMPT_TOOLS_FORBIDDEN = {"Read", "Bash", "Grep", "Glob", "WebFetch", "WebSearch", "Edit",
-                          "NotebookEdit", "Agent", "Task", "Skill", "ToolSearch"}
+# Claude Code tells every subagent to end its run by calling this tool; it is
+# harness plumbing (it only carries the final reply), so the audit allows one.
+HANDBACK_TOOL = "SubagentHandback"
+# Attachment fields that would publish private account data in a public repo.
+REDACT_ATTACHMENTS = {"session_context": "context", "credential_org": "organizationUuid"}
+EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}")
 
 
 # ---------------------------------------------------------------- helpers ---
@@ -202,18 +206,59 @@ def read_transcript(path: Path) -> dict:
             for b in _blocks(msg.get("content")):
                 if b.get("type") == "tool_use":
                     tools.append({"name": b.get("name"), "input": b.get("input", {})})
-                elif b.get("type") == "text" and b.get("text", "").strip():
+                    if b.get("name") == HANDBACK_TOOL:
+                        final_text = str((b.get("input") or {}).get("message", "")).strip()
+                elif b.get("type") == "text" and b.get("text", "").strip() and not final_text:
                     final_text = b["text"].strip()
             if msg.get("usage") and msg.get("id"):
                 usage_by_msg[msg["id"]] = msg["usage"]   # one API message can span several records
+    # Claude Code stores the usage block from the START of each streamed reply: the
+    # input side (uncached, cache write, cache read) is final, the output side is not.
     usage = {"input_tokens": 0, "cache_creation_input_tokens": 0, "cache_read_input_tokens": 0,
-             "output_tokens": 0, "thinking_tokens": 0, "api_calls": len(usage_by_msg)}
+             "output_tokens_at_stream_start": 0, "api_calls": len(usage_by_msg)}
     for u in usage_by_msg.values():
-        for k in ("input_tokens", "cache_creation_input_tokens", "cache_read_input_tokens", "output_tokens"):
+        for k in ("input_tokens", "cache_creation_input_tokens", "cache_read_input_tokens"):
             usage[k] += u.get(k) or 0
-        usage["thinking_tokens"] += (u.get("output_tokens_details") or {}).get("thinking_tokens") or 0
+        usage["output_tokens_at_stream_start"] += u.get("output_tokens") or 0
+    written = "".join(str(c["input"].get("content", "")) for c in tools if c["name"] == config.FORGER_TOOL)
+    usage["article_tokens_est"] = int(len(written.split()) * 1.35)
+    stamps = sorted(r["timestamp"] for r in records if r.get("timestamp"))
+    if len(stamps) >= 2:
+        t0, t1 = (datetime.fromisoformat(x.replace("Z", "+00:00")) for x in (stamps[0], stamps[-1]))
+        usage["duration_s"] = round((t1 - t0).total_seconds())
     return {"prompt": prompt, "models": sorted(models), "tools": tools, "final_text": final_text,
             "usage": usage, "n_records": len(records)}
+
+
+def read_meta(path: Path) -> dict:
+    meta = path.with_name(path.name.replace(".jsonl", ".meta.json"))
+    return json.loads(meta.read_text(encoding="utf-8")) if meta.exists() else {}
+
+
+def copy_redacted(src: Path, dest: Path) -> dict:
+    """Copy a transcript, blanking the user's email and org id; return provenance."""
+    raw = src.read_bytes()
+    out_lines, redacted = [], []
+    for line in raw.decode("utf-8").splitlines():
+        if not line.strip():
+            continue
+        r = json.loads(line)
+        a = r.get("attachment")
+        if isinstance(a, dict) and a.get("type") in REDACT_ATTACHMENTS:
+            field = REDACT_ATTACHMENTS[a["type"]]
+            if field in a:
+                a[field] = "[redacted before publishing]"
+                redacted.append(f"{a['type']}.{field}")
+            if "rendered" in r:                       # the same text, as shown to the model
+                r["rendered"] = "[redacted before publishing]"
+                redacted.append(f"{a['type']}.rendered")
+        line = json.dumps(r, ensure_ascii=False)
+        if isinstance(a, dict) and EMAIL_RE.search(line):  # belt and braces, harness records only
+            line = EMAIL_RE.sub("[email redacted]", line)
+            redacted.append(f"{a.get('type')}:email")
+        out_lines.append(line)
+    dest.write_text("\n".join(out_lines) + "\n", encoding="utf-8")
+    return {"source": src.name, "source_sha256": hashlib.sha256(raw).hexdigest(), "redacted": redacted}
 
 
 def find_subagent_transcripts() -> list[Path]:
@@ -223,8 +268,8 @@ def find_subagent_transcripts() -> list[Path]:
 
 def write_usage_log(rows: list[dict]) -> None:
     fields = ["label", "slug", "node_id", "agent_file", "model", "api_calls", "input_tokens",
-              "cache_creation_input_tokens", "cache_read_input_tokens", "output_tokens", "thinking_tokens",
-              "verdict", "audited_at"]
+              "cache_creation_input_tokens", "cache_read_input_tokens", "output_tokens_at_stream_start",
+              "article_tokens_est", "duration_s", "verdict", "audited_at"]
     existing = []
     if config.USAGE_LOG.exists():
         with open(config.USAGE_LOG, newline="", encoding="utf-8") as f:
@@ -277,10 +322,15 @@ def do_audit(args, sample_doc) -> None:
         if d["models"] != [config.FORGER_MODEL]:
             problems.append(f"model(s) {d['models']} != {config.FORGER_MODEL}")
         names = [c["name"] for c in d["tools"]]
-        forbidden = [n for n in names if n != config.FORGER_TOOL]
+        forbidden = [n for n in names if n not in (config.FORGER_TOOL, HANDBACK_TOOL)]
         contaminated = bool(forbidden)
         if forbidden:
             problems.append(f"forbidden tool calls: {forbidden}")
+        if names.count(HANDBACK_TOOL) > 1:
+            problems.append(f"{names.count(HANDBACK_TOOL)} {HANDBACK_TOOL} calls (expected at most 1)")
+        meta = read_meta(t)
+        if meta and meta.get("agentType") != "general-purpose":
+            problems.append(f"agent type {meta.get('agentType')!r}, expected 'general-purpose'")
         writes = [c for c in d["tools"] if c["name"] == config.FORGER_TOOL]
         if len(writes) != 1:
             problems.append(f"{len(writes)} Write calls (expected exactly 1)")
@@ -294,19 +344,19 @@ def do_audit(args, sample_doc) -> None:
             problems.append(f"final reply was {d['final_text'][:60]!r}, not 'done' (noted, not fatal)")
         fatal = [p for p in problems if "not fatal" not in p]
         verdict = "CONTAMINATED" if contaminated else ("FAIL" if fatal else "PASS")
-        dest = tdir / f"{s}.jsonl"
         if verdict == "PASS":
-            shutil.copyfile(t, dest)
+            provenance = copy_redacted(t, tdir / f"{s}.jsonl")
         else:
             rej = tdir / "rejected"
             rej.mkdir(exist_ok=True)
-            shutil.copyfile(t, rej / f"{s}__{t.stem}.jsonl")
+            provenance = copy_redacted(t, rej / f"{s}__{t.stem}.jsonl")
             if contaminated and out.exists():
                 out.unlink()                           # spec: delete a contaminated forgery and re-spawn
                 problems.append("forgery deleted; re-spawn this forger")
         audit[s] = {"verdict": verdict, "problems": problems, "agent_file": t.name,
-                    "models": d["models"], "tool_calls": names, "usage": d["usage"],
-                    "prompt_identical": t in exact, "audited_at": now()}
+                    "agent_meta": meta, "models": d["models"], "tool_calls": names,
+                    "final_reply": d["final_text"][:200], "usage": d["usage"],
+                    "prompt_identical": t in exact, "transcript": provenance, "audited_at": now()}
         usage_rows.append({"label": label, "slug": s, "node_id": m["node_id"], "agent_file": t.name,
                            "model": ",".join(d["models"]), **d["usage"], "verdict": verdict, "audited_at": now()})
     (tdir / "audit.json").write_text(json.dumps(audit, ensure_ascii=False, indent=1), encoding="utf-8")
@@ -317,8 +367,8 @@ def do_audit(args, sample_doc) -> None:
         a = audit.get(s, {})
         u = a.get("usage", {})
         extra = (f"  in={u.get('input_tokens')} cache_w={u.get('cache_creation_input_tokens')} "
-                 f"cache_r={u.get('cache_read_input_tokens')} out={u.get('output_tokens')} "
-                 f"(thinking {u.get('thinking_tokens')})") if u else ""
+                 f"cache_r={u.get('cache_read_input_tokens')} article~{u.get('article_tokens_est')} tok "
+                 f"{u.get('duration_s')}s") if u else ""
         print(f"  {a.get('verdict', '?'):13s} {manifest[s]['name']}{extra}")
         for p in a.get("problems", []):
             print(f"      - {p}")

@@ -1,0 +1,44 @@
+{
+ "She-Hulk": {
+  "node_id": "She-Hulk",
+  "target_words": 1439,
+  "ok": true,
+  "error": null,
+  "clean_words": 1492,
+  "ratio": 1.037,
+  "headings": [
+   "Creation",
+   "1980s",
+   "1990s and 2000s",
+   "2010s and 2020s",
+   "Origin"
+  ]
+ },
+ "Kristoff_Vernard": {
+  "node_id": "Kristoff_Vernard",
+  "target_words": 1049,
+  "ok": true,
+  "error": null,
+  "clean_words": 988,
+  "ratio": 0.942,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions"
+  ]
+ },
+ "Mahr_Vehl": {
+  "node_id": "Mahr_Vehl",
+  "target_words": 652,
+  "ok": true,
+  "error": null,
+  "clean_words": 660,
+  "ratio": 1.012,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities"
+  ]
+ }
+}

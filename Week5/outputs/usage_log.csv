@@ -1,0 +1,4 @@
+label,slug,node_id,agent_file,model,api_calls,input_tokens,cache_creation_input_tokens,cache_read_input_tokens,output_tokens_at_stream_start,article_tokens_est,duration_s,verdict,audited_at
+pilot_round1,She-Hulk,She-Hulk,agent-a68aff6ae152f65d5.jsonl,claude-fable-5-1,2,34,67506,45640,28,2042,240,PASS,2026-10-05T08:49:11Z
+pilot_round1,Kristoff_Vernard,Kristoff_Vernard,agent-a015a4dd0e655faee.jsonl,claude-fable-5-1,2,34,61842,45476,30,1347,190,PASS,2026-10-05T08:49:11Z
+pilot_round1,Mahr_Vehl,Mahr_Vehl,agent-aacb1fd81d23b0107.jsonl,claude-fable-5-1,2,34,68131,45474,32,901,228,PASS,2026-10-05T08:49:11Z

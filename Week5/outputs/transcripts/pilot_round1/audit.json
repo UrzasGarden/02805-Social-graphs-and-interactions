@@ -1,0 +1,130 @@
+{
+ "She-Hulk": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a68aff6ae152f65d5.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge pilot: She-Hulk",
+   "toolUseId": "toolu_01C2pYyZAv9QPiy6vM5m9Uwc",
+   "spawnDepth": 1,
+   "requestShape": "foreground",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 67506,
+   "cache_read_input_tokens": 45640,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 2042,
+   "duration_s": 240
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a68aff6ae152f65d5.jsonl",
+   "source_sha256": "379a980b2b94965c1cd73df9ec7144e0ce1f451b9296f526b657b8cf665b12b7",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T08:49:11Z"
+ },
+ "Kristoff_Vernard": {
+  "verdict": "PASS",
+  "problems": [
+   "final reply was 'done\\n\\nArticle saved to /home/user/02805-Social-graphs-and-in', not 'done' (noted, not fatal)"
+  ],
+  "agent_file": "agent-a015a4dd0e655faee.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge pilot: Kristoff Vernard",
+   "toolUseId": "toolu_01APM5eFoCTeH58usFN7r9hB",
+   "spawnDepth": 1,
+   "requestShape": "foreground",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done\n\nArticle saved to /home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/pilot_round1/Kristoff_Vernard.txt (wrapped in <article></article> tags, roughly 1,050 words, sections: le",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 61842,
+   "cache_read_input_tokens": 45476,
+   "output_tokens_at_stream_start": 30,
+   "api_calls": 2,
+   "article_tokens_est": 1347,
+   "duration_s": 190
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a015a4dd0e655faee.jsonl",
+   "source_sha256": "25e106335ca3289a7a53900f95a3784ca5fd1660afdad6fdf4e8442068aa3c0c",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T08:49:11Z"
+ },
+ "Mahr_Vehl": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-aacb1fd81d23b0107.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge pilot: Mahr Vehl",
+   "toolUseId": "toolu_017U5fei6qUH4b9QmzfWMqjs",
+   "spawnDepth": 1,
+   "requestShape": "foreground",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 68131,
+   "cache_read_input_tokens": 45474,
+   "output_tokens_at_stream_start": 32,
+   "api_calls": 2,
+   "article_tokens_est": 901,
+   "duration_s": 228
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-aacb1fd81d23b0107.jsonl",
+   "source_sha256": "c24aab5b7d427bc386a9ce3bbb25b95143ddd4d2b6fc4e9f847d58d894a5d61d",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T08:49:11Z"
+ }
+}
