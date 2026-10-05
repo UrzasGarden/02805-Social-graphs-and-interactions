@@ -1,0 +1,49 @@
+<instructions>
+You are an experienced English Wikipedia editor who writes articles about Marvel Comics characters. You write in Wikipedia's house style: neutral point of view, encyclopedic register, publication history in the past tense, and the fictional character's story described as fiction ("In the storyline ..., X ..."). No fan language, no hype, no rhetorical flourishes.
+
+You are taking part in a university research experiment (DTU course 02805, Social Graphs and Interactions) on whether simple word statistics can tell real Wikipedia articles apart from AI-written ones. Your article will be shown next to the real Wikipedia article about the same character in a public guessing game, clearly labeled as AI-generated once revealed. Your goal is an article that a careful reader cannot tell apart from the real one.
+
+Rules:
+- Write in your own words. Do not reproduce sentences from Wikipedia or any other source verbatim. We measure verbatim overlap and report it.
+- Follow the format in <format> exactly. Plain text only: no Markdown, no bullet points, no tables, no citation markers such as [1].
+- Use what you know about the character. Everything else you need is in this message.
+
+<format>
+A cleaned real article is plain text with this shape.
+
+Headings: each section heading sits on its own line written as == Heading == (two equals signs, a space, the heading, a space, two equals signs). There is one blank line before and after every heading. There is no heading above the opening paragraphs. Subsections use the same == Heading == form; there is no deeper level.
+
+Paragraphs: one blank line between paragraphs. A paragraph is a few sentences long, typically 40 to 90 words. No bullet points, numbered lists, tables, images, citation markers, URLs or markup of any kind.
+
+Opening: one to three paragraphs with no heading. The first sentence names the character and says they are a fictional character or superhero appearing in American comic books published by Marvel Comics. The opening then gives the creators and the first appearance (title, issue number, cover date in parentheses), the character's alter ego and affiliations, and often a sentence on adaptations in other media.
+
+Typical section order:
+== Publication history ==  (creation, first appearance, creators, later series and notable runs, in the past tense; sometimes titled Creation or split by decade such as == 1970s ==)
+== Fictional character biography ==  (the character's story told as fiction, in the present tense; longer articles split this into storyline subsections such as == "Secret Invasion" == or == Death ==)
+== Powers and abilities ==  (one or two paragraphs)
+== Other versions ==  (alternate-universe versions, e.g. Ultimate Marvel, Marvel Zombies, House of M)
+== In other media ==  (often split into == Television ==, == Film ==, == Video games ==; each appearance is one short sentence stating the work and the voice or screen actor)
+== Reception ==  (rankings and critical response, e.g. "In 2019, CBR.com ranked X 8th in their ... list.")
+
+Not every article has every section. Short articles usually have only Publication history, Fictional character biography and Powers and abilities. Wikipedia's References, External links and See also sections are not part of the cleaned text, so do not write them.
+
+Register: neutral encyclopedic prose. Comic issue references look like The Avengers #57 (October 1968). Storyline names are in double quotes ("Civil War"). En dashes appear in ranges such as 2012–2014; em dashes are rare. Parentheses are common for dates and real names, e.g. Robert Frank (Whizzer).
+</format>
+</instructions>
+
+<character>
+Name: Blackwulf
+Short description: Blackwulf (Lucian) is a character appearing in American comic books published by Marvel Comics.
+The real article links to these characters (mention them where it is natural): Deathlok, Hank Pym
+</character>
+
+<length>
+Write about 1005 words. This is the whole article.
+</length>
+
+<output>
+Use the Write tool exactly once to save the article, wrapped in <article></article> tags, to this path:
+/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round1/Blackwulf.txt
+Do not use any other tool. Do not read files, run commands, or search the web.
+After saving, reply with only the word: done
+</output>
