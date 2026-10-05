@@ -242,3 +242,55 @@ class RealCorpus:
 
     def unseen_bigrams(self, clean_text: str, node_id: str) -> list[tuple[str, str]]:
         return [b for b in paragraph_bigrams(clean_text) if self.unseen(b, node_id)]
+
+
+def excerpt(clean_text: str, target: int = 120, low: int = 90, high: int = 150) -> str:
+    """Opening of the prose, about `target` tokens, cut at a sentence boundary.
+
+    Sentences are added in order; we stop at the cut closest to `target`
+    that is at least `low` tokens (the first sentence is always kept)."""
+    best, best_gap, n, out = None, None, 0, []
+    for p_i, p in enumerate(prose_paragraphs(clean_text)):
+        for s in sentences(p):
+            n += len(tokens(s))
+            out.append((p_i, s))
+            if n >= low or best is None:
+                gap = abs(n - target)
+                if best_gap is None or gap < best_gap:
+                    best, best_gap = list(out), gap
+            if n > high:
+                break
+        if n > high:
+            break
+    paras: dict[int, list[str]] = {}
+    for p_i, s in best:
+        paras.setdefault(p_i, []).append(s)
+    return "\n\n".join(" ".join(v) for v in paras.values())
+
+
+def segments_unseen(corpus: "RealCorpus", text: str, node_id: str) -> list[list]:
+    """[[text, is_unseen], ...] covering `text`, for safe highlighting in the browser."""
+    out: list[list] = []
+    for k, p in enumerate(text.split("\n\n")):
+        if k:
+            out.append(["\n\n", False])
+        spans = [(m.start(), m.end(), m.group().lower()) for m in TOKEN_RE.finditer(p)]
+        marked = [False] * len(spans)
+        for i in range(len(spans) - 1):
+            if corpus.unseen((spans[i][2], spans[i + 1][2]), node_id):
+                marked[i] = marked[i + 1] = True
+        pos, i = 0, 0
+        while i < len(spans):
+            if not marked[i]:
+                i += 1
+                continue
+            j = i
+            while j + 1 < len(spans) and marked[j + 1]:
+                j += 1
+            if spans[i][0] > pos:
+                out.append([p[pos:spans[i][0]], False])
+            out.append([p[spans[i][0]:spans[j][1]], True])
+            pos, i = spans[j][1], j + 1
+        if pos < len(p):
+            out.append([p[pos:], False])
+    return out
