@@ -740,61 +740,137 @@
  "Typeface__character_": {
   "node_id": "Typeface_(character)",
   "target_words": 420,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 423,
+  "ratio": 1.007,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities"
+  ]
  },
  "Blackwulf": {
   "node_id": "Blackwulf",
   "target_words": 1005,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 981,
+  "ratio": 0.976,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions",
+   "Reception"
+  ]
  },
  "Captain_Midlands": {
   "node_id": "Captain_Midlands",
   "target_words": 620,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 628,
+  "ratio": 1.013,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities"
+  ]
  },
  "Digitek__character_": {
   "node_id": "Digitek_(character)",
   "target_words": 476,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 461,
+  "ratio": 0.968,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities"
+  ]
  },
  "Gremlin__comics_": {
   "node_id": "Gremlin_(comics)",
   "target_words": 600,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 711,
+  "ratio": 1.185,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities"
+  ]
  },
  "Mahr_Vehl": {
   "node_id": "Mahr_Vehl",
   "target_words": 652,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 669,
+  "ratio": 1.026,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities"
+  ]
  },
  "Oya__comics_": {
   "node_id": "Oya_(comics)",
   "target_words": 631,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 629,
+  "ratio": 0.997,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions",
+   "In other media"
+  ]
  },
  "Sean_and_Chris": {
   "node_id": "Sean_and_Chris",
   "target_words": 529,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 584,
+  "ratio": 1.104,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities"
+  ]
  },
  "Solomon_Kane__comics_": {
   "node_id": "Solomon_Kane_(comics)",
   "target_words": 746,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 807,
+  "ratio": 1.082,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "In other media"
+  ]
  },
  "Thunderbolt__Marvel_Comics_": {
   "node_id": "Thunderbolt_(Marvel_Comics)",
   "target_words": 514,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 527,
+  "ratio": 1.025,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions"
+  ]
  }
 }
