@@ -448,62 +448,152 @@
  "Lei_Kung__character_": {
   "node_id": "Lei_Kung_(character)",
   "target_words": 419,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 448,
+  "ratio": 1.069,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "In other media"
+  ]
  },
  "Rockslide__character_": {
   "node_id": "Rockslide_(character)",
   "target_words": 968,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 966,
+  "ratio": 0.998,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions",
+   "In other media",
+   "Reception"
+  ]
  },
  "Shuri__character_": {
   "node_id": "Shuri_(character)",
   "target_words": 1421,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 1427,
+  "ratio": 1.004,
+  "headings": [
+   "Publication history",
+   "Early life",
+   "Black Panther",
+   "Aja-Adanna"
+  ]
  },
  "Turbo__comics_": {
   "node_id": "Turbo_(comics)",
   "target_words": 1206,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 1285,
+  "ratio": 1.066,
+  "headings": [
+   "Publication history",
+   "Mike Jeffries and Mickey Musashi",
+   "Volx and the death of Mike Jeffries",
+   "Later career",
+   "Powers and abilities",
+   "Reception"
+  ]
  },
  "Frankenstein_s_Monster__Marvel_Comics_": {
   "node_id": "Frankenstein's_Monster_(Marvel_Comics)",
   "target_words": 1480,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 1361,
+  "ratio": 0.92,
+  "headings": [
+   "Publication history",
+   "Origin",
+   "19th century",
+   "Modern era"
+  ]
  },
  "Iron_Lad": {
   "node_id": "Iron_Lad",
   "target_words": 892,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 896,
+  "ratio": 1.004,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions",
+   "In other media",
+   "Reception"
+  ]
  },
  "Marvel_Boy__Robert_Grayson_": {
   "node_id": "Marvel_Boy_(Robert_Grayson)",
   "target_words": 794,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 877,
+  "ratio": 1.105,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions"
+  ]
  },
  "Ricochet__comics_": {
   "node_id": "Ricochet_(comics)",
   "target_words": 736,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 691,
+  "ratio": 0.939,
+  "headings": [
+   "Publication history",
+   "Peter Parker",
+   "Johnny Gallo",
+   "Powers and abilities",
+   "Video games"
+  ]
  },
  "Spider-Bitch__Ashley_Barton_": {
   "node_id": "Spider-Bitch_(Ashley_Barton)",
   "target_words": 1434,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 1417,
+  "ratio": 0.988,
+  "headings": [
+   "Publication history",
+   "\"Old Man Logan\"",
+   "\"Spider-Verse\" and \"Spider-Geddon\"",
+   "Later appearances in the Wastelands",
+   "Powers and abilities"
+  ]
  },
  "The_Union__Marvel_": {
   "node_id": "The_Union_(Marvel)",
   "target_words": 1044,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 957,
+  "ratio": 0.917,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Membership",
+   "Powers and abilities",
+   "Reception",
+   "In other media"
+  ]
  },
  "Blackthorn__character_": {
   "node_id": "Blackthorn_(character)",
