@@ -1,0 +1,121 @@
+node_id,name,doc,n_tokens,any_longest_run,any_shared_8grams,any_distinctive_8grams,own_longest_run,own_shared_8grams,own_distinctive_8grams
+Spider-Man,Spider-Man,real (vs other real pages),1416,16,15,11,,,
+Spider-Man,Spider-Man,forgery,1404,31,38,30,31.0,28.0,24.0
+She-Hulk,She-Hulk,real (vs other real pages),1512,23,38,30,,,
+She-Hulk,She-Hulk,forgery,1441,27,34,26,27.0,23.0,18.0
+Quasar_(character),Quasar (character),real (vs other real pages),989,15,21,19,,,
+Quasar_(character),Quasar (character),forgery,1040,16,18,15,16.0,12.0,10.0
+Black_Widow_(Natasha_Romanova),Black Widow (Natasha Romanova),real (vs other real pages),1422,14,7,0,,,
+Black_Widow_(Natasha_Romanova),Black Widow (Natasha Romanova),forgery,1461,17,23,16,12.0,13.0,8.0
+Black_Cat_(Marvel_Comics),Black Cat (Marvel Comics),real (vs other real pages),1519,18,20,13,,,
+Black_Cat_(Marvel_Comics),Black Cat (Marvel Comics),forgery,1395,16,21,12,12.0,13.0,8.0
+Deathlok,Deathlok,real (vs other real pages),1503,17,24,20,,,
+Deathlok,Deathlok,forgery,1533,25,27,23,25.0,23.0,19.0
+Misty_Knight,Misty Knight,real (vs other real pages),1504,16,19,12,,,
+Misty_Knight,Misty Knight,forgery,1326,19,22,14,10.0,6.0,3.0
+Black_Bolt,Black Bolt,real (vs other real pages),1516,23,49,41,,,
+Black_Bolt,Black Bolt,forgery,1513,20,33,25,17.0,18.0,12.0
+Mockingbird_(Marvel_Comics),Mockingbird (Marvel Comics),real (vs other real pages),1500,24,41,34,,,
+Mockingbird_(Marvel_Comics),Mockingbird (Marvel Comics),forgery,1430,16,43,34,13.0,18.0,16.0
+Moondragon,Moondragon,real (vs other real pages),1437,15,8,1,,,
+Moondragon,Moondragon,forgery,1486,16,12,4,12.0,7.0,2.0
+Rocket_Raccoon,Rocket Raccoon,real (vs other real pages),1478,46,63,55,,,
+Rocket_Raccoon,Rocket Raccoon,forgery,1544,27,34,25,27.0,27.0,21.0
+Captain_Marvel_(Marvel_Comics),Captain Marvel (Marvel Comics),real (vs other real pages),1535,23,108,106,,,
+Captain_Marvel_(Marvel_Comics),Captain Marvel (Marvel Comics),forgery,1578,19,21,19,19.0,15.0,13.0
+Vulcan_(Marvel_Comics),Vulcan (Marvel Comics),real (vs other real pages),1434,17,11,4,,,
+Vulcan_(Marvel_Comics),Vulcan (Marvel Comics),forgery,1462,16,23,14,16.0,15.0,9.0
+Scarlet_Spider,Scarlet Spider,real (vs other real pages),899,14,37,33,,,
+Scarlet_Spider,Scarlet Spider,forgery,1096,17,20,16,12.0,12.0,9.0
+Betsy_Braddock,Betsy Braddock,real (vs other real pages),1461,16,18,13,,,
+Betsy_Braddock,Betsy Braddock,forgery,1407,17,23,17,17.0,13.0,10.0
+Hyperion_(character),Hyperion (character),real (vs other real pages),1487,18,40,35,,,
+Hyperion_(character),Hyperion (character),forgery,1552,18,15,11,9.0,4.0,2.0
+Werewolf_by_Night,Werewolf by Night,real (vs other real pages),1359,9,2,0,,,
+Werewolf_by_Night,Werewolf by Night,forgery,1348,24,24,20,24.0,18.0,16.0
+Guardian_(Marvel_Comics),Guardian (Marvel Comics),real (vs other real pages),1449,16,38,33,,,
+Guardian_(Marvel_Comics),Guardian (Marvel Comics),forgery,1524,19,17,12,13.0,6.0,3.0
+Tarantula_(Marvel_Comics),Tarantula (Marvel Comics),real (vs other real pages),1514,12,27,25,,,
+Tarantula_(Marvel_Comics),Tarantula (Marvel Comics),forgery,1650,18,16,13,11.0,7.0,5.0
+Vance_Astrovik,Vance Astrovik,real (vs other real pages),1401,15,36,29,,,
+Vance_Astrovik,Vance Astrovik,forgery,1287,13,8,2,12.0,6.0,1.0
+Abomination_(character),Abomination (character),real (vs other real pages),1472,19,29,21,,,
+Abomination_(character),Abomination (character),forgery,1401,30,35,26,30.0,31.0,25.0
+Delroy_Garrett,Delroy Garrett,real (vs other real pages),1513,14,11,4,,,
+Delroy_Garrett,Delroy Garrett,forgery,1334,15,11,5,12.0,7.0,2.0
+Gorgon_(Inhuman),Gorgon (Inhuman),real (vs other real pages),767,18,55,47,,,
+Gorgon_(Inhuman),Gorgon (Inhuman),forgery,810,24,31,22,10.0,9.0,6.0
+Paladin_(comics),Paladin (comics),real (vs other real pages),1213,15,25,17,,,
+Paladin_(comics),Paladin (comics),forgery,1151,28,26,17,28.0,21.0,15.0
+Ch'od,Ch'od,real (vs other real pages),492,46,105,97,,,
+Ch'od,Ch'od,forgery,482,17,25,16,14.0,12.0,6.0
+Guardsman_(character),Guardsman (character),real (vs other real pages),1417,16,14,10,,,
+Guardsman_(character),Guardsman (character),forgery,1423,18,12,8,12.0,6.0,2.0
+Kristoff_Vernard,Kristoff Vernard,real (vs other real pages),1054,14,19,12,,,
+Kristoff_Vernard,Kristoff Vernard,forgery,1065,16,10,1,13.0,6.0,0.0
+Ronin_(Marvel_Comics),Ronin (Marvel Comics),real (vs other real pages),969,13,22,17,,,
+Ronin_(Marvel_Comics),Ronin (Marvel Comics),forgery,1053,17,19,15,10.0,7.0,4.0
+Balder_the_Brave,Balder the Brave,real (vs other real pages),1283,19,12,4,,,
+Balder_the_Brave,Balder the Brave,forgery,1226,19,17,9,19.0,17.0,9.0
+Gauntlet_(Joseph_Green),Gauntlet (Joseph Green),real (vs other real pages),545,12,5,0,,,
+Gauntlet_(Joseph_Green),Gauntlet (Joseph Green),forgery,607,18,15,10,10.0,3.0,0.0
+Lei_Kung_(character),Lei Kung (character),real (vs other real pages),429,16,22,15,,,
+Lei_Kung_(character),Lei Kung (character),forgery,453,19,18,10,17.0,11.0,5.0
+Rockslide_(character),Rockslide (character),real (vs other real pages),967,19,18,13,,,
+Rockslide_(character),Rockslide (character),forgery,976,17,25,20,17.0,10.0,7.0
+Shuri_(character),Shuri (character),real (vs other real pages),1443,15,13,8,,,
+Shuri_(character),Shuri (character),forgery,1449,33,41,32,33.0,36.0,31.0
+Turbo_(comics),Turbo (comics),real (vs other real pages),1200,10,6,4,,,
+Turbo_(comics),Turbo (comics),forgery,1273,16,9,7,16.0,9.0,7.0
+Frankenstein's_Monster_(Marvel_Comics),Frankenstein's Monster (Marvel Comics),real (vs other real pages),1542,19,15,7,,,
+Frankenstein's_Monster_(Marvel_Comics),Frankenstein's Monster (Marvel Comics),forgery,1401,21,27,19,21.0,18.0,10.0
+Iron_Lad,Iron Lad,real (vs other real pages),887,13,16,12,,,
+Iron_Lad,Iron Lad,forgery,892,18,18,11,9.0,6.0,4.0
+Marvel_Boy_(Robert_Grayson),Marvel Boy (Robert Grayson),real (vs other real pages),781,15,9,2,,,
+Marvel_Boy_(Robert_Grayson),Marvel Boy (Robert Grayson),forgery,884,22,28,21,18.0,17.0,10.0
+Ricochet_(comics),Ricochet (comics),real (vs other real pages),734,16,39,33,,,
+Ricochet_(comics),Ricochet (comics),forgery,700,14,11,4,14.0,8.0,2.0
+Spider-Bitch_(Ashley_Barton),Spider-Bitch (Ashley Barton),real (vs other real pages),1492,15,17,10,,,
+Spider-Bitch_(Ashley_Barton),Spider-Bitch (Ashley Barton),forgery,1452,16,16,7,12.0,9.0,4.0
+The_Union_(Marvel),The Union (Marvel),real (vs other real pages),1038,9,3,3,,,
+The_Union_(Marvel),The Union (Marvel),forgery,954,12,5,0,0.0,0.0,0.0
+Blackthorn_(character),Blackthorn (character),real (vs other real pages),1072,35,46,39,,,
+Blackthorn_(character),Blackthorn (character),forgery,1005,18,18,13,12.0,10.0,5.0
+Citizen_V,Citizen V,real (vs other real pages),659,13,6,3,,,
+Citizen_V,Citizen V,forgery,658,19,13,10,19.0,12.0,9.0
+Ajak,Ajak,real (vs other real pages),602,17,26,18,,,
+Ajak,Ajak,forgery,632,19,16,8,14.0,8.0,2.0
+Box_(comics),Box (comics),real (vs other real pages),818,13,6,3,,,
+Box_(comics),Box (comics),forgery,877,18,17,12,16.0,9.0,6.0
+Darkdevil,Darkdevil,real (vs other real pages),572,14,7,0,,,
+Darkdevil,Darkdevil,forgery,593,18,18,13,10.0,3.0,0.0
+Fandral,Fandral,real (vs other real pages),1466,16,15,8,,,
+Fandral,Fandral,forgery,1373,24,27,18,16.0,13.0,7.0
+Golem_(Marvel_Comics),Golem (Marvel Comics),real (vs other real pages),716,12,12,9,,,
+Golem_(Marvel_Comics),Golem (Marvel Comics),forgery,777,20,16,12,20.0,13.0,10.0
+Janice_Lincoln,Janice Lincoln,real (vs other real pages),1032,14,28,23,,,
+Janice_Lincoln,Janice Lincoln,forgery,972,21,17,12,21.0,17.0,12.0
+Motormouth_(comics),Motormouth (comics),real (vs other real pages),1188,18,17,9,,,
+Motormouth_(comics),Motormouth (comics),forgery,1182,16,12,3,16.0,9.0,3.0
+Skull_the_Slayer,Skull the Slayer,real (vs other real pages),525,14,8,1,,,
+Skull_the_Slayer,Skull the Slayer,forgery,560,19,16,8,12.0,5.0,0.0
+Typeface_(character),Typeface (character),real (vs other real pages),430,17,21,14,,,
+Typeface_(character),Typeface (character),forgery,425,19,17,9,16.0,9.0,3.0
+Blackwulf,Blackwulf,real (vs other real pages),1004,12,5,0,,,
+Blackwulf,Blackwulf,forgery,975,19,14,6,10.0,3.0,0.0
+Captain_Midlands,Captain Midlands,real (vs other real pages),622,13,6,0,,,
+Captain_Midlands,Captain Midlands,forgery,634,19,19,11,17.0,13.0,7.0
+Digitek_(character),Digitek (character),real (vs other real pages),480,14,10,4,,,
+Digitek_(character),Digitek (character),forgery,456,18,12,7,9.0,2.0,0.0
+Gremlin_(comics),Gremlin (comics),real (vs other real pages),604,20,24,17,,,
+Gremlin_(comics),Gremlin (comics),forgery,717,17,21,12,17.0,12.0,6.0
+Mahr_Vehl,Mahr Vehl,real (vs other real pages),655,15,16,8,,,
+Mahr_Vehl,Mahr Vehl,forgery,685,16,20,11,16.0,13.0,7.0
+Oya_(comics),Oya (comics),real (vs other real pages),632,15,13,9,,,
+Oya_(comics),Oya (comics),forgery,631,13,12,7,10.0,4.0,2.0
+Sean_and_Chris,Sean and Chris,real (vs other real pages),527,9,2,1,,,
+Sean_and_Chris,Sean and Chris,forgery,600,12,10,6,10.0,4.0,4.0
+Solomon_Kane_(comics),Solomon Kane (comics),real (vs other real pages),761,0,0,0,,,
+Solomon_Kane_(comics),Solomon Kane (comics),forgery,807,18,12,4,0.0,0.0,0.0
+Thunderbolt_(Marvel_Comics),Thunderbolt (Marvel Comics),real (vs other real pages),507,17,14,10,,,
+Thunderbolt_(Marvel_Comics),Thunderbolt (Marvel Comics),forgery,519,18,12,8,18.0,11.0,7.0

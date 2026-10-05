@@ -1,0 +1,103 @@
+{
+ "name": "D1",
+ "train_rounds": [
+  1
+ ],
+ "n_docs": 120,
+ "n_folds": 10,
+ "features": [
+  "hapax_ratio",
+  "ttr",
+  "unseen_bigram_rate",
+  "stopword_rate",
+  "comma_rate",
+  "semicolon_rate",
+  "paren_rate",
+  "dash_rate",
+  "sent_len_mean",
+  "sent_len_sd",
+  "cos_corpus",
+  "cos_neighbors"
+ ],
+ "cv": {
+  "accuracy": 0.8833333333333333,
+  "auc": 0.9322222222222223,
+  "pair_accuracy": 0.9666666666666667
+ },
+ "single_feature": {
+  "hapax_ratio": {
+   "accuracy": 0.6333,
+   "auc": 0.6733,
+   "pair_accuracy": 0.6333
+  },
+  "ttr": {
+   "accuracy": 0.6167,
+   "auc": 0.6101,
+   "pair_accuracy": 0.5667
+  },
+  "unseen_bigram_rate": {
+   "accuracy": 0.6667,
+   "auc": 0.7053,
+   "pair_accuracy": 0.8167
+  },
+  "stopword_rate": {
+   "accuracy": 0.5333,
+   "auc": 0.5269,
+   "pair_accuracy": 0.5833
+  },
+  "comma_rate": {
+   "accuracy": 0.5583,
+   "auc": 0.5408,
+   "pair_accuracy": 0.5167
+  },
+  "semicolon_rate": {
+   "accuracy": 0.5167,
+   "auc": 0.5064,
+   "pair_accuracy": 0.3667
+  },
+  "paren_rate": {
+   "accuracy": 0.7,
+   "auc": 0.7251,
+   "pair_accuracy": 0.8167
+  },
+  "dash_rate": {
+   "accuracy": 0.65,
+   "auc": 0.6593,
+   "pair_accuracy": 0.6667
+  },
+  "sent_len_mean": {
+   "accuracy": 0.75,
+   "auc": 0.8408,
+   "pair_accuracy": 0.9333
+  },
+  "sent_len_sd": {
+   "accuracy": 0.4667,
+   "auc": 0.4344,
+   "pair_accuracy": 0.4167
+  },
+  "cos_corpus": {
+   "accuracy": 0.5917,
+   "auc": 0.6161,
+   "pair_accuracy": 0.7667
+  },
+  "cos_neighbors": {
+   "accuracy": 0.625,
+   "auc": 0.6414,
+   "pair_accuracy": 0.8333
+  }
+ },
+ "coefficients": {
+  "sent_len_mean": 2.6038733180469245,
+  "sent_len_sd": -1.8368098723940818,
+  "paren_rate": 0.6431038985340852,
+  "hapax_ratio": 0.5999743670312271,
+  "unseen_bigram_rate": -0.5794836738641546,
+  "cos_corpus": -0.5354164072332015,
+  "stopword_rate": 0.43861153997428487,
+  "comma_rate": -0.3788091100186798,
+  "semicolon_rate": 0.3261415485848793,
+  "cos_neighbors": 0.2611228036604575,
+  "ttr": 0.09537742598615659,
+  "dash_rate": 0.07558408440853877
+ }
+}
