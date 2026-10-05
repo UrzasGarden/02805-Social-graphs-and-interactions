@@ -1,5 +1,4 @@
 # Week 5 "The Forger" pipeline. Install with: pip install -r Week5/requirements.txt
-anthropic>=0.40
 requests>=2.31
 numpy>=1.26
 pandas>=2.1

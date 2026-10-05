@@ -1,25 +1,33 @@
-"""Phase 2/3/5: forge Wikipedia-style articles with Claude.
+"""Render forging prompts, audit the Fable forger subagents, check their output.
 
-Usage
-  python pipeline/02_forge.py --round 1 --pilot [--dry-run] [--characters A,B,C]
-  python pipeline/02_forge.py --round N --dry-run          # estimate only, no API call
-  python pipeline/02_forge.py --round N --submit           # create a Message Batch, save its id
-  python pipeline/02_forge.py --round N --collect          # check the batch once, save results
+Forgeries are written by Fable subagents inside the Claude Code session (see
+SPEC.md, "How forging works"). This script never calls a model. It has three
+modes, each for one round (or its pilot):
 
-Rules baked in (see SPEC.md):
-  * the key is read only from the FORGE_API_KEY environment variable and never printed
-  * every paid call is logged to outputs/cost_log.csv
-  * hard stop if cumulative estimated spend would exceed config.BUDGET_USD
-  * a character whose forgery file already exists is skipped (never pay twice)
-  * missing <article> tags = failed request, reported, never guessed
+  python pipeline/02_forge.py --round 1 --plan             # count + total target words, writes nothing
+  python pipeline/02_forge.py --round 1 --render [--pilot] # write one prompt per character
+  python pipeline/02_forge.py --round 1 --audit  [--pilot] # verify each forger from its transcript
+  python pipeline/02_forge.py --round 1 --check  [--pilot] # parse + length check of each forgery
+
+Layout, with LABEL = roundN or pilot_roundN:
+  outputs/prompts/LABEL/<slug>.txt       rendered prompt, exactly what the forger receives
+  outputs/prompts/LABEL/manifest.json    slug -> node_id, target words, prompt and output paths
+  outputs/forgeries/LABEL/<slug>.txt     written by the forger
+  outputs/transcripts/LABEL/<slug>.jsonl copied forger transcript
+  outputs/transcripts/LABEL/audit.json   per-forger audit verdicts
+  outputs/forgeries/LABEL/check.json     per-forgery parse/length verdicts
+  outputs/usage_log.csv                  token usage per forger, from the transcripts
+
+<slug> is the node_id with every character outside [A-Za-z0-9_.-] replaced by "_".
 """
 from __future__ import annotations
 
 import argparse
 import csv
+import difflib
 import json
-import os
 import re
+import shutil
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -29,8 +37,8 @@ import config  # noqa: E402
 from cleaning import clean_article, word_count  # noqa: E402
 
 ARTICLE_RE = re.compile(r"<article>(.*?)</article>", re.S)
-THINKING_HEADROOM_TOKENS = 3000   # Fable 5.1 always thinks and thinking counts against max_tokens
-EXPECTED_THINKING_TOKENS = 800    # guess for the dry-run estimate at effort "low"; the pilot/round 1 calibrate it
+PROMPT_TOOLS_FORBIDDEN = {"Read", "Bash", "Grep", "Glob", "WebFetch", "WebSearch", "Edit",
+                          "NotebookEdit", "Agent", "Task", "Skill", "ToolSearch"}
 
 
 # ---------------------------------------------------------------- helpers ---
@@ -38,190 +46,24 @@ def now() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def read_prompt(name: str) -> str:
-    return (config.PROMPTS_DIR / name).read_text(encoding="utf-8")
+def slug(node_id: str) -> str:
+    return re.sub(r"[^A-Za-z0-9_.-]", "_", node_id)
 
 
-def est_tokens(text: str) -> int:
-    return int(len(text.split()) * config.WORDS_TO_TOKENS) + 1
+def label_for(round_no: int, pilot: bool) -> str:
+    return f"pilot_round{round_no}" if pilot else f"round{round_no}"
 
 
-def is_fable(model: str) -> bool:
-    return "fable" in model or "mythos" in model
+def template(name: str) -> str:
+    return (config.PROMPTS_DIR / name).read_text(encoding="utf-8").rstrip("\n")
 
 
-def get_client():
-    import anthropic
-    key = os.environ.get(config.API_KEY_ENV)
-    if not key:
-        sys.exit(f"{config.API_KEY_ENV} is not set in this environment. Add it to the cloud "
-                 "environment's settings and start a new session.")
-    return anthropic.Anthropic(api_key=key, max_retries=3, timeout=600.0)
+def load_sample() -> dict:
+    return json.loads(config.SAMPLE_FILE.read_text(encoding="utf-8"))
 
 
-def spent_so_far() -> float:
-    if not config.COST_LOG.exists():
-        return 0.0
-    with open(config.COST_LOG, newline="", encoding="utf-8") as f:
-        return sum(float(r["est_usd"]) for r in csv.DictReader(f))
-
-
-COST_FIELDS = ["timestamp", "round", "mode", "model", "node_id", "input_tokens", "cache_write_tokens",
-               "cache_read_tokens", "output_tokens", "est_usd", "batch_id"]
-
-
-def log_cost(row: dict) -> None:
-    new = not config.COST_LOG.exists()
-    config.OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
-    with open(config.COST_LOG, "a", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=COST_FIELDS)
-        if new:
-            w.writeheader()
-        w.writerow({k: row.get(k, "") for k in COST_FIELDS})
-
-
-def usage_cost(model: str, usage, batch: bool) -> tuple[dict, float]:
-    u = {
-        "input_tokens": getattr(usage, "input_tokens", 0) or 0,
-        "cache_write_tokens": getattr(usage, "cache_creation_input_tokens", 0) or 0,
-        "cache_read_tokens": getattr(usage, "cache_read_input_tokens", 0) or 0,
-        "output_tokens": getattr(usage, "output_tokens", 0) or 0,
-    }
-    usd = config.estimate_cost(model, u["input_tokens"], u["output_tokens"],
-                               u["cache_write_tokens"], u["cache_read_tokens"], batch=batch)
-    return u, usd
-
-
-# ----------------------------------------------------------------- prompts ---
-def build_system(round_no: int, sample: dict) -> list[dict]:
-    """System prompt as cacheable blocks: stable text first, cache marker on the last stable block."""
-    blocks = [{"type": "text", "text": read_prompt("forge_system.txt").replace("{FORMAT_NOTES}", read_prompt("format_notes.txt").strip())}]
-    if round_no == 3:
-        refs = sample["style_references"]
-        text = (read_prompt("forge_references_block.txt")
-                .replace("{REF1_NAME}", refs[0]["name"]).replace("{REF1_TEXT}", refs[0]["text"])
-                .replace("{REF2_NAME}", refs[1]["name"]).replace("{REF2_TEXT}", refs[1]["text"]))
-        blocks.append({"type": "text", "text": text})
-    blocks[-1]["cache_control"] = {"type": "ephemeral"}
-    return blocks
-
-
-def feedback_block(round_no: int) -> str:
-    """Detector feedback for rounds 2 and 3, produced by 04_detector.py."""
-    path = config.OUTPUTS_DIR / f"feedback_round{round_no}.json"
-    if not path.exists():
-        sys.exit(f"round {round_no} needs {path.name} (written by 04_detector.py after the previous round)")
-    fb = json.loads(path.read_text(encoding="utf-8"))
-    return (read_prompt("forge_feedback_block.txt")
-            .replace("{CAUGHT}", str(fb["caught"])).replace("{TOTAL}", str(fb["total"]))
-            .replace("{FEATURE_TABLE}", fb["feature_table"]).replace("{IMPOSSIBLE_BIGRAMS}", fb["impossible_bigrams"]))
-
-
-def build_user(round_no: int, ch: dict) -> str:
-    neighbors = ", ".join(ch["out_neighbors"]) if ch["out_neighbors"] else "(none)"
-    user = (read_prompt("forge_user_round1.txt")
-            .replace("{NAME}", ch["name"]).replace("{DESCRIPTION}", ch["description"])
-            .replace("{OUT_NEIGHBORS}", neighbors).replace("{TARGET_WORDS}", str(ch["target_words"]))
-            .replace("{LENGTH_NOTE}", ch["length_note"]))
-    if round_no in (2, 3):
-        user = feedback_block(round_no).rstrip() + "\n\n" + user
-    return user
-
-
-def request_params(model: str, system: list[dict], user: str, ch: dict) -> dict:
-    target_tokens = int(ch["target_words"] * config.WORDS_TO_TOKENS)
-    max_tokens = int(config.MAX_TOKENS_FACTOR * target_tokens)
-    params = {"model": model, "max_tokens": max_tokens, "system": system,
-              "messages": [{"role": "user", "content": user}]}
-    if is_fable(model):
-        # Thinking cannot be turned off on Fable 5.1; the lowest effort is the
-        # closest thing to "no extended thinking", and the cap needs room for it.
-        params["max_tokens"] = max_tokens + THINKING_HEADROOM_TOKENS
-        params["output_config"] = {"effort": "low"}
-    return params
-
-
-# ------------------------------------------------------------------ output ---
-def out_dir(round_no: int, pilot: bool) -> Path:
-    d = config.FORGERIES_DIR / (f"pilot_round{round_no}" if pilot else f"round{round_no}")
-    d.mkdir(parents=True, exist_ok=True)
-    return d
-
-
-def forgery_path(d: Path, node_id: str) -> Path:
-    return d / (re.sub(r"[^A-Za-z0-9_.-]", "_", node_id) + ".json")
-
-
-def parse_article(raw: str) -> tuple[str | None, str | None]:
-    m = ARTICLE_RE.search(raw)
-    if not m:
-        return None, "missing <article></article> tags"
-    return m.group(1).strip(), None
-
-
-def save_result(d: Path, ch: dict, round_no: int, model: str, mode: str, params: dict, message,
-                batch_id: str = "", custom_id: str = "") -> dict:
-    """Parse, clean, log cost, write the per-character JSON. Returns the record."""
-    raw = "".join(getattr(b, "text", "") for b in message.content if getattr(b, "type", "") == "text")
-    stop = getattr(message, "stop_reason", None)
-    usage, usd = usage_cost(model, message.usage, batch=(mode == "batch"))
-    article, err = (None, f"stop_reason={stop}") if stop == "refusal" else parse_article(raw)
-    if article is None and err is None:
-        err = "empty"
-    if article is not None and stop == "max_tokens":
-        err = "truncated at max_tokens"
-    clean = clean_article(article) if article else ""
-    rec = {
-        "node_id": ch["node_id"], "name": ch["name"], "round": round_no, "mode": mode, "model": model,
-        "timestamp": now(), "batch_id": batch_id, "custom_id": custom_id,
-        "prompt": {"system": params["system"], "user": params["messages"][0]["content"],
-                   "max_tokens": params["max_tokens"], "output_config": params.get("output_config")},
-        "raw_response": raw, "stop_reason": stop, "usage": usage, "est_usd": round(usd, 6),
-        "ok": err is None, "error": err,
-        "article_raw": article, "article_clean": clean,
-        "clean_words": word_count(clean) if clean else 0, "target_words": ch["target_words"],
-    }
-    forgery_path(d, ch["node_id"]).write_text(json.dumps(rec, ensure_ascii=False, indent=1), encoding="utf-8")
-    log_cost({"timestamp": rec["timestamp"], "round": round_no, "mode": mode, "model": model,
-              "node_id": ch["node_id"], **usage, "est_usd": f"{usd:.6f}", "batch_id": batch_id})
-    return rec
-
-
-# ----------------------------------------------------------------- dry run ---
-def dry_run(model: str, system: list[dict], todo: list[tuple[dict, str, dict]], batch: bool) -> float:
-    sys_tokens = sum(est_tokens(b["text"]) for b in system)
-    n = len(todo)
-    user_tokens = sum(est_tokens(u) for _, u, _ in todo)
-    out_tokens = sum(int(ch["target_words"] * config.WORDS_TO_TOKENS * 1.1) for ch, _, _ in todo)
-    think = EXPECTED_THINKING_TOKENS * n if is_fable(model) else 0
-    cap = sum(p["max_tokens"] for _, _, p in todo)
-    # caching: first request writes the system prompt, the rest read it
-    cache_write = sys_tokens if n else 0
-    cache_read = sys_tokens * max(n - 1, 0)
-    expected = config.estimate_cost(model, user_tokens, out_tokens + think, cache_write, cache_read, batch=batch)
-    worst = config.estimate_cost(model, user_tokens, cap, cache_write, cache_read, batch=batch)
-    uncached = config.estimate_cost(model, user_tokens + sys_tokens * n, out_tokens + think, batch=batch)
-    print(f"\nDRY RUN  model={model}  mode={'batch (50% off)' if batch else 'synchronous'}  requests={n}")
-    print(f"  system prompt ~{sys_tokens} tokens (cached after the first request; Haiku 4.5 needs >=4096 to cache, Fable >=512)")
-    print(f"  input: ~{user_tokens} user tokens + ~{sys_tokens * n} system tokens across all requests")
-    print(f"  output: ~{out_tokens} article tokens" + (f" + ~{think} thinking tokens (guess, effort=low)" if think else ""))
-    print(f"  max_tokens cap summed: {cap}")
-    print(f"  estimated cost: ${expected:.2f}  (worst case at the cap: ${worst:.2f}; without caching: ${uncached:.2f})")
-    print(f"  spent so far: ${spent_so_far():.2f} of budget ${config.BUDGET_USD:.2f}")
-    if spent_so_far() + worst > config.BUDGET_USD:
-        print("  !! worst case would exceed the budget")
-    return expected
-
-
-def budget_guard(expected: float) -> None:
-    if spent_so_far() + expected > config.BUDGET_USD:
-        sys.exit(f"HARD STOP: spent ${spent_so_far():.2f} + estimated ${expected:.2f} "
-                 f"exceeds BUDGET_USD={config.BUDGET_USD:.2f}")
-
-
-# ---------------------------------------------------------------- selection --
 def pilot_characters(sample: list[dict]) -> list[dict]:
-    """One per tier: the member whose target length is the tier's median."""
+    """One per in-degree tier: the member whose target length is the tier's median."""
     picks = []
     for tier in ("high", "middle", "low"):
         rows = sorted((c for c in sample if c["tier"] == tier), key=lambda c: c["target_words"])
@@ -229,153 +71,337 @@ def pilot_characters(sample: list[dict]) -> list[dict]:
     return picks
 
 
-# -------------------------------------------------------------------- modes --
-def run_pilot(args, model, system, d, todo) -> None:
-    client = get_client()
-    for ch, user, params in todo:
-        print(f"  forging {ch['name']} (target {ch['target_words']} words) ...", flush=True)
-        message = client.messages.create(**params)
-        rec = save_result(d, ch, args.round, model, "pilot", params, message)
-        status = "ok" if rec["ok"] else f"FAILED: {rec['error']}"
-        print(f"    {status}  words={rec['clean_words']}  stop={rec['stop_reason']}  "
-              f"in={rec['usage']['input_tokens']} cw={rec['usage']['cache_write_tokens']} "
-              f"cr={rec['usage']['cache_read_tokens']} out={rec['usage']['output_tokens']}  ${rec['est_usd']:.4f}")
-    print(f"\nspent so far: ${spent_so_far():.2f}")
-
-
-def load_batches() -> dict:
-    return json.loads(config.BATCHES_FILE.read_text(encoding="utf-8")) if config.BATCHES_FILE.exists() else {}
-
-
-def save_batches(b: dict) -> None:
-    config.BATCHES_FILE.write_text(json.dumps(b, ensure_ascii=False, indent=1), encoding="utf-8")
-
-
-def run_submit(args, model, system, d, todo) -> None:
-    from anthropic.types.message_create_params import MessageCreateParamsNonStreaming
-    from anthropic.types.messages.batch_create_params import Request
-    key = f"round{args.round}"
-    batches = load_batches()
-    open_batches = [b for b in batches.get(key, []) if not b.get("collected")]
-    if open_batches:
-        sys.exit(f"{key} already has an uncollected batch {open_batches[0]['batch_id']}; run --collect first")
-    client = get_client()
-    id_map = {}
-    requests = []
-    for i, (ch, user, params) in enumerate(todo):
-        cid = f"r{args.round}-{i:03d}"
-        id_map[cid] = ch["node_id"]
-        requests.append(Request(custom_id=cid, params=MessageCreateParamsNonStreaming(**params)))
-    batch = client.messages.batches.create(requests=requests)
-    batches.setdefault(key, []).append({"batch_id": batch.id, "model": model, "submitted": now(),
-                                        "n_requests": len(requests), "custom_ids": id_map, "collected": False})
-    save_batches(batches)
-    print(f"submitted batch {batch.id} with {len(requests)} requests (status {batch.processing_status}).")
-    print(f"saved to {config.BATCHES_FILE.relative_to(config.WEEK5_DIR)} -- commit and push now.")
-
-
-def run_collect(args, model, system, d, sample_by_id) -> None:
-    key = f"round{args.round}"
-    batches = load_batches()
-    pending = [b for b in batches.get(key, []) if not b.get("collected")]
-    if not pending:
-        sys.exit(f"no uncollected batch for {key} in {config.BATCHES_FILE.name}")
-    client = get_client()
-    for entry in pending:
-        batch = client.messages.batches.retrieve(entry["batch_id"])
-        rc = batch.request_counts
-        print(f"batch {batch.id}: status={batch.processing_status}  processing={rc.processing} "
-              f"succeeded={rc.succeeded} errored={rc.errored} canceled={rc.canceled} expired={rc.expired}")
-        if batch.processing_status != "ended":
-            print("  not finished; ask me to collect again later.")
-            continue
-        ok = failed = 0
-        for result in client.messages.batches.results(batch.id):
-            node_id = entry["custom_ids"].get(result.custom_id)
-            ch = sample_by_id.get(node_id)
-            if ch is None:
-                print(f"  unknown custom_id {result.custom_id}"); failed += 1; continue
-            if result.result.type != "succeeded":
-                err = getattr(getattr(result.result, "error", None), "type", result.result.type)
-                print(f"  {ch['name']}: {result.result.type} ({err}) -- not retried"); failed += 1
-                continue
-            params = request_params(entry["model"], system, build_user(args.round, ch), ch)
-            rec = save_result(d, ch, args.round, entry["model"], "batch", params, result.result.message,
-                              batch_id=batch.id, custom_id=result.custom_id)
-            if rec["ok"]:
-                ok += 1
-            else:
-                failed += 1
-                print(f"  {ch['name']}: FAILED {rec['error']}")
-        entry["collected"] = True
-        entry["collected_at"] = now()
-        entry["ok"] = ok
-        entry["failed"] = failed
-        save_batches(batches)
-        print(f"  saved {ok} forgeries, {failed} failures. spent so far: ${spent_so_far():.2f}. Commit and push now.")
-
-
-# --------------------------------------------------------------------- main --
-def main() -> None:
-    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--round", type=int, choices=(1, 2, 3), required=True)
-    ap.add_argument("--pilot", action="store_true", help="synchronous run on 3 characters with PILOT_MODEL")
-    ap.add_argument("--dry-run", action="store_true", help="estimate only, no API call")
-    ap.add_argument("--submit", action="store_true", help="create the Message Batch")
-    ap.add_argument("--collect", action="store_true", help="check the batch once and save results")
-    ap.add_argument("--characters", help="comma-separated node_ids to restrict to")
-    ap.add_argument("--retry-failed", action="store_true", help="redo characters whose existing file is a failure")
-    args = ap.parse_args()
-    if sum(bool(x) for x in (args.dry_run, args.submit, args.collect)) > 1:
-        ap.error("pick one of --dry-run / --submit / --collect")
-
-    sample_doc = json.loads(config.SAMPLE_FILE.read_text(encoding="utf-8"))
+def select(args, sample_doc: dict) -> list[dict]:
     sample = sample_doc["sample"]
-    sample_by_id = {c["node_id"]: c for c in sample}
-    model = config.PILOT_MODEL if args.pilot else config.FORGE_MODEL
-    system = build_system(args.round, sample_doc)
-    d = out_dir(args.round, args.pilot)
-
-    if args.collect:
-        run_collect(args, model, system, d, sample_by_id)
-        return
-
+    by_id = {c["node_id"]: c for c in sample}
     chars = pilot_characters(sample) if args.pilot else list(sample)
     if args.characters:
         wanted = [c.strip() for c in args.characters.split(",")]
-        missing = [w for w in wanted if w not in sample_by_id]
+        missing = [w for w in wanted if w not in by_id]
         if missing:
             sys.exit(f"not in sample: {missing}")
-        chars = [sample_by_id[w] for w in wanted]
+        chars = [by_id[w] for w in wanted]
+    return chars
 
-    todo, skipped = [], []
+
+def dirs(label: str) -> tuple[Path, Path, Path]:
+    return config.RENDERED_DIR / label, config.FORGERIES_DIR / label, config.TRANSCRIPTS_DIR / label
+
+
+def load_manifest(label: str) -> dict:
+    p = config.RENDERED_DIR / label / "manifest.json"
+    if not p.exists():
+        sys.exit(f"no rendered prompts for {label}; run --render first")
+    return json.loads(p.read_text(encoding="utf-8"))
+
+
+def load_audit(label: str) -> dict:
+    p = config.TRANSCRIPTS_DIR / label / "audit.json"
+    return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
+
+
+# ----------------------------------------------------------------- render ---
+def feedback_block(round_no: int) -> str:
+    """Detector feedback for rounds 2 and 3, written by 04_detector.py."""
+    path = config.OUTPUTS_DIR / f"feedback_round{round_no}.json"
+    if not path.exists():
+        sys.exit(f"round {round_no} needs {path.relative_to(config.WEEK5_DIR)} (written by 04_detector.py)")
+    fb = json.loads(path.read_text(encoding="utf-8"))
+    return (template("forge_feedback_block.txt")
+            .replace("{CAUGHT}", str(fb["caught"])).replace("{TOTAL}", str(fb["total"]))
+            .replace("{FEATURE_TABLE}", fb["feature_table"]).replace("{IMPOSSIBLE_BIGRAMS}", fb["impossible_bigrams"]))
+
+
+def render_prompt(round_no: int, ch: dict, sample_doc: dict, output_path: Path) -> str:
+    """instructions -> (r3) style references -> (r2-3) feedback -> character/length/output."""
+    parts = [template("forge_instructions.txt").replace("{FORMAT_NOTES}", template("format_notes.txt"))]
+    if round_no == 3:
+        r1, r2 = sample_doc["style_references"]
+        parts.append(template("forge_references_block.txt")
+                     .replace("{REF1_NAME}", r1["name"]).replace("{REF1_TEXT}", r1["text"])
+                     .replace("{REF2_NAME}", r2["name"]).replace("{REF2_TEXT}", r2["text"]))
+    if round_no in (2, 3):
+        parts.append(feedback_block(round_no))
+    neighbors = ", ".join(ch["out_neighbors"]) if ch["out_neighbors"] else "(none)"
+    parts.append(template("forge_character.txt")
+                 .replace("{NAME}", ch["name"]).replace("{DESCRIPTION}", ch["description"])
+                 .replace("{OUT_NEIGHBORS}", neighbors).replace("{TARGET_WORDS}", str(ch["target_words"]))
+                 .replace("{LENGTH_NOTE}", ch["length_note"]).replace("{OUTPUT_PATH}", str(output_path)))
+    text = "\n\n".join(parts)
+    leftover = re.findall(r"\{[A-Z0-9_]+\}", text)
+    if leftover:
+        sys.exit(f"unfilled placeholders in prompt for {ch['node_id']}: {leftover}")
+    return text
+
+
+def do_plan(args, sample_doc) -> None:
+    chars = select(args, sample_doc)
+    total = sum(c["target_words"] for c in chars)
+    print(f"{label_for(args.round, args.pilot)}: {len(chars)} forgeries, {total} target words in total "
+          f"(min {min(c['target_words'] for c in chars)}, max {max(c['target_words'] for c in chars)})")
+
+
+def do_render(args, sample_doc) -> None:
+    label = label_for(args.round, args.pilot)
+    pdir, fdir, _ = dirs(label)
+    pdir.mkdir(parents=True, exist_ok=True)
+    fdir.mkdir(parents=True, exist_ok=True)
+    audit = load_audit(label)
+    manifest_path = pdir / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.exists() else {}
+    chars = select(args, sample_doc)
+    pending, done, changed = [], [], []
     for ch in chars:
-        p = forgery_path(d, ch["node_id"])
-        if p.exists():
-            prev = json.loads(p.read_text(encoding="utf-8"))
-            if prev.get("ok") or not args.retry_failed:
-                skipped.append(ch["name"]); continue
-        user = build_user(args.round, ch)
-        todo.append((ch, user, request_params(model, system, user, ch)))
-    if skipped:
-        print(f"skipping {len(skipped)} existing: {', '.join(skipped[:8])}{' ...' if len(skipped) > 8 else ''}")
-    if not todo:
-        print("nothing to do"); return
-    print("characters:", ", ".join(f"{c['name']} [{c['tier']}, {c['target_words']}w]" for c, _, _ in todo[:6]),
-          "..." if len(todo) > 6 else "")
+        s = slug(ch["node_id"])
+        out = (fdir / f"{s}.txt").resolve()
+        text = render_prompt(args.round, ch, sample_doc, out)
+        ppath = pdir / f"{s}.txt"
+        if ppath.exists() and ppath.read_text(encoding="utf-8") != text:
+            changed.append(ch["name"])
+        ppath.write_text(text, encoding="utf-8")   # no trailing newline: the file is the prompt, byte for byte
+        manifest[s] = {"node_id": ch["node_id"], "name": ch["name"], "tier": ch["tier"],
+                       "in_degree": ch["in_degree"], "target_words": ch["target_words"],
+                       "prompt_path": str(ppath.relative_to(config.WEEK5_DIR)), "output_path": str(out),
+                       "rendered_at": now()}
+        (done if audit.get(s, {}).get("verdict") == "PASS" and out.exists() else pending).append(s)
+    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=1), encoding="utf-8")
+    total = sum(c["target_words"] for c in chars)
+    print(f"rendered {len(chars)} prompts for {label} into {pdir.relative_to(config.WEEK5_DIR)}  "
+          f"({total} target words in total)")
+    if changed:
+        print(f"!! prompt text changed for: {', '.join(changed)} -- earlier forgeries used the old prompt")
+    print(f"already done and audited: {len(done)}; to spawn: {len(pending)}")
+    for s in pending:
+        print(f"  {manifest[s]['prompt_path']}")
 
-    batch = not args.pilot
-    expected = dry_run(model, system, todo, batch=batch)
-    if args.dry_run:
-        print("\n(dry run only: nothing was sent)")
-        return
-    budget_guard(expected)
-    if args.pilot:
-        run_pilot(args, model, system, d, todo)
-    elif args.submit:
-        run_submit(args, model, system, d, todo)
-    else:
-        ap.error("for a non-pilot round use --dry-run, --submit or --collect")
+
+# ------------------------------------------------------------------ audit ---
+def _blocks(content) -> list[dict]:
+    if isinstance(content, str):
+        return [{"type": "text", "text": content}]
+    return [b for b in (content or []) if isinstance(b, dict)]
+
+
+def read_transcript(path: Path) -> dict:
+    """Prompt, models, tool calls, usage and final text of one subagent transcript."""
+    records = [json.loads(ln) for ln in path.read_text(encoding="utf-8").splitlines() if ln.strip()]
+    prompt = None
+    models, tools, final_text = set(), [], ""
+    usage_by_msg: dict[str, dict] = {}
+    for r in records:
+        msg = r.get("message")
+        if not isinstance(msg, dict):
+            continue
+        if r.get("type") == "user" and prompt is None:
+            texts = [b.get("text", "") for b in _blocks(msg.get("content")) if b.get("type") == "text"]
+            if texts:
+                prompt = "".join(texts)
+        if r.get("type") == "assistant":
+            if msg.get("model"):
+                models.add(msg["model"])
+            for b in _blocks(msg.get("content")):
+                if b.get("type") == "tool_use":
+                    tools.append({"name": b.get("name"), "input": b.get("input", {})})
+                elif b.get("type") == "text" and b.get("text", "").strip():
+                    final_text = b["text"].strip()
+            if msg.get("usage") and msg.get("id"):
+                usage_by_msg[msg["id"]] = msg["usage"]   # one API message can span several records
+    usage = {"input_tokens": 0, "cache_creation_input_tokens": 0, "cache_read_input_tokens": 0,
+             "output_tokens": 0, "thinking_tokens": 0, "api_calls": len(usage_by_msg)}
+    for u in usage_by_msg.values():
+        for k in ("input_tokens", "cache_creation_input_tokens", "cache_read_input_tokens", "output_tokens"):
+            usage[k] += u.get(k) or 0
+        usage["thinking_tokens"] += (u.get("output_tokens_details") or {}).get("thinking_tokens") or 0
+    return {"prompt": prompt, "models": sorted(models), "tools": tools, "final_text": final_text,
+            "usage": usage, "n_records": len(records)}
+
+
+def find_subagent_transcripts() -> list[Path]:
+    return sorted(config.CLAUDE_PROJECTS_DIR.glob("*/*/subagents/agent-*.jsonl"),
+                  key=lambda p: p.stat().st_mtime)
+
+
+def write_usage_log(rows: list[dict]) -> None:
+    fields = ["label", "slug", "node_id", "agent_file", "model", "api_calls", "input_tokens",
+              "cache_creation_input_tokens", "cache_read_input_tokens", "output_tokens", "thinking_tokens",
+              "verdict", "audited_at"]
+    existing = []
+    if config.USAGE_LOG.exists():
+        with open(config.USAGE_LOG, newline="", encoding="utf-8") as f:
+            existing = list(csv.DictReader(f))
+    keys = {(r["label"], r["agent_file"]) for r in rows}
+    merged = [r for r in existing if (r["label"], r["agent_file"]) not in keys] + rows
+    with open(config.USAGE_LOG, "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=fields)
+        w.writeheader()
+        for r in merged:
+            w.writerow({k: r.get(k, "") for k in fields})
+
+
+def do_audit(args, sample_doc) -> None:
+    label = label_for(args.round, args.pilot)
+    pdir, fdir, tdir = dirs(label)
+    manifest = load_manifest(label)
+    tdir.mkdir(parents=True, exist_ok=True)
+    transcripts = find_subagent_transcripts()
+    if not transcripts:
+        sys.exit(f"STOP: no subagent transcripts under {config.CLAUDE_PROJECTS_DIR}/*/*/subagents/. "
+                 "The audit cannot run; tell the user.")
+    parsed = {}
+    for t in transcripts:
+        try:
+            parsed[t] = read_transcript(t)
+        except Exception as e:  # noqa: BLE001
+            print(f"  unreadable transcript {t.name}: {e}")
+    audit = load_audit(label)
+    usage_rows = []
+    for s, m in manifest.items():
+        rendered = (pdir / f"{s}.txt").read_text(encoding="utf-8")
+        out = Path(m["output_path"])
+        # transcripts whose prompt is this rendered prompt, or that wrote this output path
+        exact = [t for t, d in parsed.items() if d["prompt"] == rendered]
+        near = [t for t, d in parsed.items() if t not in exact and d["prompt"] and
+                (m["output_path"] in d["prompt"] or any(c["input"].get("file_path") == m["output_path"] for c in d["tools"]))]
+        if not exact and not near:
+            if audit.get(s, {}).get("verdict") == "PASS" and out.exists():
+                continue                              # audited earlier; transcript already copied
+            audit[s] = {"verdict": "NOT_SPAWNED" if not out.exists() else "NO_TRANSCRIPT", "audited_at": now()}
+            continue
+        t = (exact or near)[-1]                       # latest spawn wins
+        d = parsed[t]
+        problems = []
+        if t not in exact:
+            diff = list(difflib.unified_diff(rendered.splitlines(), (d["prompt"] or "").splitlines(),
+                                             "rendered", "received", lineterm="", n=0))
+            problems.append("prompt differs from rendered file: " + " | ".join(diff[2:8]))
+        if d["models"] != [config.FORGER_MODEL]:
+            problems.append(f"model(s) {d['models']} != {config.FORGER_MODEL}")
+        names = [c["name"] for c in d["tools"]]
+        forbidden = [n for n in names if n != config.FORGER_TOOL]
+        contaminated = bool(forbidden)
+        if forbidden:
+            problems.append(f"forbidden tool calls: {forbidden}")
+        writes = [c for c in d["tools"] if c["name"] == config.FORGER_TOOL]
+        if len(writes) != 1:
+            problems.append(f"{len(writes)} Write calls (expected exactly 1)")
+        elif writes[0]["input"].get("file_path") != m["output_path"]:
+            problems.append(f"Write to {writes[0]['input'].get('file_path')!r}, expected {m['output_path']!r}")
+        elif not out.exists():
+            problems.append("output file missing on disk")
+        elif out.read_text(encoding="utf-8") != writes[0]["input"].get("content"):
+            problems.append("file on disk differs from what the forger wrote")
+        if d["final_text"].strip().lower().rstrip(".") != "done":
+            problems.append(f"final reply was {d['final_text'][:60]!r}, not 'done' (noted, not fatal)")
+        fatal = [p for p in problems if "not fatal" not in p]
+        verdict = "CONTAMINATED" if contaminated else ("FAIL" if fatal else "PASS")
+        dest = tdir / f"{s}.jsonl"
+        if verdict == "PASS":
+            shutil.copyfile(t, dest)
+        else:
+            rej = tdir / "rejected"
+            rej.mkdir(exist_ok=True)
+            shutil.copyfile(t, rej / f"{s}__{t.stem}.jsonl")
+            if contaminated and out.exists():
+                out.unlink()                           # spec: delete a contaminated forgery and re-spawn
+                problems.append("forgery deleted; re-spawn this forger")
+        audit[s] = {"verdict": verdict, "problems": problems, "agent_file": t.name,
+                    "models": d["models"], "tool_calls": names, "usage": d["usage"],
+                    "prompt_identical": t in exact, "audited_at": now()}
+        usage_rows.append({"label": label, "slug": s, "node_id": m["node_id"], "agent_file": t.name,
+                           "model": ",".join(d["models"]), **d["usage"], "verdict": verdict, "audited_at": now()})
+    (tdir / "audit.json").write_text(json.dumps(audit, ensure_ascii=False, indent=1), encoding="utf-8")
+    if usage_rows:
+        write_usage_log(usage_rows)
+    print(f"audit of {label}: {len(transcripts)} subagent transcripts found")
+    for s in manifest:
+        a = audit.get(s, {})
+        u = a.get("usage", {})
+        extra = (f"  in={u.get('input_tokens')} cache_w={u.get('cache_creation_input_tokens')} "
+                 f"cache_r={u.get('cache_read_input_tokens')} out={u.get('output_tokens')} "
+                 f"(thinking {u.get('thinking_tokens')})") if u else ""
+        print(f"  {a.get('verdict', '?'):13s} {manifest[s]['name']}{extra}")
+        for p in a.get("problems", []):
+            print(f"      - {p}")
+
+
+# ------------------------------------------------------------------ check ---
+def parse_forgery(path: Path) -> tuple[str | None, str | None]:
+    if not path.exists():
+        return None, "missing file"
+    m = ARTICLE_RE.search(path.read_text(encoding="utf-8"))
+    if not m:
+        return None, "missing <article></article> tags"
+    return m.group(1).strip(), None
+
+
+def do_check(args, sample_doc) -> None:
+    label = label_for(args.round, args.pilot)
+    pdir, fdir, _ = dirs(label)
+    manifest = load_manifest(label)
+    lo, hi = config.LENGTH_TOLERANCE
+    results, failures = {}, 0
+    for s, m in manifest.items():
+        article, err = parse_forgery(Path(m["output_path"]))
+        rec = {"node_id": m["node_id"], "target_words": m["target_words"], "ok": False, "error": err}
+        if article is not None:
+            clean = clean_article(article)
+            n = word_count(clean)
+            ratio = n / m["target_words"]
+            rec.update(clean_words=n, ratio=round(ratio, 3),
+                       headings=[p[3:-3] for p in clean.split("\n\n") if p.startswith("== ")])
+            if not lo <= ratio <= hi:
+                rec["error"] = f"length {n} words is {ratio:.2f}x the target {m['target_words']}"
+            else:
+                rec["ok"] = True
+        failures += not rec["ok"]
+        results[s] = rec
+        print(f"  {'ok  ' if rec['ok'] else 'FAIL'} {m['name']:32s} target {m['target_words']:5d}  "
+              f"got {rec.get('clean_words', '-'):>5}  {rec.get('ratio', '')}  {rec['error'] or ''}")
+    (fdir / "check.json").write_text(json.dumps(results, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(f"check of {label}: {len(results) - failures} ok, {failures} failed")
+    if args.compare:
+        write_comparison(label, manifest, results)
+
+
+def write_comparison(label: str, manifest: dict, results: dict) -> None:
+    arts = json.loads(config.ARTICLES_FILE.read_text(encoding="utf-8"))
+    sample = {c["node_id"]: c for c in load_sample()["sample"]}
+    esc = lambda s: s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")  # noqa: E731
+    md = [f"# {label}: forgeries next to the real cleaned pages\n\n",
+          "Left: the real Wikipedia article (CC BY-SA 4.0), cleaned comparison text. "
+          "Right: **AI-generated forgery** by a Claude Fable 5.1 subagent, after the same cleaning.\n\n"]
+    for s, m in manifest.items():
+        art, _ = parse_forgery(Path(m["output_path"]))
+        forged = clean_article(art) if art else "(no forgery)"
+        real = sample[m["node_id"]]["comparison_text"]
+        r = results.get(s, {})
+        md.append(f"## {m['name']} ({m['tier']} tier, in-degree {m['in_degree']})\n\n"
+                  f"Target {m['target_words']} words; forgery {r.get('clean_words', '-')} words. "
+                  f"Real article: {arts[m['node_id']]['url']}\n\n"
+                  f"<table><tr><th>real (cleaned)</th><th>AI-generated forgery (cleaned)</th></tr>\n<tr>\n"
+                  f"<td valign=top><pre>{esc(real)}</pre></td>\n<td valign=top><pre>{esc(forged)}</pre></td>\n"
+                  f"</tr></table>\n\n")
+    out = config.OUTPUTS_DIR / f"{label}_comparison.md"
+    out.write_text("".join(md), encoding="utf-8")
+    print(f"wrote {out.relative_to(config.WEEK5_DIR)}")
+
+
+# ------------------------------------------------------------------- main ---
+def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--round", type=int, choices=(1, 2, 3), required=True)
+    mode = ap.add_mutually_exclusive_group(required=True)
+    mode.add_argument("--plan", action="store_true", help="print count and total target words only")
+    mode.add_argument("--render", action="store_true", help="write one prompt per character")
+    mode.add_argument("--audit", action="store_true", help="verify forgers from their transcripts")
+    mode.add_argument("--check", action="store_true", help="parse and length-check the forgeries")
+    ap.add_argument("--pilot", action="store_true", help="3 characters, one per in-degree tier")
+    ap.add_argument("--characters", help="comma-separated node_ids to restrict --plan/--render to")
+    ap.add_argument("--compare", action="store_true", help="with --check: write a real-vs-forged markdown file")
+    args = ap.parse_args()
+    sample_doc = load_sample()
+    {"plan": do_plan, "render": do_render, "audit": do_audit, "check": do_check}[
+        next(k for k in ("plan", "render", "audit", "check") if getattr(args, k))](args, sample_doc)
 
 
 if __name__ == "__main__":

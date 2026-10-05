@@ -1,0 +1,32 @@
+{
+ "She-Hulk": {
+  "node_id": "She-Hulk",
+  "name": "She-Hulk",
+  "tier": "high",
+  "in_degree": 29,
+  "target_words": 1439,
+  "prompt_path": "outputs/prompts/pilot_round1/She-Hulk.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/pilot_round1/She-Hulk.txt",
+  "rendered_at": "2026-10-05T08:43:32Z"
+ },
+ "Kristoff_Vernard": {
+  "node_id": "Kristoff_Vernard",
+  "name": "Kristoff Vernard",
+  "tier": "middle",
+  "in_degree": 4,
+  "target_words": 1049,
+  "prompt_path": "outputs/prompts/pilot_round1/Kristoff_Vernard.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/pilot_round1/Kristoff_Vernard.txt",
+  "rendered_at": "2026-10-05T08:43:32Z"
+ },
+ "Mahr_Vehl": {
+  "node_id": "Mahr_Vehl",
+  "name": "Mahr Vehl",
+  "tier": "low",
+  "in_degree": 0,
+  "target_words": 652,
+  "prompt_path": "outputs/prompts/pilot_round1/Mahr_Vehl.txt",
+  "output_path": "/home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/pilot_round1/Mahr_Vehl.txt",
+  "rendered_at": "2026-10-05T08:43:32Z"
+ }
+}
