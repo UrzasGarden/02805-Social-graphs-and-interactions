@@ -144,62 +144,153 @@
  "Rocket_Raccoon": {
   "node_id": "Rocket_Raccoon",
   "target_words": 1472,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 1519,
+  "ratio": 1.032,
+  "headings": [
+   "Publication history",
+   "Fictional character biography"
+  ]
  },
  "Captain_Marvel__Marvel_Comics_": {
   "node_id": "Captain_Marvel_(Marvel_Comics)",
   "target_words": 1500,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 1523,
+  "ratio": 1.015,
+  "headings": [
+   "Publication history",
+   "Mar-Vell",
+   "Monica Rambeau",
+   "Genis-Vell"
+  ]
  },
  "Vulcan__Marvel_Comics_": {
   "node_id": "Vulcan_(Marvel_Comics)",
   "target_words": 1429,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 1437,
+  "ratio": 1.006,
+  "headings": [
+   "Publication history",
+   "Origin",
+   "\"Deadly Genesis\"",
+   "\"The Rise and Fall of the Shi'ar Empire\"",
+   "Emperor Vulcan and \"Kingbreaker\"",
+   "\"War of Kings\""
+  ]
  },
  "Scarlet_Spider": {
   "node_id": "Scarlet_Spider",
   "target_words": 881,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 1071,
+  "ratio": 1.216,
+  "headings": [
+   "Publication history",
+   "Ben Reilly",
+   "Kaine",
+   "Others",
+   "Powers and abilities",
+   "Other versions",
+   "Television",
+   "Video games",
+   "Reception"
+  ]
  },
  "Betsy_Braddock": {
   "node_id": "Betsy_Braddock",
   "target_words": 1409,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 1353,
+  "ratio": 0.96,
+  "headings": [
+   "Publication history",
+   "Early life",
+   "Captain Britain and Psylocke"
+  ]
  },
  "Hyperion__character_": {
   "node_id": "Hyperion_(character)",
   "target_words": 1482,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 1520,
+  "ratio": 1.026,
+  "headings": [
+   "Publication history",
+   "Squadron Sinister",
+   "Squadron Supreme"
+  ]
  },
  "Werewolf_by_Night": {
   "node_id": "Werewolf_by_Night",
   "target_words": 1349,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 1313,
+  "ratio": 0.973,
+  "headings": [
+   "Publication history",
+   "Fictional character biography"
+  ]
  },
  "Guardian__Marvel_Comics_": {
   "node_id": "Guardian_(Marvel_Comics)",
   "target_words": 1435,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 1507,
+  "ratio": 1.05,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions",
+   "In other media",
+   "Reception"
+  ]
  },
  "Tarantula__Marvel_Comics_": {
   "node_id": "Tarantula_(Marvel_Comics)",
   "target_words": 1479,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 1609,
+  "ratio": 1.088,
+  "headings": [
+   "Publication history",
+   "Anton Miguel Rodriguez",
+   "Luis Alvarez",
+   "Jacinda Rodríguez",
+   "Maria Vasquez",
+   "Kaine Parker",
+   "Powers and abilities",
+   "Other versions"
+  ]
  },
  "Vance_Astrovik": {
   "node_id": "Vance_Astrovik",
   "target_words": 1404,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 1285,
+  "ratio": 0.915,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Avengers",
+   "Civil War and the Initiative",
+   "Avengers Academy and later",
+   "Powers and abilities",
+   "Other versions",
+   "Video games"
+  ]
  },
  "Abomination__character_": {
   "node_id": "Abomination_(character)",
