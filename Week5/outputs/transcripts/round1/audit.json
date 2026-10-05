@@ -39,7 +39,7 @@
     "credential_org.organizationUuid"
    ]
   },
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "She-Hulk": {
   "verdict": "PASS",
@@ -81,7 +81,7 @@
     "credential_org.organizationUuid"
    ]
   },
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Quasar__character_": {
   "verdict": "PASS",
@@ -123,7 +123,7 @@
     "credential_org.organizationUuid"
    ]
   },
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Black_Widow__Natasha_Romanova_": {
   "verdict": "PASS",
@@ -165,7 +165,7 @@
     "credential_org.organizationUuid"
    ]
   },
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Black_Cat__Marvel_Comics_": {
   "verdict": "PASS",
@@ -207,7 +207,7 @@
     "credential_org.organizationUuid"
    ]
   },
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Deathlok": {
   "verdict": "PASS",
@@ -249,7 +249,7 @@
     "credential_org.organizationUuid"
    ]
   },
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Misty_Knight": {
   "verdict": "PASS",
@@ -293,7 +293,7 @@
     "credential_org.organizationUuid"
    ]
   },
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Black_Bolt": {
   "verdict": "PASS",
@@ -335,7 +335,7 @@
     "credential_org.organizationUuid"
    ]
   },
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Mockingbird__Marvel_Comics_": {
   "verdict": "PASS",
@@ -377,7 +377,7 @@
     "credential_org.organizationUuid"
    ]
   },
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Moondragon": {
   "verdict": "PASS",
@@ -419,7 +419,7 @@
     "credential_org.organizationUuid"
    ]
   },
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Rocket_Raccoon": {
   "verdict": "PASS",
@@ -461,7 +461,7 @@
     "credential_org.organizationUuid"
    ]
   },
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Captain_Marvel__Marvel_Comics_": {
   "verdict": "PASS",
@@ -503,7 +503,7 @@
     "credential_org.organizationUuid"
    ]
   },
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Vulcan__Marvel_Comics_": {
   "verdict": "PASS",
@@ -545,7 +545,7 @@
     "credential_org.organizationUuid"
    ]
   },
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Scarlet_Spider": {
   "verdict": "PASS",
@@ -587,7 +587,7 @@
     "credential_org.organizationUuid"
    ]
   },
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Betsy_Braddock": {
   "verdict": "PASS",
@@ -629,7 +629,7 @@
     "credential_org.organizationUuid"
    ]
   },
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Hyperion__character_": {
   "verdict": "PASS",
@@ -671,7 +671,7 @@
     "credential_org.organizationUuid"
    ]
   },
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Werewolf_by_Night": {
   "verdict": "PASS",
@@ -713,7 +713,7 @@
     "credential_org.organizationUuid"
    ]
   },
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Guardian__Marvel_Comics_": {
   "verdict": "PASS",
@@ -755,7 +755,7 @@
     "credential_org.organizationUuid"
    ]
   },
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Tarantula__Marvel_Comics_": {
   "verdict": "PASS",
@@ -797,7 +797,7 @@
     "credential_org.organizationUuid"
    ]
   },
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Vance_Astrovik": {
   "verdict": "PASS",
@@ -839,166 +839,546 @@
     "credential_org.organizationUuid"
    ]
   },
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Abomination__character_": {
-  "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a6db7ba2d0bef4858.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Abomination",
+   "toolUseId": "toolu_01REwM9jBU9bogsEpehR9pNx",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 20430,
+   "cache_read_input_tokens": 76081,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1871,
+   "duration_s": 148
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a6db7ba2d0bef4858.jsonl",
+   "source_sha256": "add4efe7d3a8cb3e4ddc738bbda969ddf5ca9c69eeb730ee2eb16c2cf0d9c63a",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Delroy_Garrett": {
-  "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a3a99f4db79e7d5e8.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Delroy Garrett",
+   "toolUseId": "toolu_019DuL3kTCruDPoQjiQUrHKu",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 19239,
+   "cache_read_input_tokens": 76042,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1798,
+   "duration_s": 127
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a3a99f4db79e7d5e8.jsonl",
+   "source_sha256": "0b9ae86a2ba8b342bb1de43118dd37756d6eb174e35f75a6ebb6845a03901ca3",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Gorgon__Inhuman_": {
-  "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-ae739400a949dd13f.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Gorgon",
+   "toolUseId": "toolu_013ELkrk7hbNQ5cKcFYDAbV4",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 12475,
+   "cache_read_input_tokens": 76003,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1112,
+   "duration_s": 41
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-ae739400a949dd13f.jsonl",
+   "source_sha256": "c85314d593a649304b98f7211d0a5e869d623ddad068b5206ee9d7a1ca05e2dc",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Paladin__comics_": {
-  "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a6dc69a65218ad977.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Paladin",
+   "toolUseId": "toolu_01XAgRyc49zX7eSrZ3pMwja6",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 18284,
+   "cache_read_input_tokens": 76083,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1556,
+   "duration_s": 114
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a6dc69a65218ad977.jsonl",
+   "source_sha256": "972fae3dc679c1a37da32df13738ed718a0bebdcc042d148535bc09f0303aa0e",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Ch_od": {
-  "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a480a1fb0a019b352.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Ch'od",
+   "toolUseId": "toolu_01E29Ca5mbdfjikv82nNBP2s",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 12345,
+   "cache_read_input_tokens": 76011,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 662,
+   "duration_s": 39
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a480a1fb0a019b352.jsonl",
+   "source_sha256": "90d28f54185b615d061956e6bf9e93c2235e8d65ec7362d1a28ada0cb81fdb44",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Guardsman__character_": {
-  "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-abf7455c1ceec9c21.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Guardsman",
+   "toolUseId": "toolu_01NuACoyAJowSNfaHfiReZ71",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 15982,
+   "cache_read_input_tokens": 76066,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1935,
+   "duration_s": 92
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-abf7455c1ceec9c21.jsonl",
+   "source_sha256": "a2fa7672c9f536a03e7005a65653445eef503c0eb64825451516440b3bb03c3d",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Kristoff_Vernard": {
-  "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a8a75d0e3eeff1ad1.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Kristoff Vernard",
+   "toolUseId": "toolu_019WKA4qV9QSHQZJcsxXeCBG",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 14420,
+   "cache_read_input_tokens": 76025,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1459,
+   "duration_s": 71
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a8a75d0e3eeff1ad1.jsonl",
+   "source_sha256": "a3fe0d9446624c28a53ca7e2de50d780f3e57fb9c81ae6bfc8905f0416f286b5",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Ronin__Marvel_Comics_": {
-  "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a630d14e31dfb138b.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Ronin",
+   "toolUseId": "toolu_01Jjgm9zckBEdqCGdUWFqPYS",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 17168,
+   "cache_read_input_tokens": 76041,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1487,
+   "duration_s": 103
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a630d14e31dfb138b.jsonl",
+   "source_sha256": "8410449e31cf0fcb0eee4b064b1000e626ddea601127154cdb6378e572c8bcc4",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Balder_the_Brave": {
-  "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a6105352d6b1bd730.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Balder the Brave",
+   "toolUseId": "toolu_01QFjnzrBH6CZWXD4KhR21qV",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 22603,
+   "cache_read_input_tokens": 76031,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1676,
+   "duration_s": 181
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a6105352d6b1bd730.jsonl",
+   "source_sha256": "54d65dd18cfdeeeb3a40599ea2440c368afe89573805599625f6cc7528d58b74",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Gauntlet__Joseph_Green_": {
-  "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-aa2c4cd5ef9bdb018.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Gauntlet",
+   "toolUseId": "toolu_019r9mSMdskPTJ2PNEhPDyyU",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 13126,
+   "cache_read_input_tokens": 76032,
+   "output_tokens_at_stream_start": 30,
+   "api_calls": 2,
+   "article_tokens_est": 823,
+   "duration_s": 49
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-aa2c4cd5ef9bdb018.jsonl",
+   "source_sha256": "035eaa4e04b73099995857a8ec7318c32cc0e0770af6deb2c68c9a03b1e07b39",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Lei_Kung__character_": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Rockslide__character_": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Shuri__character_": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Turbo__comics_": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Frankenstein_s_Monster__Marvel_Comics_": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Iron_Lad": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Marvel_Boy__Robert_Grayson_": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Ricochet__comics_": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Spider-Bitch__Ashley_Barton_": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "The_Union__Marvel_": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Blackthorn__character_": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Citizen_V": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Ajak": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Box__comics_": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Darkdevil": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Fandral": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Golem__Marvel_Comics_": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Janice_Lincoln": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Motormouth__comics_": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Skull_the_Slayer": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Typeface__character_": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Blackwulf": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Captain_Midlands": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Digitek__character_": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Gremlin__comics_": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Mahr_Vehl": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Oya__comics_": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Sean_and_Chris": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Solomon_Kane__comics_": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  },
  "Thunderbolt__Marvel_Comics_": {
   "verdict": "NOT_SPAWNED",
-  "audited_at": "2026-10-05T09:13:34Z"
+  "audited_at": "2026-10-05T09:18:33Z"
  }
 }

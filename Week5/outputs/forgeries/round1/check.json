@@ -295,62 +295,155 @@
  "Abomination__character_": {
   "node_id": "Abomination_(character)",
   "target_words": 1455,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 1378,
+  "ratio": 0.947,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Death"
+  ]
  },
  "Delroy_Garrett": {
   "node_id": "Delroy_Garrett",
   "target_words": 1498,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 1318,
+  "ratio": 0.88,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Avengers",
+   "3-D Man",
+   "\"Secret Invasion\"",
+   "Agents of Atlas"
+  ]
  },
  "Gorgon__Inhuman_": {
   "node_id": "Gorgon_(Inhuman)",
   "target_words": 764,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 805,
+  "ratio": 1.054,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions",
+   "Television",
+   "Video games"
+  ]
  },
  "Paladin__comics_": {
   "node_id": "Paladin_(comics)",
   "target_words": 1183,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 1139,
+  "ratio": 0.963,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Heroes for Hire",
+   "Thunderbolts",
+   "Villains for Hire",
+   "Powers and abilities"
+  ]
  },
  "Ch_od": {
   "node_id": "Ch'od",
   "target_words": 488,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 481,
+  "ratio": 0.986,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "In other media"
+  ]
  },
  "Guardsman__character_": {
   "node_id": "Guardsman_(character)",
   "target_words": 1444,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 1419,
+  "ratio": 0.983,
+  "headings": [
+   "Publication history",
+   "Kevin O'Brien",
+   "Michael O'Brien",
+   "The Vault Guardsmen"
+  ]
  },
  "Kristoff_Vernard": {
   "node_id": "Kristoff_Vernard",
   "target_words": 1049,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 1069,
+  "ratio": 1.019,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions",
+   "Reception"
+  ]
  },
  "Ronin__Marvel_Comics_": {
   "node_id": "Ronin_(Marvel_Comics)",
   "target_words": 986,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 1066,
+  "ratio": 1.081,
+  "headings": [
+   "Publication history",
+   "Maya Lopez",
+   "Clint Barton",
+   "Alexei Shostakov",
+   "Eric Brooks",
+   "Other users",
+   "Powers and abilities",
+   "Other versions",
+   "Television",
+   "Film",
+   "Video games",
+   "Reception"
+  ]
  },
  "Balder_the_Brave": {
   "node_id": "Balder_the_Brave",
   "target_words": 1276,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 1227,
+  "ratio": 0.962,
+  "headings": [
+   "Publication history",
+   "Early life",
+   "Death and Ragnarok",
+   "Ruler of Asgard"
+  ]
  },
  "Gauntlet__Joseph_Green_": {
   "node_id": "Gauntlet_(Joseph_Green)",
   "target_words": 550,
-  "ok": false,
-  "error": "missing file"
+  "ok": true,
+  "error": null,
+  "clean_words": 602,
+  "ratio": 1.095,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities"
+  ]
  },
  "Lei_Kung__character_": {
   "node_id": "Lei_Kung_(character)",
