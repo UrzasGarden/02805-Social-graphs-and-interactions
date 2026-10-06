@@ -138,7 +138,8 @@
         box.appendChild(prob);
         const foot = el("p", "note");
         foot.append(pair.detector_correct ? "The word counter caught it too. " : "Fable fooled the word counter here as well. ",
-          el("mark", null, "Highlighted"), " = word pairs no real Marvel article uses. ");
+          el("mark", null, "Highlighted"), " = word pairs that appear in no other hero's Wikipedia article. ",
+          "This hero's own article is left out, since Fable never saw it, so a pair can still show up on the real side. ");
         const a = el("a", null, "Real article ↗");
         a.href = pair.url; a.target = "_blank"; a.rel = "noopener";
         foot.appendChild(a);
