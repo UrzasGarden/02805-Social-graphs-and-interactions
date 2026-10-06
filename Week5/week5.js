@@ -136,6 +136,18 @@
     table.append(thead, tbody);
   }
 
+  // one square per hero: caught first, the pairs where Fable fooled the counter last
+  function drawTally(root, data) {
+    const pairs = data.rounds["1"].pairs.slice().sort((a, b) => (b.detector_correct ? 1 : 0) - (a.detector_correct ? 1 : 0));
+    root.replaceChildren(...pairs.map(p => {
+      const c = el("div", "c" + (p.detector_correct ? "" : " fooled"));
+      c.title = `${p.name}: ${p.detector_correct ? "fake caught" : "Fable fooled the counter"}`;
+      return c;
+    }));
+    const names = document.getElementById("tally-fooled");
+    if (names) names.textContent = pairs.filter(p => !p.detector_correct).map(p => p.name).join(", ");
+  }
+
   function fillStats(data) {
     const s = data.stats;
     const values = { n_pairs: String(s.n_pairs), n_features: String(s.n_features),
@@ -153,6 +165,8 @@
     .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(data => {
       fillStats(data);
+      const tallyRoot = document.getElementById("tally-strip");
+      if (tallyRoot) drawTally(tallyRoot, data);
       const vsRoot = document.getElementById("vs-figure");
       const vs = vsRoot ? drawVs(vsRoot, data) : null;
       const tellsRoot = document.getElementById("tells");
