@@ -1,0 +1,121 @@
+node_id,name,tier,in_degree,round,label,p_forged_oof
+Spider-Man,Spider-Man,high,106,0,0,0.28918097722309843
+Spider-Man,Spider-Man,high,106,1,1,0.8607890128543213
+She-Hulk,She-Hulk,high,29,0,0,0.5033242450797896
+She-Hulk,She-Hulk,high,29,1,1,0.8443990865376544
+Quasar_(character),Quasar (character),high,24,0,0,0.29423417201830526
+Quasar_(character),Quasar (character),high,24,1,1,0.8796626340487287
+Black_Widow_(Natasha_Romanova),Black Widow (Natasha Romanova),high,22,0,0,0.9294267027370104
+Black_Widow_(Natasha_Romanova),Black Widow (Natasha Romanova),high,22,1,1,0.9987524235634042
+Black_Cat_(Marvel_Comics),Black Cat (Marvel Comics),high,21,0,0,0.7960860326258157
+Black_Cat_(Marvel_Comics),Black Cat (Marvel Comics),high,21,1,1,0.9914099934419389
+Deathlok,Deathlok,high,17,0,0,0.014033309340243903
+Deathlok,Deathlok,high,17,1,1,0.9256732580787417
+Misty_Knight,Misty Knight,high,15,0,0,0.03741674145013296
+Misty_Knight,Misty Knight,high,15,1,1,0.9775526784772163
+Black_Bolt,Black Bolt,high,13,0,0,0.37431622745536464
+Black_Bolt,Black Bolt,high,13,1,1,0.9898785449966984
+Mockingbird_(Marvel_Comics),Mockingbird (Marvel Comics),high,13,0,0,0.5980757266409157
+Mockingbird_(Marvel_Comics),Mockingbird (Marvel Comics),high,13,1,1,0.8724663183036475
+Moondragon,Moondragon,high,11,0,0,0.02294329271915452
+Moondragon,Moondragon,high,11,1,1,0.9546393289288668
+Rocket_Raccoon,Rocket Raccoon,high,10,0,0,0.2751915136434558
+Rocket_Raccoon,Rocket Raccoon,high,10,1,1,0.9564868695173983
+Captain_Marvel_(Marvel_Comics),Captain Marvel (Marvel Comics),high,9,0,0,0.01027837258677052
+Captain_Marvel_(Marvel_Comics),Captain Marvel (Marvel Comics),high,9,1,1,0.9802672036231681
+Vulcan_(Marvel_Comics),Vulcan (Marvel Comics),high,9,0,0,0.36541739212653823
+Vulcan_(Marvel_Comics),Vulcan (Marvel Comics),high,9,1,1,0.9245927040254376
+Scarlet_Spider,Scarlet Spider,high,8,0,0,0.8037448514856818
+Scarlet_Spider,Scarlet Spider,high,8,1,1,0.7104985062385301
+Betsy_Braddock,Betsy Braddock,high,7,0,0,0.33923238114766435
+Betsy_Braddock,Betsy Braddock,high,7,1,1,0.7146428868851341
+Hyperion_(character),Hyperion (character),high,7,0,0,0.027616374918719874
+Hyperion_(character),Hyperion (character),high,7,1,1,0.9884251609187698
+Werewolf_by_Night,Werewolf by Night,high,7,0,0,0.36124746141169745
+Werewolf_by_Night,Werewolf by Night,high,7,1,1,0.9661405379947642
+Guardian_(Marvel_Comics),Guardian (Marvel Comics),high,6,0,0,0.04751638767870442
+Guardian_(Marvel_Comics),Guardian (Marvel Comics),high,6,1,1,0.689504710520468
+Tarantula_(Marvel_Comics),Tarantula (Marvel Comics),high,6,0,0,0.09468747606809196
+Tarantula_(Marvel_Comics),Tarantula (Marvel Comics),high,6,1,1,0.9381450150025333
+Vance_Astrovik,Vance Astrovik,high,5,0,0,0.23328140467349337
+Vance_Astrovik,Vance Astrovik,high,5,1,1,0.8252405778528163
+Abomination_(character),Abomination (character),middle,5,0,0,0.8641576457403136
+Abomination_(character),Abomination (character),middle,5,1,1,0.9973024749432152
+Delroy_Garrett,Delroy Garrett,middle,5,0,0,0.07132905413850966
+Delroy_Garrett,Delroy Garrett,middle,5,1,1,0.9560468908682733
+Gorgon_(Inhuman),Gorgon (Inhuman),middle,5,0,0,0.05928661753773527
+Gorgon_(Inhuman),Gorgon (Inhuman),middle,5,1,1,0.9711082678574582
+Paladin_(comics),Paladin (comics),middle,5,0,0,0.13382038805653423
+Paladin_(comics),Paladin (comics),middle,5,1,1,0.9373384821843948
+Ch'od,Ch'od,middle,4,0,0,0.3627411351517813
+Ch'od,Ch'od,middle,4,1,1,0.47392699277028805
+Guardsman_(character),Guardsman (character),middle,4,0,0,0.014821926305367076
+Guardsman_(character),Guardsman (character),middle,4,1,1,0.9643361925950774
+Kristoff_Vernard,Kristoff Vernard,middle,4,0,0,0.4674393478702549
+Kristoff_Vernard,Kristoff Vernard,middle,4,1,1,0.4291365384298738
+Ronin_(Marvel_Comics),Ronin (Marvel Comics),middle,4,0,0,0.3078079529782461
+Ronin_(Marvel_Comics),Ronin (Marvel Comics),middle,4,1,1,0.7470043901753647
+Balder_the_Brave,Balder the Brave,middle,3,0,0,0.29021586366083385
+Balder_the_Brave,Balder the Brave,middle,3,1,1,0.5977718470590612
+Gauntlet_(Joseph_Green),Gauntlet (Joseph Green),middle,3,0,0,0.41694205065892787
+Gauntlet_(Joseph_Green),Gauntlet (Joseph Green),middle,3,1,1,0.5337378870400497
+Lei_Kung_(character),Lei Kung (character),middle,3,0,0,0.013975001281157085
+Lei_Kung_(character),Lei Kung (character),middle,3,1,1,0.8785270812141615
+Rockslide_(character),Rockslide (character),middle,3,0,0,0.14078808518508337
+Rockslide_(character),Rockslide (character),middle,3,1,1,0.7418012232382829
+Shuri_(character),Shuri (character),middle,3,0,0,0.18019171129886757
+Shuri_(character),Shuri (character),middle,3,1,1,0.9640012028559215
+Turbo_(comics),Turbo (comics),middle,3,0,0,0.18780380528748725
+Turbo_(comics),Turbo (comics),middle,3,1,1,0.9373791380754922
+Frankenstein's_Monster_(Marvel_Comics),Frankenstein's Monster (Marvel Comics),middle,2,0,0,0.0026270563704736
+Frankenstein's_Monster_(Marvel_Comics),Frankenstein's Monster (Marvel Comics),middle,2,1,1,0.8240599200333326
+Iron_Lad,Iron Lad,middle,2,0,0,0.3548426683410422
+Iron_Lad,Iron Lad,middle,2,1,1,0.9864359148810872
+Marvel_Boy_(Robert_Grayson),Marvel Boy (Robert Grayson),middle,2,0,0,0.009296070738645835
+Marvel_Boy_(Robert_Grayson),Marvel Boy (Robert Grayson),middle,2,1,1,0.9286404563698103
+Ricochet_(comics),Ricochet (comics),middle,2,0,0,0.07397251640570901
+Ricochet_(comics),Ricochet (comics),middle,2,1,1,0.11772729366705736
+Spider-Bitch_(Ashley_Barton),Spider-Bitch (Ashley Barton),middle,2,0,0,0.4862816113367789
+Spider-Bitch_(Ashley_Barton),Spider-Bitch (Ashley Barton),middle,2,1,1,0.9741191519282347
+The_Union_(Marvel),The Union (Marvel),middle,2,0,0,0.021242012152748298
+The_Union_(Marvel),The Union (Marvel),middle,2,1,1,0.6955600480833694
+Blackthorn_(character),Blackthorn (character),low,2,0,0,0.1549588428608525
+Blackthorn_(character),Blackthorn (character),low,2,1,1,0.5642990559988988
+Citizen_V,Citizen V,low,2,0,0,0.24449610745296088
+Citizen_V,Citizen V,low,2,1,1,0.3302753682234548
+Ajak,Ajak,low,1,0,0,0.05561979195341235
+Ajak,Ajak,low,1,1,1,0.8961321093498991
+Box_(comics),Box (comics),low,1,0,0,0.0011736551193275058
+Box_(comics),Box (comics),low,1,1,1,0.13969927852764133
+Darkdevil,Darkdevil,low,1,0,0,0.13169445939230917
+Darkdevil,Darkdevil,low,1,1,1,0.9431896293424074
+Fandral,Fandral,low,1,0,0,0.0036120055617013622
+Fandral,Fandral,low,1,1,1,0.8751865925256188
+Golem_(Marvel_Comics),Golem (Marvel Comics),low,1,0,0,0.5540601185572909
+Golem_(Marvel_Comics),Golem (Marvel Comics),low,1,1,1,0.8843716458098163
+Janice_Lincoln,Janice Lincoln,low,1,0,0,0.0218196055037476
+Janice_Lincoln,Janice Lincoln,low,1,1,1,0.7781210228108677
+Motormouth_(comics),Motormouth (comics),low,1,0,0,0.05492913371278902
+Motormouth_(comics),Motormouth (comics),low,1,1,1,0.9199189777451086
+Skull_the_Slayer,Skull the Slayer,low,1,0,0,0.059977495971590425
+Skull_the_Slayer,Skull the Slayer,low,1,1,1,0.9255030260194995
+Typeface_(character),Typeface (character),low,1,0,0,0.6139060600205574
+Typeface_(character),Typeface (character),low,1,1,1,0.8167536468168671
+Blackwulf,Blackwulf,low,0,0,0,0.013433105296046945
+Blackwulf,Blackwulf,low,0,1,1,0.783947909956073
+Captain_Midlands,Captain Midlands,low,0,0,0,0.4156275857857242
+Captain_Midlands,Captain Midlands,low,0,1,1,0.6410872570674085
+Digitek_(character),Digitek (character),low,0,0,0,0.13313952118242095
+Digitek_(character),Digitek (character),low,0,1,1,0.856690637780128
+Gremlin_(comics),Gremlin (comics),low,0,0,0,0.06009722895373915
+Gremlin_(comics),Gremlin (comics),low,0,1,1,0.5357558423775443
+Mahr_Vehl,Mahr Vehl,low,0,0,0,0.150658229181535
+Mahr_Vehl,Mahr Vehl,low,0,1,1,0.5776207429231963
+Oya_(comics),Oya (comics),low,0,0,0,0.26863615898835275
+Oya_(comics),Oya (comics),low,0,1,1,0.6509266566347937
+Sean_and_Chris,Sean and Chris,low,0,0,0,0.027450324125479993
+Sean_and_Chris,Sean and Chris,low,0,1,1,0.11237441695935473
+Solomon_Kane_(comics),Solomon Kane (comics),low,0,0,0,0.0002115695928222379
+Solomon_Kane_(comics),Solomon Kane (comics),low,0,1,1,0.5143991495032102
+Thunderbolt_(Marvel_Comics),Thunderbolt (Marvel Comics),low,0,0,0,0.012989665626535194
+Thunderbolt_(Marvel_Comics),Thunderbolt (Marvel Comics),low,0,1,1,0.5935990186331973

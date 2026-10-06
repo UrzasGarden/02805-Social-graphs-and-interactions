@@ -1,0 +1,876 @@
+{
+ "Spider-Man": {
+  "node_id": "Spider-Man",
+  "target_words": 1365,
+  "ok": true,
+  "error": null,
+  "clean_words": 1361,
+  "ratio": 0.997,
+  "headings": [
+   "Creation and development",
+   "1960s and 1970s",
+   "1980s and 1990s",
+   "2000s and 2010s"
+  ]
+ },
+ "She-Hulk": {
+  "node_id": "She-Hulk",
+  "target_words": 1439,
+  "ok": true,
+  "error": null,
+  "clean_words": 1405,
+  "ratio": 0.976,
+  "headings": [
+   "Creation",
+   "1980s",
+   "1990s and 2000s",
+   "2010s and 2020s",
+   "Origin",
+   "Avengers and Fantastic Four"
+  ]
+ },
+ "Quasar__character_": {
+  "node_id": "Quasar_(character)",
+  "target_words": 973,
+  "ok": true,
+  "error": null,
+  "clean_words": 1022,
+  "ratio": 1.05,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions",
+   "In other media"
+  ]
+ },
+ "Black_Widow__Natasha_Romanova_": {
+  "node_id": "Black_Widow_(Natasha_Romanova)",
+  "target_words": 1403,
+  "ok": true,
+  "error": null,
+  "clean_words": 1429,
+  "ratio": 1.019,
+  "headings": [
+   "1960s",
+   "1970s",
+   "1980s and 1990s",
+   "2000s",
+   "2010s and 2020s"
+  ]
+ },
+ "Black_Cat__Marvel_Comics_": {
+  "node_id": "Black_Cat_(Marvel_Comics)",
+  "target_words": 1477,
+  "ok": true,
+  "error": null,
+  "clean_words": 1352,
+  "ratio": 0.915,
+  "headings": [
+   "Publication history",
+   "Fictional character biography"
+  ]
+ },
+ "Deathlok": {
+  "node_id": "Deathlok",
+  "target_words": 1441,
+  "ok": true,
+  "error": null,
+  "clean_words": 1493,
+  "ratio": 1.036,
+  "headings": [
+   "Publication history",
+   "Luther Manning",
+   "John Kelly",
+   "Michael Collins"
+  ]
+ },
+ "Misty_Knight": {
+  "node_id": "Misty_Knight",
+  "target_words": 1487,
+  "ok": true,
+  "error": null,
+  "clean_words": 1322,
+  "ratio": 0.889,
+  "headings": [
+   "Publication history",
+   "Early life",
+   "Iron Fist and the X-Men",
+   "Daughters of the Dragon",
+   "\"Civil War\" and Heroes for Hire"
+  ]
+ },
+ "Black_Bolt": {
+  "node_id": "Black_Bolt",
+  "target_words": 1486,
+  "ok": true,
+  "error": null,
+  "clean_words": 1500,
+  "ratio": 1.009,
+  "headings": [
+   "Publication history",
+   "Fictional character biography"
+  ]
+ },
+ "Mockingbird__Marvel_Comics_": {
+  "node_id": "Mockingbird_(Marvel_Comics)",
+  "target_words": 1403,
+  "ok": true,
+  "error": null,
+  "clean_words": 1344,
+  "ratio": 0.958,
+  "headings": [
+   "Publication history",
+   "Fictional character biography"
+  ]
+ },
+ "Moondragon": {
+  "node_id": "Moondragon",
+  "target_words": 1445,
+  "ok": true,
+  "error": null,
+  "clean_words": 1475,
+  "ratio": 1.021,
+  "headings": [
+   "Publication history",
+   "Origin",
+   "Thanos and the Avengers",
+   "Ba-Bani and the Defenders",
+   "Infinity Watch",
+   "Captain Marvel and Phyla-Vell",
+   "\"Annihilation\" and death"
+  ]
+ },
+ "Rocket_Raccoon": {
+  "node_id": "Rocket_Raccoon",
+  "target_words": 1472,
+  "ok": true,
+  "error": null,
+  "clean_words": 1519,
+  "ratio": 1.032,
+  "headings": [
+   "Publication history",
+   "Fictional character biography"
+  ]
+ },
+ "Captain_Marvel__Marvel_Comics_": {
+  "node_id": "Captain_Marvel_(Marvel_Comics)",
+  "target_words": 1500,
+  "ok": true,
+  "error": null,
+  "clean_words": 1523,
+  "ratio": 1.015,
+  "headings": [
+   "Publication history",
+   "Mar-Vell",
+   "Monica Rambeau",
+   "Genis-Vell"
+  ]
+ },
+ "Vulcan__Marvel_Comics_": {
+  "node_id": "Vulcan_(Marvel_Comics)",
+  "target_words": 1429,
+  "ok": true,
+  "error": null,
+  "clean_words": 1437,
+  "ratio": 1.006,
+  "headings": [
+   "Publication history",
+   "Origin",
+   "\"Deadly Genesis\"",
+   "\"The Rise and Fall of the Shi'ar Empire\"",
+   "Emperor Vulcan and \"Kingbreaker\"",
+   "\"War of Kings\""
+  ]
+ },
+ "Scarlet_Spider": {
+  "node_id": "Scarlet_Spider",
+  "target_words": 881,
+  "ok": true,
+  "error": null,
+  "clean_words": 1071,
+  "ratio": 1.216,
+  "headings": [
+   "Publication history",
+   "Ben Reilly",
+   "Kaine",
+   "Others",
+   "Powers and abilities",
+   "Other versions",
+   "Television",
+   "Video games",
+   "Reception"
+  ]
+ },
+ "Betsy_Braddock": {
+  "node_id": "Betsy_Braddock",
+  "target_words": 1409,
+  "ok": true,
+  "error": null,
+  "clean_words": 1353,
+  "ratio": 0.96,
+  "headings": [
+   "Publication history",
+   "Early life",
+   "Captain Britain and Psylocke"
+  ]
+ },
+ "Hyperion__character_": {
+  "node_id": "Hyperion_(character)",
+  "target_words": 1482,
+  "ok": true,
+  "error": null,
+  "clean_words": 1520,
+  "ratio": 1.026,
+  "headings": [
+   "Publication history",
+   "Squadron Sinister",
+   "Squadron Supreme"
+  ]
+ },
+ "Werewolf_by_Night": {
+  "node_id": "Werewolf_by_Night",
+  "target_words": 1349,
+  "ok": true,
+  "error": null,
+  "clean_words": 1313,
+  "ratio": 0.973,
+  "headings": [
+   "Publication history",
+   "Fictional character biography"
+  ]
+ },
+ "Guardian__Marvel_Comics_": {
+  "node_id": "Guardian_(Marvel_Comics)",
+  "target_words": 1435,
+  "ok": true,
+  "error": null,
+  "clean_words": 1507,
+  "ratio": 1.05,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions",
+   "In other media",
+   "Reception"
+  ]
+ },
+ "Tarantula__Marvel_Comics_": {
+  "node_id": "Tarantula_(Marvel_Comics)",
+  "target_words": 1479,
+  "ok": true,
+  "error": null,
+  "clean_words": 1609,
+  "ratio": 1.088,
+  "headings": [
+   "Publication history",
+   "Anton Miguel Rodriguez",
+   "Luis Alvarez",
+   "Jacinda Rodríguez",
+   "Maria Vasquez",
+   "Kaine Parker",
+   "Powers and abilities",
+   "Other versions"
+  ]
+ },
+ "Vance_Astrovik": {
+  "node_id": "Vance_Astrovik",
+  "target_words": 1404,
+  "ok": true,
+  "error": null,
+  "clean_words": 1285,
+  "ratio": 0.915,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Avengers",
+   "Civil War and the Initiative",
+   "Avengers Academy and later",
+   "Powers and abilities",
+   "Other versions",
+   "Video games"
+  ]
+ },
+ "Abomination__character_": {
+  "node_id": "Abomination_(character)",
+  "target_words": 1455,
+  "ok": true,
+  "error": null,
+  "clean_words": 1378,
+  "ratio": 0.947,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Death"
+  ]
+ },
+ "Delroy_Garrett": {
+  "node_id": "Delroy_Garrett",
+  "target_words": 1498,
+  "ok": true,
+  "error": null,
+  "clean_words": 1318,
+  "ratio": 0.88,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Avengers",
+   "3-D Man",
+   "\"Secret Invasion\"",
+   "Agents of Atlas"
+  ]
+ },
+ "Gorgon__Inhuman_": {
+  "node_id": "Gorgon_(Inhuman)",
+  "target_words": 764,
+  "ok": true,
+  "error": null,
+  "clean_words": 805,
+  "ratio": 1.054,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions",
+   "Television",
+   "Video games"
+  ]
+ },
+ "Paladin__comics_": {
+  "node_id": "Paladin_(comics)",
+  "target_words": 1183,
+  "ok": true,
+  "error": null,
+  "clean_words": 1139,
+  "ratio": 0.963,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Heroes for Hire",
+   "Thunderbolts",
+   "Villains for Hire",
+   "Powers and abilities"
+  ]
+ },
+ "Ch_od": {
+  "node_id": "Ch'od",
+  "target_words": 488,
+  "ok": true,
+  "error": null,
+  "clean_words": 481,
+  "ratio": 0.986,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "In other media"
+  ]
+ },
+ "Guardsman__character_": {
+  "node_id": "Guardsman_(character)",
+  "target_words": 1444,
+  "ok": true,
+  "error": null,
+  "clean_words": 1419,
+  "ratio": 0.983,
+  "headings": [
+   "Publication history",
+   "Kevin O'Brien",
+   "Michael O'Brien",
+   "The Vault Guardsmen"
+  ]
+ },
+ "Kristoff_Vernard": {
+  "node_id": "Kristoff_Vernard",
+  "target_words": 1049,
+  "ok": true,
+  "error": null,
+  "clean_words": 1069,
+  "ratio": 1.019,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions",
+   "Reception"
+  ]
+ },
+ "Ronin__Marvel_Comics_": {
+  "node_id": "Ronin_(Marvel_Comics)",
+  "target_words": 986,
+  "ok": true,
+  "error": null,
+  "clean_words": 1066,
+  "ratio": 1.081,
+  "headings": [
+   "Publication history",
+   "Maya Lopez",
+   "Clint Barton",
+   "Alexei Shostakov",
+   "Eric Brooks",
+   "Other users",
+   "Powers and abilities",
+   "Other versions",
+   "Television",
+   "Film",
+   "Video games",
+   "Reception"
+  ]
+ },
+ "Balder_the_Brave": {
+  "node_id": "Balder_the_Brave",
+  "target_words": 1276,
+  "ok": true,
+  "error": null,
+  "clean_words": 1227,
+  "ratio": 0.962,
+  "headings": [
+   "Publication history",
+   "Early life",
+   "Death and Ragnarok",
+   "Ruler of Asgard"
+  ]
+ },
+ "Gauntlet__Joseph_Green_": {
+  "node_id": "Gauntlet_(Joseph_Green)",
+  "target_words": 550,
+  "ok": true,
+  "error": null,
+  "clean_words": 602,
+  "ratio": 1.095,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities"
+  ]
+ },
+ "Lei_Kung__character_": {
+  "node_id": "Lei_Kung_(character)",
+  "target_words": 419,
+  "ok": true,
+  "error": null,
+  "clean_words": 448,
+  "ratio": 1.069,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "In other media"
+  ]
+ },
+ "Rockslide__character_": {
+  "node_id": "Rockslide_(character)",
+  "target_words": 968,
+  "ok": true,
+  "error": null,
+  "clean_words": 966,
+  "ratio": 0.998,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions",
+   "In other media",
+   "Reception"
+  ]
+ },
+ "Shuri__character_": {
+  "node_id": "Shuri_(character)",
+  "target_words": 1421,
+  "ok": true,
+  "error": null,
+  "clean_words": 1427,
+  "ratio": 1.004,
+  "headings": [
+   "Publication history",
+   "Early life",
+   "Black Panther",
+   "Aja-Adanna"
+  ]
+ },
+ "Turbo__comics_": {
+  "node_id": "Turbo_(comics)",
+  "target_words": 1206,
+  "ok": true,
+  "error": null,
+  "clean_words": 1285,
+  "ratio": 1.066,
+  "headings": [
+   "Publication history",
+   "Mike Jeffries and Mickey Musashi",
+   "Volx and the death of Mike Jeffries",
+   "Later career",
+   "Powers and abilities",
+   "Reception"
+  ]
+ },
+ "Frankenstein_s_Monster__Marvel_Comics_": {
+  "node_id": "Frankenstein's_Monster_(Marvel_Comics)",
+  "target_words": 1480,
+  "ok": true,
+  "error": null,
+  "clean_words": 1361,
+  "ratio": 0.92,
+  "headings": [
+   "Publication history",
+   "Origin",
+   "19th century",
+   "Modern era"
+  ]
+ },
+ "Iron_Lad": {
+  "node_id": "Iron_Lad",
+  "target_words": 892,
+  "ok": true,
+  "error": null,
+  "clean_words": 896,
+  "ratio": 1.004,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions",
+   "In other media",
+   "Reception"
+  ]
+ },
+ "Marvel_Boy__Robert_Grayson_": {
+  "node_id": "Marvel_Boy_(Robert_Grayson)",
+  "target_words": 794,
+  "ok": true,
+  "error": null,
+  "clean_words": 877,
+  "ratio": 1.105,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions"
+  ]
+ },
+ "Ricochet__comics_": {
+  "node_id": "Ricochet_(comics)",
+  "target_words": 736,
+  "ok": true,
+  "error": null,
+  "clean_words": 691,
+  "ratio": 0.939,
+  "headings": [
+   "Publication history",
+   "Peter Parker",
+   "Johnny Gallo",
+   "Powers and abilities",
+   "Video games"
+  ]
+ },
+ "Spider-Bitch__Ashley_Barton_": {
+  "node_id": "Spider-Bitch_(Ashley_Barton)",
+  "target_words": 1434,
+  "ok": true,
+  "error": null,
+  "clean_words": 1417,
+  "ratio": 0.988,
+  "headings": [
+   "Publication history",
+   "\"Old Man Logan\"",
+   "\"Spider-Verse\" and \"Spider-Geddon\"",
+   "Later appearances in the Wastelands",
+   "Powers and abilities"
+  ]
+ },
+ "The_Union__Marvel_": {
+  "node_id": "The_Union_(Marvel)",
+  "target_words": 1044,
+  "ok": true,
+  "error": null,
+  "clean_words": 957,
+  "ratio": 0.917,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Membership",
+   "Powers and abilities",
+   "Reception",
+   "In other media"
+  ]
+ },
+ "Blackthorn__character_": {
+  "node_id": "Blackthorn_(character)",
+  "target_words": 1077,
+  "ok": true,
+  "error": null,
+  "clean_words": 1009,
+  "ratio": 0.937,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Reception"
+  ]
+ },
+ "Citizen_V": {
+  "node_id": "Citizen_V",
+  "target_words": 669,
+  "ok": true,
+  "error": null,
+  "clean_words": 657,
+  "ratio": 0.982,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "In other media",
+   "Reception"
+  ]
+ },
+ "Ajak": {
+  "node_id": "Ajak",
+  "target_words": 620,
+  "ok": true,
+  "error": null,
+  "clean_words": 639,
+  "ratio": 1.031,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions",
+   "In other media"
+  ]
+ },
+ "Box__comics_": {
+  "node_id": "Box_(comics)",
+  "target_words": 829,
+  "ok": true,
+  "error": null,
+  "clean_words": 884,
+  "ratio": 1.066,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions"
+  ]
+ },
+ "Darkdevil": {
+  "node_id": "Darkdevil",
+  "target_words": 555,
+  "ok": true,
+  "error": null,
+  "clean_words": 593,
+  "ratio": 1.068,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Reception"
+  ]
+ },
+ "Fandral": {
+  "node_id": "Fandral",
+  "target_words": 1469,
+  "ok": true,
+  "error": null,
+  "clean_words": 1373,
+  "ratio": 0.935,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities"
+  ]
+ },
+ "Golem__Marvel_Comics_": {
+  "node_id": "Golem_(Marvel_Comics)",
+  "target_words": 721,
+  "ok": true,
+  "error": null,
+  "clean_words": 769,
+  "ratio": 1.067,
+  "headings": [
+   "Publication history",
+   "Adamson's Golem",
+   "Jacob Goldstein",
+   "Powers and abilities",
+   "Other versions"
+  ]
+ },
+ "Janice_Lincoln": {
+  "node_id": "Janice_Lincoln",
+  "target_words": 1028,
+  "ok": true,
+  "error": null,
+  "clean_words": 966,
+  "ratio": 0.94,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Reception"
+  ]
+ },
+ "Motormouth__comics_": {
+  "node_id": "Motormouth_(comics)",
+  "target_words": 1170,
+  "ok": true,
+  "error": null,
+  "clean_words": 1165,
+  "ratio": 0.996,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions",
+   "Reception"
+  ]
+ },
+ "Skull_the_Slayer": {
+  "node_id": "Skull_the_Slayer",
+  "target_words": 530,
+  "ok": true,
+  "error": null,
+  "clean_words": 562,
+  "ratio": 1.06,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities"
+  ]
+ },
+ "Typeface__character_": {
+  "node_id": "Typeface_(character)",
+  "target_words": 420,
+  "ok": true,
+  "error": null,
+  "clean_words": 423,
+  "ratio": 1.007,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities"
+  ]
+ },
+ "Blackwulf": {
+  "node_id": "Blackwulf",
+  "target_words": 1005,
+  "ok": true,
+  "error": null,
+  "clean_words": 981,
+  "ratio": 0.976,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions",
+   "Reception"
+  ]
+ },
+ "Captain_Midlands": {
+  "node_id": "Captain_Midlands",
+  "target_words": 620,
+  "ok": true,
+  "error": null,
+  "clean_words": 628,
+  "ratio": 1.013,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities"
+  ]
+ },
+ "Digitek__character_": {
+  "node_id": "Digitek_(character)",
+  "target_words": 476,
+  "ok": true,
+  "error": null,
+  "clean_words": 461,
+  "ratio": 0.968,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities"
+  ]
+ },
+ "Gremlin__comics_": {
+  "node_id": "Gremlin_(comics)",
+  "target_words": 600,
+  "ok": true,
+  "error": null,
+  "clean_words": 711,
+  "ratio": 1.185,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities"
+  ]
+ },
+ "Mahr_Vehl": {
+  "node_id": "Mahr_Vehl",
+  "target_words": 652,
+  "ok": true,
+  "error": null,
+  "clean_words": 669,
+  "ratio": 1.026,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities"
+  ]
+ },
+ "Oya__comics_": {
+  "node_id": "Oya_(comics)",
+  "target_words": 631,
+  "ok": true,
+  "error": null,
+  "clean_words": 629,
+  "ratio": 0.997,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions",
+   "In other media"
+  ]
+ },
+ "Sean_and_Chris": {
+  "node_id": "Sean_and_Chris",
+  "target_words": 529,
+  "ok": true,
+  "error": null,
+  "clean_words": 584,
+  "ratio": 1.104,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities"
+  ]
+ },
+ "Solomon_Kane__comics_": {
+  "node_id": "Solomon_Kane_(comics)",
+  "target_words": 746,
+  "ok": true,
+  "error": null,
+  "clean_words": 807,
+  "ratio": 1.082,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "In other media"
+  ]
+ },
+ "Thunderbolt__Marvel_Comics_": {
+  "node_id": "Thunderbolt_(Marvel_Comics)",
+  "target_words": 514,
+  "ok": true,
+  "error": null,
+  "clean_words": 527,
+  "ratio": 1.025,
+  "headings": [
+   "Publication history",
+   "Fictional character biography",
+   "Powers and abilities",
+   "Other versions"
+  ]
+ }
+}

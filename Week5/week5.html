@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Can you spot the AI?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="week5.css" />
+  <link rel="stylesheet" href="game/game.css" />
+</head>
+<body>
+
+  <!-- ─── Global Nav ────────────────────────────────────────────── -->
+  <nav class="global-nav">
+    <div class="global-nav-brand">SOCIAL GRAPHS AND INTERACTIONS</div>
+    <div class="global-nav-links">
+      <a href="../index.html">Overview</a>
+      <a href="../Week1/jonathan-week1.html">Week 1</a>
+      <a href="../Week2/week2.html">Week 2</a>
+      <a href="../Week3/week3.html">Week 3</a>
+      <a href="../Week4/week4.html">Week 4</a>
+      <a href="week5.html" class="active">Week 5</a>
+    </div>
+  </nav>
+
+  <main class="post present">
+
+    <!-- The question + the result as a scoreline -->
+    <header class="intro">
+      <p class="kicker">Week 5 · DTU 02805</p>
+      <h1>Can you spot the <em>AI</em>?</h1>
+      <p class="lede">We asked Claude Fable 5.1, Anthropic's most capable publicly available AI, to fake the
+        Wikipedia articles of <span data-stat="n_pairs">60</span> Marvel heroes. Then we tried to catch it with
+        nothing smarter than counting words.</p>
+
+      <div class="tally">
+        <p class="tally-head"><span class="big" data-stat="d1_pairs_won">58</span> of
+          <span data-stat="n_pairs">60</span> fakes caught</p>
+        <p class="tally-sub">For every hero, the word counter read the real article and Fable's fake and flagged the
+          one that looked more suspicious. It flagged the fake <span data-stat="d1_pairs_won">58</span> times.</p>
+        <div class="tally-strip" id="tally-strip" aria-hidden="true"></div>
+        <p class="tally-key"><span><i class="k caught"></i>fake caught</span>
+          <span><i class="k fooled"></i>Fable fooled the counter: <span id="tally-fooled">Scarlet Spider, Kristoff Vernard</span></span></p>
+        <p class="tally-meta">Fable wrote <span data-stat="forged_words">63,706</span> words in
+          <span data-stat="forger_minutes">108</span> minutes. The counter uses <span data-stat="n_features">12</span>
+          counts and no understanding.</p>
+      </div>
+
+      <a class="play-link" href="#play">Play the game ↓</a>
+    </header>
+
+    <!-- The game -->
+    <section id="play">
+      <h2>Real or AI?</h2>
+      <p class="sub">Two openings about the same hero. One is from Wikipedia, the other was written by Claude
+        Fable 5.1. Pick the real one, ten times.</p>
+      <div class="game-frame" id="game"><p class="note">Loading…</p></div>
+    </section>
+
+    <!-- Main figure -->
+    <section>
+      <h2>Who catches Claude Fable 5.1?</h2>
+      <p class="sub">Share of the <span data-stat="n_pairs">60</span> pairs where each one picks the real article.
+        Your bar fills in when you finish a game.</p>
+      <div id="vs-figure"><p class="note">Loading…</p></div>
+    </section>
+
+    <!-- It was warned -->
+    <section>
+      <h2>It knew it was being tested</h2>
+      <blockquote class="pull">“You are taking part in a university research experiment … on whether
+        <mark>simple word statistics</mark> can tell real Wikipedia articles apart from AI-written ones. …
+        Your goal is an article that a careful reader cannot tell apart from the real one.”</blockquote>
+      <p class="pull-source">From the prompt every forger received. The counter still won
+        <span data-stat="d1_pairs_right">58 of 60</span> pairs.</p>
+    </section>
+
+    <!-- What gives it away -->
+    <section>
+      <h2>How Claude Fable 5.1 gives itself away</h2>
+      <p class="sub">Typical values in the 60 real articles and the 60 fakes.
+        <span class="key"><i class="k real"></i>Wikipedia <i class="k ai"></i>Claude Fable 5.1</span></p>
+      <div class="table-wrap"><table class="tells-table" id="tells">
+        <tr><td class="note">Loading…</td></tr>
+      </table></div>
+    </section>
+
+    <!-- What surprised us -->
+    <section>
+      <h2>What surprised us</h2>
+      <ul class="facts">
+        <li><span class="fig">2 of 60.</span> The counter lost only two pairs, and they are exactly the two heroes
+          whose description in the course data is cut off mid-sentence.</li>
+        <li><span class="fig">33 words.</span> The longest stretch Fable copied from Wikipedia is the stock opening
+          line, “appearing in American comic books published by Marvel Comics…”, which real articles share too.</li>
+        <li><span class="fig">2×.</span> Real articles about famous heroes look twice as suspicious to the counter
+          as articles about obscure ones. They have the long sentences and brackets Fable likes.</li>
+      </ul>
+    </section>
+
+    <!-- What we did -->
+    <section id="how">
+      <h2>How we did it</h2>
+      <ol class="steps-list">
+        <li>Picked 60 heroes from the course's Marvel network: 20 famous, 20 in between, 20 obscure.</li>
+        <li>Gave each one to its own Claude Fable 5.1 agent with only the name, a one-line description and the
+          linked heroes. No agent saw the real article, and we checked every agent's log.</li>
+        <li>Scored every article on 12 simple counts (sentence length, punctuation, rare word pairs) with a
+          textbook statistical model.</li>
+      </ol>
+    </section>
+
+    <p class="fine-print">You read 120 words, while the counter reads the whole article (up to 1,500), which makes
+      its job easier. The agents ran inside Claude Code, and only round 1 of the planned arms race was run.
+      More: <a href="week5-deep-dive.html">full write-up</a> · <a href="notebooks/analysis.ipynb">analysis notebook</a>
+      · <a href="AI_METHODS.md">how we used AI</a>.</p>
+
+    <footer class="footer">
+      <p>Real article text: <a href="https://en.wikipedia.org/" target="_blank" rel="noopener">Wikipedia</a>,
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.
+        Every fake is <strong>AI-generated</strong> by Claude Fable 5.1 and labelled once revealed. This page never
+        calls an AI; the game reads precomputed data.</p>
+    </footer>
+  </main>
+
+  <script src="game/game.js"></script>
+  <script src="week5.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+{
+ "caught": 54,
+ "total": 60,
+ "feature_table": "- mean sentence length (tokens): real 20.08, forgeries 24.49\n- parentheses per 100 tokens: real 0.61, forgeries 1.05\n- share of word pairs never seen in real articles: real 32.1%, forgeries 28.0%\n- hapax ratio (per 400-token window): real 0.396, forgeries 0.415\n- dashes per 100 tokens: real 0.11, forgeries 0.36",
+ "impossible_bigrams": "\"2011 2012\", \"mobile game\", \"period the\", \"crossover secret\", \"character headlined\", \"regular in\", \"paired her\", \"supplied by\", \"2010 by\", \"a working\", \"2011 by\", \"hulk's warbound\", \"that follow\", \"forearms and\", \"has generally\"",
+ "bigram_counts": [
+  [
+   "2011 2012",
+   7
+  ],
+  [
+   "mobile game",
+   6
+  ],
+  [
+   "period the",
+   5
+  ],
+  [
+   "crossover secret",
+   4
+  ],
+  [
+   "character headlined",
+   4
+  ],
+  [
+   "regular in",
+   4
+  ],
+  [
+   "paired her",
+   4
+  ],
+  [
+   "supplied by",
+   4
+  ],
+  [
+   "2010 by",
+   4
+  ],
+  [
+   "a working",
+   4
+  ],
+  [
+   "2011 by",
+   4
+  ],
+  [
+   "hulk's warbound",
+   4
+  ],
+  [
+   "that follow",
+   4
+  ],
+  [
+   "forearms and",
+   4
+  ],
+  [
+   "has generally",
+   4
+  ]
+ ],
+ "features_used": [
+  "sent_len_mean",
+  "paren_rate",
+  "unseen_bigram_rate",
+  "hapax_ratio",
+  "dash_rate"
+ ]
+}

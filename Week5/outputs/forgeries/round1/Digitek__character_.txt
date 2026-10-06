@@ -1,0 +1,17 @@
+<article>
+Digitek (Jonathan Bryant) is a fictional superhero appearing in American comic books published by Marvel Comics. The character was created by writer John Tomlinson and artist Dermot Power and first appeared in Digitek #1 (December 1992), published under the company's Marvel UK imprint. Bryant is a British computer scientist who is transformed into a being able to convert his body into digital information. He is loosely associated with the wider Marvel UK line of the early 1990s and has crossed paths with the cyborg Deathlok.
+
+== Publication history ==
+
+Digitek was launched during the expansion of Marvel UK's American-format output in the early 1990s, a period in which the imprint introduced a number of new characters alongside established titles such as Death's Head II and Motormouth. The character headlined a four-issue limited series, Digitek #1–4 (December 1992 – March 1993), written by John Tomlinson with art by Dermot Power. Deathlok appeared as a guest star in the series, a common practice for Marvel UK books of the time, which paired new creations with recognisable American characters. The series was not continued after its fourth issue, and the character has made only occasional appearances since, most notably in later Marvel UK material.
+
+== Fictional character biography ==
+
+Jonathan Bryant is a computer specialist working at a British research facility on an experimental project involving organic computing. The facility is attacked by the Bacillicons, a race of artificial life forms that exist as living computer viruses and seek to spread through electronic systems. During the attack, Bryant is exposed to the project's technology and is physically merged with it, gaining the ability to break his body down into data and reassemble himself elsewhere. Taking the name Digitek, he uses his new abilities to fight the Bacillicons as they attempt to take control of the world's computer networks.
+
+In the course of the conflict, Digitek encounters Deathlok, whose own cybernetic nature makes him a target for the Bacillicons. The two initially clash before uniting against the common threat. Digitek ultimately defeats the Bacillicons by entering their systems directly, though the experience leaves him uncertain whether he remains fully human.
+
+== Powers and abilities ==
+
+Digitek can transform his body into a stream of digital information, allowing him to travel through computer networks, telephone lines and other electronic systems and to re-form at a remote location. While in this state he can interface with and manipulate software and hardware, and he can project bursts of energy drawn from the systems he inhabits. In physical form he wears a suit of armour that is part of his altered body, which provides enhanced strength and durability and can generate constructs made of solidified data. He retains the training and knowledge of a computer scientist, which he applies to understanding and countering digital threats.
+</article>

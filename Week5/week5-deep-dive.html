@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Week 5 — The Forger (deep dive)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="week5.css" />
+  <link rel="stylesheet" href="game/game.css" />
+</head>
+<body>
+
+  <!-- ─── Global Nav ────────────────────────────────────────────── -->
+  <nav class="global-nav">
+    <div class="global-nav-brand">SOCIAL GRAPHS AND INTERACTIONS</div>
+    <div class="global-nav-links">
+      <a href="../index.html">Overview</a>
+      <a href="../Week1/jonathan-week1.html">Week 1</a>
+      <a href="../Week2/week2.html">Week 2</a>
+      <a href="../Week3/week3.html">Week 3</a>
+      <a href="../Week4/week4.html">Week 4</a>
+      <a href="week5.html" class="active">Week 5</a>
+    </div>
+  </nav>
+
+  <main class="post">
+
+    <!-- 1. The question -->
+    <header class="page-header">
+      <span class="eyebrow">Week 5 · Deep dive</span>
+      <p class="note" style="margin-bottom:10px"><a href="week5.html">&larr; Back to the short version</a></p>
+      <h1>The Forger: can word counting catch an AI writing Wikipedia?</h1>
+      <p class="lede">
+        We asked Claude Fable 5.1, a frontier language model, to forge the Wikipedia articles of 60 Marvel
+        characters. Can a detector built only from this week's tools (counts, hapaxes, n-grams and bags of words)
+        tell the forgeries from the real articles? And does it beat you? Play the game below and find out.
+      </p>
+    </header>
+
+    <!-- 2. What we did -->
+    <section>
+      <h2>What we did</h2>
+      <ol>
+        <li><strong>Real side.</strong> 60 characters from the course's 303-article Marvel network, 20 each from the
+          high, middle and low in-degree tiers. Every page went through one cleaning function, and we kept
+          its first ≤1500 words.</li>
+        <li><strong>Forged side.</strong> For each character a separate Fable 5.1 <span class="ai-tag">AI</span>
+          was told only the name, the one-line description, the characters the real article links to, and the
+          target length. It never saw the real article. We checked every forger's log: it received exactly our
+          prompt and made no other tool call than writing its article. The forgeries then went through the same
+          cleaning as the real pages.</li>
+        <li><strong>Detector.</strong> Twelve counts per document: sentence length, punctuation rates, stopword
+          share, type/token and hapax ratios on 400-word windows, the share of word pairs never seen in the other
+          real articles, and bag-of-words similarity to all articles and to the character's network neighbours.
+          A logistic regression on these, tested so that it never sees the character it is judging (grouped
+          cross-validation).</li>
+      </ol>
+      <p>The plan was an arms race: tell the forger what gave it away and let it try again. We stopped after
+        round 1, so everything here is the forger's first attempt.</p>
+    </section>
+
+    <!-- 3. Main figure -->
+    <section>
+      <h2>Counting words catches the forger almost every time</h2>
+      <div class="panel">
+        <div class="figure-title">Given a real article and its forgery, who picks out the forgery?</div>
+        <div class="figure-sub">Pair accuracy over the 60 characters, round 1. The human bar is filled in from your game results.</div>
+        <div id="vs-figure"><p class="note">Loading…</p></div>
+      </div>
+      <p>One number does most of the work. Real articles average 20 words per sentence; the forgeries average 24.5.
+        That alone picks the forgery in 93% of pairs. Adding the other eleven counts gets the detector D1 to 97%
+        (58 of 60). It loses only Scarlet Spider and Kristoff Vernard.</p>
+    </section>
+
+    <!-- 4. The game -->
+    <section>
+      <h2>Your turn: spot the real article</h2>
+      <p>Each turn shows the opening of the real Wikipedia article and the opening of the AI forgery for the same
+        character, about 120 words each, in random order. One of the two is <strong>always AI-generated</strong>.
+        Pick the real one. After each guess you see the answer, what the detector thought, and the forger's
+        never-seen word pairs.</p>
+      <div class="panel" id="game"><p class="note">Loading…</p></div>
+      <p class="note">Your picks stay in your browser. "Copy results" gives you a small JSON snippet to paste to us
+        in Teams, so we can add the human bar to the figure.</p>
+    </section>
+
+    <!-- 5. What surprised us -->
+    <section>
+      <h2>What surprised us</h2>
+      <ul>
+        <li><strong>The forgeries are more typical than the real thing.</strong> We expected the AI to give itself
+          away with odd word pairs. It does the opposite. Only 28% of a forgery's word pairs are missing from the
+          other real articles, against 32% for real pages. Its vocabulary is also closer to the average Marvel
+          article. Fable writes the average article; real editors write stranger ones.</li>
+        <li><strong>The tell is rhythm, not vocabulary.</strong> Commas, stopwords and semicolons barely
+          separate the two. Long sentences, extra parentheses and dashes do (forgeries use about three times as
+          many dashes).</li>
+        <li><strong>Famous characters look more "forged", real or not.</strong> The detector's average forgery
+          score for real pages of high in-degree characters is 0.32, against 0.15 for the least-linked ones.
+          Popular articles have the long, parenthesis-heavy sentences the forger writes.</li>
+        <li><strong>The only two pairs the detector lost are the two broken prompts.</strong> For Scarlet Spider
+          and Kristoff Vernard, the course data's one-line description is cut off mid-sentence. With two cases
+          this may be chance, but it is the kind of thing we would test next.</li>
+      </ul>
+    </section>
+
+    <!-- 6. What we checked -->
+    <section>
+      <h2>What we checked in the text</h2>
+      <p>We read the forgeries the detector is most and least sure about (all printed in the
+        <a href="notebooks/analysis.ipynb">analysis notebook</a>) before trusting any number. Three examples:</p>
+      <h3>Did the forger copy Wikipedia? Mostly the template.</h3>
+      <p>The longest run of words a forgery shares with its own real article is 33 tokens, for Shuri
+        <span class="ai-tag">AI</span>:</p>
+      <blockquote>appearing in american comic books published by marvel comics created by writer reginald hudlin and
+        artist john romita jr the character first appeared in black panther vol 4 2 may 2005 shuri is</blockquote>
+      <p>That is Wikipedia's stock opening sentence filled in with facts, not memorised prose. Real pages share
+        runs this long with each other too. The median longest run is 15 tokens for a forgery against its own
+        article, and also 15 for a real page against the other real pages.</p>
+      <h3>A real article the detector calls a forgery</h3>
+      <p>The real Black Widow article gets a 93% forgery score. Its opening packs a Russian transliteration and
+        several issue references into parentheses (1.5 per 100 words) and runs long sentences. On counts alone it
+        looks like Fable. The detector still gets the pair right, because Fable's Black Widow
+        <span class="ai-tag">AI</span> is even more extreme: 30 words per sentence and 1.7 parentheses per 100.</p>
+      <h3>Is "sentence length" just a formatting artefact?</h3>
+      <p>Real Wikipedia pages sometimes contain flattened lists, which would make sentences look short. We
+        re-measured using only proper prose paragraphs: real 20.2 against forged 24.5 words per sentence, the same
+        gap. The forger really does write longer sentences.</p>
+    </section>
+
+    <!-- 7. Limitation -->
+    <section>
+      <h2>One limitation</h2>
+      <p>You and the detector are not playing the same game. You read a 120-word opening. The detector scores the
+        whole document, up to 1500 words, where sentence length and punctuation have room to add up. A fair
+        human-vs-machine comparison would give the detector the same 120 words. Expect its accuracy to drop there,
+        because these statistics are noisy on short texts.</p>
+    </section>
+
+    <footer class="footer">
+      <p>Real article text: <a href="https://en.wikipedia.org/" target="_blank" rel="noopener">Wikipedia</a>, used under
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>
+        (course snapshot of 26 August 2026). Every forged text on this page is <strong>AI-generated</strong> by
+        Claude Fable 5.1 for this experiment and is labelled as such once revealed. The page never calls an AI: the
+        game reads precomputed data from <code>game/game_data.json</code>.</p>
+      <p>DTU 02805 Social Graphs and Interactions, Week 5.</p>
+    </footer>
+  </main>
+
+  <script src="game/game.js"></script>
+  <script src="week5.js"></script>
+</body>
+</html>

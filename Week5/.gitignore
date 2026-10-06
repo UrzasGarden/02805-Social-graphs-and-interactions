@@ -1,0 +1,15 @@
+# Secrets: never commit anything that could hold a key
+.env
+.env.*
+*.key
+
+# Re-downloadable course data (01_prepare.py fetches it again)
+data/raw/
+
+# Caches and scratch
+.cache/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.pytest_cache/
+.DS_Store

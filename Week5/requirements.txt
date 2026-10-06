@@ -1,0 +1,12 @@
+# Week 5 "The Forger" pipeline. Install with: pip install -r Week5/requirements.txt
+requests>=2.31
+numpy>=1.26
+pandas>=2.1
+scikit-learn>=1.4
+nltk>=3.8
+networkx>=3.2
+matplotlib>=3.8
+tqdm>=4.66
+jupyter>=1.0
+nbconvert>=7.10
+ipykernel>=6.29

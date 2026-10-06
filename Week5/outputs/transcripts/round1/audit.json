@@ -1,0 +1,2528 @@
+{
+ "Spider-Man": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-adac4b31d4f3f1035.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Spider-Man",
+   "toolUseId": "toolu_01SqzVMouGn7BchTXRMgB9Tn",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 51098,
+   "cache_read_input_tokens": 42202,
+   "output_tokens_at_stream_start": 32,
+   "api_calls": 2,
+   "article_tokens_est": 1856,
+   "duration_s": 88
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-adac4b31d4f3f1035.jsonl",
+   "source_sha256": "1ba35ccb20245797d01b3975f65738a6011c05156887fa2f44ad74ca1d8e401a",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:29Z"
+ },
+ "She-Hulk": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-afef30bddadcc09c5.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: She-Hulk",
+   "toolUseId": "toolu_0182QGhS3icLf6DxHqcLbgv6",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 48083,
+   "cache_read_input_tokens": 42305,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1927,
+   "duration_s": 64
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-afef30bddadcc09c5.jsonl",
+   "source_sha256": "c7f27902b9e4626e20a18a8d458b57340e00d62cb3b1933ce5ca9cdd75da7800",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:29Z"
+ },
+ "Quasar__character_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a28ffbc2dbda22f05.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Quasar",
+   "toolUseId": "toolu_01KMwVd5jYhvKCrbqxZsCchv",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 47419,
+   "cache_read_input_tokens": 42143,
+   "output_tokens_at_stream_start": 29,
+   "api_calls": 2,
+   "article_tokens_est": 1395,
+   "duration_s": 58
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a28ffbc2dbda22f05.jsonl",
+   "source_sha256": "8935a53511ccbf6b87e6efb2005d04f1c1cab02c81366f51417243aa19443f79",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:29Z"
+ },
+ "Black_Widow__Natasha_Romanova_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-ae6cc6f1e093c873c.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Black Widow",
+   "toolUseId": "toolu_01NwC8QcPNo9MyssfZ2iAavE",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 48656,
+   "cache_read_input_tokens": 42207,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1950,
+   "duration_s": 73
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-ae6cc6f1e093c873c.jsonl",
+   "source_sha256": "1e3f41d1ee659fb671514d414af85e1b0450f9b94987e8ebcc81dc4dd35793ff",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:29Z"
+ },
+ "Black_Cat__Marvel_Comics_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-ad46def09e6752c0a.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Black Cat",
+   "toolUseId": "toolu_01SCKz57Foaqb1AQebs648tZ",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 50057,
+   "cache_read_input_tokens": 42249,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1833,
+   "duration_s": 91
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-ad46def09e6752c0a.jsonl",
+   "source_sha256": "f6b18be7ce4ded2e5d7bca85f163876fc8390768cb68e8886ebb1a8f5c053b9a",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:29Z"
+ },
+ "Deathlok": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-ab01bf56af3467b35.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Deathlok",
+   "toolUseId": "toolu_014BYqUSBvf1p4vc9Fo6zBYM",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 52782,
+   "cache_read_input_tokens": 42180,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 2035,
+   "duration_s": 130
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-ab01bf56af3467b35.jsonl",
+   "source_sha256": "940c2e0fd8f96a9ac18e486b7e01d8b4daa369bbf6d7e7323421c53a15cf97b6",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:29Z"
+ },
+ "Misty_Knight": {
+  "verdict": "PASS",
+  "problems": [
+   "final reply was 'done\\n\\nArticle saved to /home/user/02805-Social-graphs-and-in', not 'done' (noted, not fatal)"
+  ],
+  "agent_file": "agent-a2d4b6450641c72e8.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Misty Knight",
+   "toolUseId": "toolu_01MKB7YH8ER16fFZ1CxfaBwP",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done\n\nArticle saved to /home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round1/Misty_Knight.txt (approx. 1,500 words; opening, Publication history, and Fictional character biogr",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 50999,
+   "cache_read_input_tokens": 42252,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1807,
+   "duration_s": 104
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a2d4b6450641c72e8.jsonl",
+   "source_sha256": "cb0c4275bb07abae320314893c08c2e16348c5823b877bb7720fe3730eb92976",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:29Z"
+ },
+ "Black_Bolt": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a5d821573a339b8ef.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Black Bolt",
+   "toolUseId": "toolu_01GGrFgXeF367d4Uu8v9qVPp",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 50756,
+   "cache_read_input_tokens": 42227,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 2033,
+   "duration_s": 97
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a5d821573a339b8ef.jsonl",
+   "source_sha256": "8b767f9854f7b6907c724fae2ade320a1c2991ef26cfbc96a4993f1fa241a658",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:29Z"
+ },
+ "Mockingbird__Marvel_Comics_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-ad8b56cfb51d3d175.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Mockingbird",
+   "toolUseId": "toolu_0152UE9wt7rPBLvkixEXY6NV",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 53286,
+   "cache_read_input_tokens": 42248,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1822,
+   "duration_s": 126
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-ad8b56cfb51d3d175.jsonl",
+   "source_sha256": "c3fc85f8375cf01b1d343920650b5c497020ddb731fcc07baf2e2e24c27c8118",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:29Z"
+ },
+ "Moondragon": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a9f6ebc88e52b2a71.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Moondragon",
+   "toolUseId": "toolu_01KvucaS3vjWvMez8gYgC5hb",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 56508,
+   "cache_read_input_tokens": 42182,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 2019,
+   "duration_s": 162
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a9f6ebc88e52b2a71.jsonl",
+   "source_sha256": "1e9972bbb0985432b909036d616319a90c795aa5e207c9ebcff00d1782240c66",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:29Z"
+ },
+ "Rocket_Raccoon": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-ac56eb3288986a7c3.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Rocket Raccoon",
+   "toolUseId": "toolu_01TuxB2WKj2ctH7Tms5xU4ms",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 15472,
+   "cache_read_input_tokens": 76083,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 2058,
+   "duration_s": 84
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-ac56eb3288986a7c3.jsonl",
+   "source_sha256": "dbb733f21411f24b8e076cdf73295caf7dbfaa6c60e75e4d3f7ffd7e0698ca22",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:29Z"
+ },
+ "Captain_Marvel__Marvel_Comics_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a3a2e9e3877a7b4f5.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Captain Marvel",
+   "toolUseId": "toolu_01JUjZUgEzrTg5c1NvVwfuiX",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 21520,
+   "cache_read_input_tokens": 76163,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 2069,
+   "duration_s": 137
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a3a2e9e3877a7b4f5.jsonl",
+   "source_sha256": "f5b751ba8904ec7d824d20a1328c681084c2b53a8c65d3f04d9c6e45013c8407",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:29Z"
+ },
+ "Vulcan__Marvel_Comics_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a86caa0f34b2eb295.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Vulcan",
+   "toolUseId": "toolu_017Wbvjxw3Y7Et58fUbrwfms",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 17348,
+   "cache_read_input_tokens": 76099,
+   "output_tokens_at_stream_start": 32,
+   "api_calls": 2,
+   "article_tokens_est": 1965,
+   "duration_s": 102
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a86caa0f34b2eb295.jsonl",
+   "source_sha256": "2c4bd2eea0b22c8528668016e2ac03ca555139c206d21de2e9ac089ede54f0fa",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:29Z"
+ },
+ "Scarlet_Spider": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a8b68a9e9289f3559.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Scarlet Spider",
+   "toolUseId": "toolu_01C6YVkMWRaYjNBFS4VDSA6q",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 15531,
+   "cache_read_input_tokens": 76075,
+   "output_tokens_at_stream_start": 29,
+   "api_calls": 2,
+   "article_tokens_est": 1486,
+   "duration_s": 72
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a8b68a9e9289f3559.jsonl",
+   "source_sha256": "8019c936b975dbd9cf9107a0946396e15a15d721f5b31d4a854d282b2279c1e0",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:29Z"
+ },
+ "Betsy_Braddock": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a9708f7247bbfd8bb.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Betsy Braddock",
+   "toolUseId": "toolu_015RbcGrr8thL6wmejQTVKVh",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 14481,
+   "cache_read_input_tokens": 76296,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1844,
+   "duration_s": 67
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a9708f7247bbfd8bb.jsonl",
+   "source_sha256": "30e4d0688b440fc97b1c8dd41b75bbf11cc59db66bf600921731f04efa877aad",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:29Z"
+ },
+ "Hyperion__character_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a4c501d0d57f3035f.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Hyperion",
+   "toolUseId": "toolu_01WfLCA3AVXTJLG6TGx9Aq6M",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 19781,
+   "cache_read_input_tokens": 76064,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 2069,
+   "duration_s": 138
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a4c501d0d57f3035f.jsonl",
+   "source_sha256": "966b4bf1d1e27002e4f56c07e0400df417e5be81591b6d8deb091dbee79de871",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:29Z"
+ },
+ "Werewolf_by_Night": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a273b25438bdbc647.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Werewolf by Night",
+   "toolUseId": "toolu_01LVVvA23Z9vZF1uD5pisN7G",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 14844,
+   "cache_read_input_tokens": 76153,
+   "output_tokens_at_stream_start": 30,
+   "api_calls": 2,
+   "article_tokens_est": 1780,
+   "duration_s": 72
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a273b25438bdbc647.jsonl",
+   "source_sha256": "4dc8f1cd2795d032f57c993ec533841123ad1534103bc0ef6db45d760a3c2034",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:29Z"
+ },
+ "Guardian__Marvel_Comics_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a86e54162c75f28ad.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Guardian",
+   "toolUseId": "toolu_012E4rc9PbCY2AiZMzD7EKA7",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 15285,
+   "cache_read_input_tokens": 76076,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 2053,
+   "duration_s": 81
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a86e54162c75f28ad.jsonl",
+   "source_sha256": "116dd5f41f057d554e973f4cc7756d7b8e3579b76469daa0a7193a91dd70b3a8",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:29Z"
+ },
+ "Tarantula__Marvel_Comics_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a468cc8dd92f7fe4b.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Tarantula",
+   "toolUseId": "toolu_01FzAi2j36BUfu4Qu8sqyxSV",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 20525,
+   "cache_read_input_tokens": 76122,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 2203,
+   "duration_s": 142
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a468cc8dd92f7fe4b.jsonl",
+   "source_sha256": "55f5d09e304ff4388b0b85f795757807605b1562090dd5130605779f20699e1f",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:29Z"
+ },
+ "Vance_Astrovik": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-abb507add3d6e65b9.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Vance Astrovik",
+   "toolUseId": "toolu_01Cy8Nr1112GJdhdsByQ1ozo",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 20696,
+   "cache_read_input_tokens": 76091,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1765,
+   "duration_s": 140
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-abb507add3d6e65b9.jsonl",
+   "source_sha256": "22a0f98cd79679ce3efad6fbb812bcd710ae1c3126dfa730a45ab022555dc0c8",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Abomination__character_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a6db7ba2d0bef4858.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Abomination",
+   "toolUseId": "toolu_01REwM9jBU9bogsEpehR9pNx",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 20430,
+   "cache_read_input_tokens": 76081,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1871,
+   "duration_s": 148
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a6db7ba2d0bef4858.jsonl",
+   "source_sha256": "add4efe7d3a8cb3e4ddc738bbda969ddf5ca9c69eeb730ee2eb16c2cf0d9c63a",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Delroy_Garrett": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a3a99f4db79e7d5e8.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Delroy Garrett",
+   "toolUseId": "toolu_019DuL3kTCruDPoQjiQUrHKu",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 19239,
+   "cache_read_input_tokens": 76042,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1798,
+   "duration_s": 127
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a3a99f4db79e7d5e8.jsonl",
+   "source_sha256": "0b9ae86a2ba8b342bb1de43118dd37756d6eb174e35f75a6ebb6845a03901ca3",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Gorgon__Inhuman_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-ae739400a949dd13f.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Gorgon",
+   "toolUseId": "toolu_013ELkrk7hbNQ5cKcFYDAbV4",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 12475,
+   "cache_read_input_tokens": 76003,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1112,
+   "duration_s": 41
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-ae739400a949dd13f.jsonl",
+   "source_sha256": "c85314d593a649304b98f7211d0a5e869d623ddad068b5206ee9d7a1ca05e2dc",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Paladin__comics_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a6dc69a65218ad977.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Paladin",
+   "toolUseId": "toolu_01XAgRyc49zX7eSrZ3pMwja6",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 18284,
+   "cache_read_input_tokens": 76083,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1556,
+   "duration_s": 114
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a6dc69a65218ad977.jsonl",
+   "source_sha256": "972fae3dc679c1a37da32df13738ed718a0bebdcc042d148535bc09f0303aa0e",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Ch_od": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a480a1fb0a019b352.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Ch'od",
+   "toolUseId": "toolu_01E29Ca5mbdfjikv82nNBP2s",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 12345,
+   "cache_read_input_tokens": 76011,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 662,
+   "duration_s": 39
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a480a1fb0a019b352.jsonl",
+   "source_sha256": "90d28f54185b615d061956e6bf9e93c2235e8d65ec7362d1a28ada0cb81fdb44",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Guardsman__character_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-abf7455c1ceec9c21.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Guardsman",
+   "toolUseId": "toolu_01NuACoyAJowSNfaHfiReZ71",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 15982,
+   "cache_read_input_tokens": 76066,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1935,
+   "duration_s": 92
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-abf7455c1ceec9c21.jsonl",
+   "source_sha256": "a2fa7672c9f536a03e7005a65653445eef503c0eb64825451516440b3bb03c3d",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Kristoff_Vernard": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a8a75d0e3eeff1ad1.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Kristoff Vernard",
+   "toolUseId": "toolu_019WKA4qV9QSHQZJcsxXeCBG",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 14420,
+   "cache_read_input_tokens": 76025,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1459,
+   "duration_s": 71
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a8a75d0e3eeff1ad1.jsonl",
+   "source_sha256": "a3fe0d9446624c28a53ca7e2de50d780f3e57fb9c81ae6bfc8905f0416f286b5",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Ronin__Marvel_Comics_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a630d14e31dfb138b.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Ronin",
+   "toolUseId": "toolu_01Jjgm9zckBEdqCGdUWFqPYS",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 17168,
+   "cache_read_input_tokens": 76041,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1487,
+   "duration_s": 103
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a630d14e31dfb138b.jsonl",
+   "source_sha256": "8410449e31cf0fcb0eee4b064b1000e626ddea601127154cdb6378e572c8bcc4",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Balder_the_Brave": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a6105352d6b1bd730.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Balder the Brave",
+   "toolUseId": "toolu_01QFjnzrBH6CZWXD4KhR21qV",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 22603,
+   "cache_read_input_tokens": 76031,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1676,
+   "duration_s": 181
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a6105352d6b1bd730.jsonl",
+   "source_sha256": "54d65dd18cfdeeeb3a40599ea2440c368afe89573805599625f6cc7528d58b74",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Gauntlet__Joseph_Green_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-aa2c4cd5ef9bdb018.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Gauntlet",
+   "toolUseId": "toolu_019r9mSMdskPTJ2PNEhPDyyU",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 13126,
+   "cache_read_input_tokens": 76032,
+   "output_tokens_at_stream_start": 30,
+   "api_calls": 2,
+   "article_tokens_est": 823,
+   "duration_s": 49
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-aa2c4cd5ef9bdb018.jsonl",
+   "source_sha256": "035eaa4e04b73099995857a8ec7318c32cc0e0770af6deb2c68c9a03b1e07b39",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Lei_Kung__character_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a6557f27f953ddc27.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Lei Kung",
+   "toolUseId": "toolu_019sKTHe4pic6VxArbt9Zj48",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 12125,
+   "cache_read_input_tokens": 76043,
+   "output_tokens_at_stream_start": 31,
+   "api_calls": 2,
+   "article_tokens_est": 618,
+   "duration_s": 34
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a6557f27f953ddc27.jsonl",
+   "source_sha256": "a8bcb0ee521e088ad3b816697df722437de66f11fd44b2ab42b1b6d8be6b40bf",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Rockslide__character_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a338a8faa1e92ad06.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Rockslide",
+   "toolUseId": "toolu_01P28S1sBH2Q5fgMAMUeDwqV",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 17089,
+   "cache_read_input_tokens": 76059,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1323,
+   "duration_s": 164
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a338a8faa1e92ad06.jsonl",
+   "source_sha256": "82fa7fc5d1224787e30271f93b7ec0fd9b05b87b576810f2bba719cb567a49a8",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Shuri__character_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-abe5f07113359211b.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Shuri",
+   "toolUseId": "toolu_01APRxSnUenkHjH8JFkRmpVm",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 20787,
+   "cache_read_input_tokens": 76114,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1946,
+   "duration_s": 148
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-abe5f07113359211b.jsonl",
+   "source_sha256": "286e43d5f186cddd8456eabc3038b28b52d18f455640511d9a77ea81bd57b0ae",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Turbo__comics_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-aa92526978dd36a9d.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Turbo",
+   "toolUseId": "toolu_01A2dVXcULF5vxrH8s8yumRk",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 16938,
+   "cache_read_input_tokens": 76022,
+   "output_tokens_at_stream_start": 34,
+   "api_calls": 2,
+   "article_tokens_est": 1760,
+   "duration_s": 109
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-aa92526978dd36a9d.jsonl",
+   "source_sha256": "730d60d4440a00811d988545b195b671d8765c0313efa25197b88f7d9a95352b",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Frankenstein_s_Monster__Marvel_Comics_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-adfa34bb38cbcc17e.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Frankenstein's Monster",
+   "toolUseId": "toolu_017u7A8Ap6wZJ4yJV2MSApm1",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 19562,
+   "cache_read_input_tokens": 76145,
+   "output_tokens_at_stream_start": 31,
+   "api_calls": 2,
+   "article_tokens_est": 1857,
+   "duration_s": 130
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-adfa34bb38cbcc17e.jsonl",
+   "source_sha256": "d00e5a99aeadd0719ad0847604817281de78956c523554fb48921feed5f72776",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Iron_Lad": {
+  "verdict": "PASS",
+  "problems": [
+   "final reply was 'done\\n\\nArticle written to /home/user/02805-Social-graphs-and-', not 'done' (noted, not fatal)"
+  ],
+  "agent_file": "agent-a5d6d2656ad997cbb.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Iron Lad",
+   "toolUseId": "toolu_019hWiaZB2Dr7ZujJg6aKwaJ",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done\n\nArticle written to /home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round1/Iron_Lad.txt (wrapped in <article></article> tags, approximately 890 words, Wikipedia house styl",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 14581,
+   "cache_read_input_tokens": 76039,
+   "output_tokens_at_stream_start": 34,
+   "api_calls": 2,
+   "article_tokens_est": 1228,
+   "duration_s": 73
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a5d6d2656ad997cbb.jsonl",
+   "source_sha256": "4b6e54f16e49aa41a9a69cff95eb005f027eb37f725bab64839b8a48e1197605",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Marvel_Boy__Robert_Grayson_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-aaf9d1f6caf926047.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Marvel Boy",
+   "toolUseId": "toolu_015sZcf23u2gm5jzgvPCW2EX",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 15172,
+   "cache_read_input_tokens": 76050,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1197,
+   "duration_s": 80
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-aaf9d1f6caf926047.jsonl",
+   "source_sha256": "ec241111d4e1e19e55e802ac892dfdf7da72132d01e0ffd47c020abf30ac0911",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Ricochet__comics_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a162d4ef31270ad7d.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Ricochet",
+   "toolUseId": "toolu_015U5oURuAdwbZ1kG5NMWpRp",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 12923,
+   "cache_read_input_tokens": 76024,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 962,
+   "duration_s": 49
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a162d4ef31270ad7d.jsonl",
+   "source_sha256": "a74b1467153015e3cc57c4db0f005ac03a226e90f1580203eac3fe8cf381676b",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Spider-Bitch__Ashley_Barton_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a6b248dafe3f06f07.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Spider-Bitch",
+   "toolUseId": "toolu_016dvme6xtQsa376DUiDM6xM",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 58803,
+   "cache_read_input_tokens": 33884,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1935,
+   "duration_s": 1122
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a6b248dafe3f06f07.jsonl",
+   "source_sha256": "ce094cf4c496d95777be22abc9fc7de3f3a022d006b0abda2324fe17e5ae00f7",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "The_Union__Marvel_": {
+  "verdict": "PASS",
+  "problems": [
+   "final reply was 'done\\n\\nArticle saved to /home/user/02805-Social-graphs-and-in', not 'done' (noted, not fatal)"
+  ],
+  "agent_file": "agent-a5cf0aee5825f42e2.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: The Union",
+   "toolUseId": "toolu_012Hid26mqTxFd6fuAbRsugy",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done\n\nArticle saved to /home/user/02805-Social-graphs-and-interactions/Week5/outputs/forgeries/round1/The_Union__Marvel_.txt (approximately 1040 words, wrapped in <article></article> tags, plain text ",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 13133,
+   "cache_read_input_tokens": 76024,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1310,
+   "duration_s": 58
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a5cf0aee5825f42e2.jsonl",
+   "source_sha256": "20bfce00c280154ebe1444b0298d5128c0d6188e5c2fa2bd662a3b3e03f451ad",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Blackthorn__character_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-acb0e79f6977cb69b.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Blackthorn",
+   "toolUseId": "toolu_01QXiXVRW927i1fc6g9m5CRn",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 14617,
+   "cache_read_input_tokens": 76015,
+   "output_tokens_at_stream_start": 29,
+   "api_calls": 2,
+   "article_tokens_est": 1375,
+   "duration_s": 199
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-acb0e79f6977cb69b.jsonl",
+   "source_sha256": "0b9ced86d5af98c7149a038c059c83bfba41ff5524358f3783c9e20f2c5e7cda",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Citizen_V": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a6b94db32dbade02a.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Citizen V",
+   "toolUseId": "toolu_01VinMiMDtfciK2ZBpDs58SX",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 16481,
+   "cache_read_input_tokens": 75997,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 903,
+   "duration_s": 101
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a6b94db32dbade02a.jsonl",
+   "source_sha256": "f6c7159e60393fac28ba19e1363079be498778fea4f4dea64a3f59a7d2936b4a",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Ajak": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a9f4df62a710a58d4.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Ajak",
+   "toolUseId": "toolu_01UKhmgtsGmW1VWpPVwC5iP8",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 12430,
+   "cache_read_input_tokens": 76012,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 878,
+   "duration_s": 47
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a9f4df62a710a58d4.jsonl",
+   "source_sha256": "4565f3b62e1d3965167f5efdf73d7ba27cd32c3930d4e88c4d1c6ec181440325",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Box__comics_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-ae443906d59afb080.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Box",
+   "toolUseId": "toolu_019PpmVqBohTFnQmLaqhkkR6",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 13542,
+   "cache_read_input_tokens": 76037,
+   "output_tokens_at_stream_start": 32,
+   "api_calls": 2,
+   "article_tokens_est": 1206,
+   "duration_s": 62
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-ae443906d59afb080.jsonl",
+   "source_sha256": "e6801faf9e86c0593baab33a4b08a1223ca8fda86ac21f170d96d0fb37ab1178",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Darkdevil": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a2837de4318b3fadf.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Darkdevil",
+   "toolUseId": "toolu_01P25bLhZmvUxLqTuH86m9UK",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 13049,
+   "cache_read_input_tokens": 76028,
+   "output_tokens_at_stream_start": 30,
+   "api_calls": 2,
+   "article_tokens_est": 814,
+   "duration_s": 55
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a2837de4318b3fadf.jsonl",
+   "source_sha256": "8e14b7b3a01bcb396db38793be063aca721db373a412b7398b21908db4013866",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Fandral": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a9288b9a515a26b58.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Fandral",
+   "toolUseId": "toolu_019o5LR94V6RKKN8HAqDNZpX",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 18097,
+   "cache_read_input_tokens": 76019,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1864,
+   "duration_s": 130
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a9288b9a515a26b58.jsonl",
+   "source_sha256": "391883094ae0ad22625a99c20034effdd7c1e7fc679163ffc6a77b4286027d55",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Golem__Marvel_Comics_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a2c3a845257ba177b.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Golem",
+   "toolUseId": "toolu_01QJBH8w5muKkAMGNwSh3771",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 13828,
+   "cache_read_input_tokens": 76031,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1061,
+   "duration_s": 66
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a2c3a845257ba177b.jsonl",
+   "source_sha256": "024b70511d8cbfa13d5173b3c3a1b43bc84f491caaf2d59d8ebe055926f4ee7d",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Janice_Lincoln": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a07067c024cf3193a.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Janice Lincoln",
+   "toolUseId": "toolu_01XvuDcXvhcHTzye8KYP1EdX",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 13645,
+   "cache_read_input_tokens": 76034,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1317,
+   "duration_s": 71
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a07067c024cf3193a.jsonl",
+   "source_sha256": "290a00f5cd00e19f3fa8bce2385ba7bc21402b59593be8b7a1f9eefdf8564cf0",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Motormouth__comics_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a57b432a0f6897b8c.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Motormouth",
+   "toolUseId": "toolu_01WuyCCHExrAXLyJH2WXBffg",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 14445,
+   "cache_read_input_tokens": 76028,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1588,
+   "duration_s": 76
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a57b432a0f6897b8c.jsonl",
+   "source_sha256": "369aac9cdcf4e1204f80534a1faa579478ab12d7cebfbc0599a050ffd319ea20",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Skull_the_Slayer": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a603bcf5e09a17339.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Skull the Slayer",
+   "toolUseId": "toolu_01B2hhLBwu9v2grBs7yLJPfG",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 13623,
+   "cache_read_input_tokens": 76027,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 769,
+   "duration_s": 63
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a603bcf5e09a17339.jsonl",
+   "source_sha256": "08a1f84e983dcab317b6233db6d184a521211ac962e9f51986f29fe3f2a3acf5",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Typeface__character_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a6ddfb404e7e3cb24.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Typeface",
+   "toolUseId": "toolu_01NSRar82aEGN3H53ZRcfnEb",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 12208,
+   "cache_read_input_tokens": 76021,
+   "output_tokens_at_stream_start": 31,
+   "api_calls": 2,
+   "article_tokens_est": 581,
+   "duration_s": 42
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a6ddfb404e7e3cb24.jsonl",
+   "source_sha256": "c0f4c7298e296260399a700b792648c07267d2d37f52cb3f13ceb9aba7381026",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Blackwulf": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a99b1106b9c7d3bab.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Blackwulf",
+   "toolUseId": "toolu_016MvxPQK5uAzwWki3jKFzNC",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 13571,
+   "cache_read_input_tokens": 76005,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 1340,
+   "duration_s": 236
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a99b1106b9c7d3bab.jsonl",
+   "source_sha256": "fa75db0afcda31ca452a77c737c5b67699a4c609db8b7d4b09cec4cd3cf3ddf2",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Captain_Midlands": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a0ad6359cee88c17c.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Captain Midlands",
+   "toolUseId": "toolu_01NdWZVXABK8T8RZH9cLXnMQ",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 11735,
+   "cache_read_input_tokens": 76005,
+   "output_tokens_at_stream_start": 29,
+   "api_calls": 2,
+   "article_tokens_est": 858,
+   "duration_s": 40
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a0ad6359cee88c17c.jsonl",
+   "source_sha256": "95729734591689fecc4142aa6d0006b7fa5370656666fd29c2769725cabd6b12",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Digitek__character_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a39b6f1292cf933da.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Digitek",
+   "toolUseId": "toolu_012ZorfWh6YiaExKqSBRK1qK",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 11223,
+   "cache_read_input_tokens": 76002,
+   "output_tokens_at_stream_start": 29,
+   "api_calls": 2,
+   "article_tokens_est": 633,
+   "duration_s": 37
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a39b6f1292cf933da.jsonl",
+   "source_sha256": "29f2a17a05c71aeff29eb6e9f1ec702de4a376a5fab821c43428c91db64bdd4e",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Gremlin__comics_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-ab593cafd71468ed3.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Gremlin",
+   "toolUseId": "toolu_01X39TLK2ve7b3f8DY9MWYJT",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 12559,
+   "cache_read_input_tokens": 76047,
+   "output_tokens_at_stream_start": 31,
+   "api_calls": 2,
+   "article_tokens_est": 970,
+   "duration_s": 61
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-ab593cafd71468ed3.jsonl",
+   "source_sha256": "8c2d686cd6334facd45eb70ff9e1789336216b50929c8138b6338e397e989061",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Mahr_Vehl": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a0071ad539341896f.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Mahr Vehl",
+   "toolUseId": "toolu_011pGJqbMxRDSbuUHCWBNTXe",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 13591,
+   "cache_read_input_tokens": 76023,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 913,
+   "duration_s": 60
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a0071ad539341896f.jsonl",
+   "source_sha256": "01148e6af7a5f1ee591b4be715bdd76bfde6c530b4273fc6db576decb659a17a",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Oya__comics_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a2a5d1b7f2db457b7.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Oya",
+   "toolUseId": "toolu_01YAnwgr33sdggM9r7mMxMtg",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 12317,
+   "cache_read_input_tokens": 76028,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 865,
+   "duration_s": 40
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a2a5d1b7f2db457b7.jsonl",
+   "source_sha256": "e8ffb0d5da79b4123b2b6127d676ea5722760895aacf4656ea1236994f723540",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Sean_and_Chris": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-ad48cde1996f7845a.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Sean and Chris",
+   "toolUseId": "toolu_01CjNtdDEZC3wt782h7xdmMS",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 12302,
+   "cache_read_input_tokens": 76009,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 799,
+   "duration_s": 39
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-ad48cde1996f7845a.jsonl",
+   "source_sha256": "6f5bd0a7b1a78af6cc228e4fec6e46bc59451eb5017ba46fc05af149d02f10f4",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Solomon_Kane__comics_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a6b75b3bed75742d5.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Solomon Kane",
+   "toolUseId": "toolu_01CTp8VxDtMqbJw36vciBSFL",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 15129,
+   "cache_read_input_tokens": 76014,
+   "output_tokens_at_stream_start": 29,
+   "api_calls": 2,
+   "article_tokens_est": 1102,
+   "duration_s": 78
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a6b75b3bed75742d5.jsonl",
+   "source_sha256": "32ab2a147c18d84a79a8dab31b28b94f84618f642468c565a1ac27b7996838eb",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ },
+ "Thunderbolt__Marvel_Comics_": {
+  "verdict": "PASS",
+  "problems": [],
+  "agent_file": "agent-a01f6770733eab323.jsonl",
+  "agent_meta": {
+   "agentType": "general-purpose",
+   "description": "Forge r1: Thunderbolt",
+   "toolUseId": "toolu_01CfWX61vp4EwgVL4g8WUEuu",
+   "spawnDepth": 1,
+   "requestShape": "background",
+   "requestNonInteractive": true,
+   "model": "fable"
+  },
+  "models": [
+   "claude-fable-5-1"
+  ],
+  "tool_calls": [
+   "Write",
+   "SubagentHandback"
+  ],
+  "final_reply": "done",
+  "usage": {
+   "input_tokens": 34,
+   "cache_creation_input_tokens": 12108,
+   "cache_read_input_tokens": 76030,
+   "output_tokens_at_stream_start": 28,
+   "api_calls": 2,
+   "article_tokens_est": 724,
+   "duration_s": 37
+  },
+  "prompt_identical": true,
+  "transcript": {
+   "source": "agent-a01f6770733eab323.jsonl",
+   "source_sha256": "93f5e37930216f7eeed7b4203de85b9b5feecbbe24127a038f7384177362de81",
+   "redacted": [
+    "session_context.context",
+    "session_context.rendered",
+    "credential_org.organizationUuid"
+   ]
+  },
+  "audited_at": "2026-10-05T09:50:30Z"
+ }
+}
