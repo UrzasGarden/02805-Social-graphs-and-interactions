@@ -92,37 +92,48 @@
   }
 
   const TELLS = {
-    sent_len_mean: { title: "It talks longer", sub: "words per sentence", fmt: v => v.toFixed(1) },
-    dash_rate: { title: "It loves dashes", sub: "dashes per 100 words", fmt: v => v.toFixed(2) },
-    paren_rate: { title: "It over-explains (in brackets)", sub: "brackets per 100 words", fmt: v => v.toFixed(2) },
-    unseen_bigram_rate: { title: "It plays it safe", sub: "word pairs no other real article uses", fmt: v => `${Math.round(v * 100)}%` },
+    sent_len_mean: { title: "Longer sentences", unit: "words per sentence", fmt: v => v.toFixed(1) },
+    paren_rate: { title: "More brackets", unit: "per 100 words", fmt: v => v.toFixed(2) },
+    dash_rate: { title: "More dashes", unit: "per 100 words", fmt: v => v.toFixed(2) },
+    unseen_bigram_rate: { title: "Fewer unusual word pairs", unit: "pairs no other real article uses", fmt: v => `${Math.round(v * 100)}%` },
   };
 
-  function drawTells(root, data) {
-    root.replaceChildren();
+  // One row per clue: a dot for Wikipedia and a dot for Fable on that clue's own scale (0 to 1.15 x the larger value)
+  function drawTells(table, data) {
+    table.replaceChildren();
+    const head = el("tr");
+    for (const h of ["Clue", "Wikipedia vs. Fable", "Difference", "Alone, it catches"]) head.appendChild(el("th", null, h));
+    const thead = el("thead"); thead.appendChild(head);
+    const tbody = el("tbody");
     for (const t of data.tells) {
       const meta = TELLS[t.feature];
       if (!meta) continue;
-      const card = el("div", "tell");
-      card.appendChild(el("h3", null, meta.title));
-      const ratio = t.forged / t.real;
-      card.appendChild(el("div", "tell-big", ratio >= 1.5 ? `${ratio.toFixed(1)}×` : ratio >= 1 ? `+${Math.round((ratio - 1) * 100)}%` : `${Math.round((1 - ratio) * 100)}% fewer`));
-      card.appendChild(el("div", "tell-sub", meta.sub));
-      const max = Math.max(t.real, t.forged);
-      for (const [lab, v, kind] of [["Real", t.real, "real"], ["AI", t.forged, "machine ai"]]) {
-        const row = el("div", "tell-row");
-        row.appendChild(el("span", "tell-lab", lab));
-        const track = el("div", "tell-track");
-        const bar = el("div", `tell-bar ${kind}`);
-        bar.style.width = `${(v / max) * 100}%`;
-        attachTip(bar, meta.fmt(v), `${lab} articles, ${meta.sub} (median)`);
-        track.appendChild(bar);
-        row.append(track, el("span", "tell-val", meta.fmt(v)));
-        card.appendChild(row);
+      const tr = el("tr");
+      const clue = el("td", "clue");
+      clue.append(el("div", "t", meta.title), el("div", "u", meta.unit));
+      const scale = Math.max(t.real, t.forged) * 1.15;
+      const cell = el("td", "dumb-cell");
+      const dumb = el("div", "dumb");
+      const xr = (t.real / scale) * 100, xa = (t.forged / scale) * 100;
+      const line = el("div", "line");
+      line.style.left = `${Math.min(xr, xa)}%`; line.style.width = `${Math.abs(xa - xr)}%`;
+      dumb.appendChild(line);
+      for (const [cls, x, v, who] of [["real", xr, t.real, "Wikipedia"], ["ai", xa, t.forged, "Claude Fable 5.1"]]) {
+        const dot = el("div", `dot ${cls}`);
+        dot.style.left = `${x}%`;
+        attachTip(dot, meta.fmt(v), `${who}, ${meta.unit} (median)`);
+        dumb.appendChild(dot);
+        const lab = el("span", `dlab ${cls}`, meta.fmt(v));
+        lab.style.left = `${x}%`;
+        dumb.appendChild(lab);
       }
-      card.appendChild(el("div", "tell-foot", `On its own, this clue spots the AI in ${pct(t.pair_accuracy)} of pairs.`));
-      root.appendChild(card);
+      cell.appendChild(dumb);
+      const ratio = t.forged / t.real;
+      const diff = ratio >= 1.5 ? `${ratio.toFixed(1)}×` : ratio >= 1 ? `+${Math.round((ratio - 1) * 100)}%` : `−${Math.round((1 - ratio) * 100)}%`;
+      tr.append(clue, cell, el("td", "num diff", diff), el("td", "num", `${pct(t.pair_accuracy)} of pairs`));
+      tbody.appendChild(tr);
     }
+    table.append(thead, tbody);
   }
 
   function fillStats(data) {
@@ -130,7 +141,8 @@
     const values = { n_pairs: String(s.n_pairs), n_features: String(s.n_features),
                      forged_words: s.forged_words.toLocaleString("en-US"), forger_minutes: String(s.forger_minutes),
                      d1_pair_accuracy: pct(s.d1_pair_accuracy), best_single: pct(s.best_single_pair_accuracy),
-                     d1_pairs_right: `${s.d1_pairs_right} of ${s.n_pairs}` };
+                     d1_pairs_right: `${s.d1_pairs_right} of ${s.n_pairs}`,
+                     d1_pairs_won: String(s.d1_pairs_right), fable_pairs_won: String(s.n_pairs - s.d1_pairs_right) };
     document.querySelectorAll("[data-stat]").forEach(n => {
       const v = values[n.getAttribute("data-stat")];
       if (v !== undefined) n.textContent = v;

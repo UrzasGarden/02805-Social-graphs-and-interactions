@@ -81,7 +81,7 @@
       const wrap = el("div", "game");
       wrap.appendChild(status());
       const q = el("p", "g-question");
-      q.append(el("span", "g-name", pair.name), " — which one is the real Wikipedia article?");
+      q.append("Which one is the real Wikipedia article?");
       wrap.appendChild(q);
       const cards = el("div", "g-cards");
       const cardEls = {};
@@ -91,13 +91,14 @@
         head.appendChild(el("span", null, "AB"[i]));
         const tagSlot = el("span");
         head.appendChild(tagSlot);
+        const title = el("h4", "g-wtitle", pair.name);
         const text = el("div", "g-text");
         text.appendChild(document.createTextNode(kind === "real" ? pair.real : plain(pair.forged)));
         const btn = el("button", "g-btn g-pick", "This one is real");
         btn.type = "button";
         btn.setAttribute("aria-label", `Excerpt ${"AB"[i]} is the real one`);
         btn.addEventListener("click", () => guess(kind));
-        card.append(head, text, btn);
+        card.append(head, title, text, btn);
         cards.appendChild(card);
         cardEls[kind] = { card, text, tagSlot, btn };
       });

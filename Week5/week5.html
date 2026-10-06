@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Week 5 — Can you spot the AI?</title>
+  <title>Can you spot the AI?</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -28,142 +28,101 @@
 
   <main class="post present">
 
-    <!-- The question -->
-    <header class="hero">
-      <span class="section-kicker">Week 5 · Words &amp; n-grams</span>
-      <h1>Can you spot the <span class="ai">AI</span>?</h1>
-      <p class="lede">We asked <strong>Claude Fable 5.1</strong>, Anthropic's most capable publicly available AI,
-        to fake the Wikipedia articles of <span data-stat="n_pairs">60</span> Marvel heroes.
-        Then we tried to catch it by doing nothing smarter than counting words.</p>
+    <!-- The question + the result as a scoreline -->
+    <header class="intro">
+      <p class="kicker">Week 5 · DTU 02805</p>
+      <h1>Can you spot the <em>AI</em>?</h1>
+      <p class="lede">We asked Claude Fable 5.1, Anthropic's most capable publicly available AI, to fake the
+        Wikipedia articles of <span data-stat="n_pairs">60</span> Marvel heroes. Then we tried to catch it with
+        nothing smarter than counting words.</p>
 
-      <div class="matchup" aria-label="The matchup">
-        <div class="fighter ai">
-          <div class="who">Claude Fable 5.1</div>
-          <div class="what">Frontier AI model</div>
-          <ul>
-            <li>Thinks before it writes</li>
-            <li>Was told what we would test</li>
-            <li><span data-stat="forger_minutes">108</span> minutes of writing</li>
-          </ul>
+      <div class="scoreline" aria-label="Final score">
+        <div class="side counter">
+          <div class="name">Word counter</div>
+          <div class="detail"><span data-stat="n_features">12</span> counts, no understanding</div>
         </div>
-        <div class="vs">VS</div>
-        <div class="fighter machine">
-          <div class="who">A word counter</div>
-          <div class="what"><span data-stat="n_features">12</span> simple counts + textbook statistics</div>
-          <ul>
-            <li>Sentence length, dashes, brackets…</li>
-            <li>Never reads for meaning</li>
-            <li>Scores every article in seconds</li>
-          </ul>
+        <div class="score"><span class="w" data-stat="d1_pairs_won">58</span><span class="dash">–</span><span class="l" data-stat="fable_pairs_won">2</span></div>
+        <div class="side fable">
+          <div class="name">Claude Fable 5.1</div>
+          <div class="detail"><span data-stat="forged_words">63,706</span> words in <span data-stat="forger_minutes">108</span> minutes</div>
         </div>
       </div>
+      <p class="scoreline-caption">Pairs won: in each pair the counter had to tell the real article from Fable's fake.</p>
 
-      <div class="stat-row">
-        <div class="stat"><div class="n" data-stat="n_pairs">60</div><div class="t">heroes forged</div></div>
-        <div class="stat"><div class="n" data-stat="forged_words">63,706</div><div class="t">words of fake Wikipedia</div></div>
-        <div class="stat"><div class="n machine" data-stat="d1_pair_accuracy">97%</div><div class="t">caught by the word counter</div></div>
-      </div>
-      <div class="cta">
-        <a class="btn-big primary" href="#play">Play: can you beat it?</a>
-        <a class="btn-big" href="#how">How it works</a>
-      </div>
+      <a class="play-link" href="#play">Play the game ↓</a>
     </header>
 
     <!-- The game -->
     <section id="play">
-      <span class="section-kicker">Round 1</span>
       <h2>Real or AI?</h2>
-      <p class="sub">Two openings, same hero. One is the real Wikipedia article, one was written by <strong>Claude Fable 5.1</strong>. Pick the real one. Ten rounds.</p>
-      <div class="panel" id="game"><p class="note">Loading…</p></div>
+      <p class="sub">Two openings about the same hero. One is from Wikipedia, the other was written by Claude
+        Fable 5.1. Pick the real one, ten times.</p>
+      <div class="game-frame" id="game"><p class="note">Loading…</p></div>
     </section>
 
     <!-- Main figure -->
     <section>
-      <span class="section-kicker">The scoreboard</span>
       <h2>Who catches Claude Fable 5.1?</h2>
-      <p class="sub">How often each one picks the real article over the AI fake, across the <span data-stat="n_pairs">60</span> pairs.</p>
-      <div class="panel"><div id="vs-figure"><p class="note">Loading…</p></div></div>
+      <p class="sub">Share of the <span data-stat="n_pairs">60</span> pairs where each one picks the real article.
+        Your bar fills in when you finish a game.</p>
+      <div id="vs-figure"><p class="note">Loading…</p></div>
     </section>
 
     <!-- It was warned -->
     <section>
-      <div class="warned">
-        <span class="section-kicker">The twist</span>
-        <h2>It knew it was being tested</h2>
-        <p class="sub">From the prompt every forger received:</p>
-        <blockquote>"You are taking part in a university research experiment … on whether
-          <strong>simple word statistics</strong> can tell real Wikipedia articles apart from AI-written ones.
-          … Your goal is an article that a careful reader cannot tell apart from the real one."</blockquote>
-        <p class="verdict-line">The word counter still picked out the fake in <span data-stat="d1_pairs_right">58 of 60</span> pairs.</p>
-      </div>
+      <h2>It knew it was being tested</h2>
+      <blockquote class="pull">“You are taking part in a university research experiment … on whether
+        <mark>simple word statistics</mark> can tell real Wikipedia articles apart from AI-written ones. …
+        Your goal is an article that a careful reader cannot tell apart from the real one.”</blockquote>
+      <p class="pull-source">From the prompt every forger received. The counter still won
+        <span data-stat="d1_pairs_right">58 of 60</span> pairs.</p>
     </section>
 
     <!-- What gives it away -->
     <section>
-      <span class="section-kicker">The giveaways</span>
       <h2>How Claude Fable 5.1 gives itself away</h2>
-      <p class="sub">Typical values: real Wikipedia articles vs. Fable's forgeries.</p>
-      <div class="tells" id="tells"><p class="note">Loading…</p></div>
+      <p class="sub">Typical values in the 60 real articles and the 60 fakes.
+        <span class="key"><i class="k real"></i>Wikipedia <i class="k ai"></i>Claude Fable 5.1</span></p>
+      <div class="table-wrap"><table class="tells-table" id="tells">
+        <tr><td class="note">Loading…</td></tr>
+      </table></div>
     </section>
 
     <!-- What surprised us -->
     <section>
-      <span class="section-kicker">Surprises</span>
-      <h2>Three things we didn't expect</h2>
-      <div class="surprises">
-        <div class="surprise">
-          <div class="n">2 / 60</div>
-          <h3>Its only misses had broken prompts</h3>
-          <p>The counter lost just two pairs. They are exactly the two heroes whose description in the course data
-            is cut off mid-sentence.</p>
-        </div>
-        <div class="surprise">
-          <div class="n">33 words</div>
-          <h3>It didn't just copy Wikipedia</h3>
-          <p>Its longest copied stretch is the stock opening line, "appearing in American comic books published by
-            Marvel Comics…", which real articles share too.</p>
-        </div>
-        <div class="surprise">
-          <div class="n">2×</div>
-          <h3>Famous heroes look fake</h3>
-          <p>Real articles about famous heroes look twice as "AI" to the counter as obscure ones: long sentences,
-            lots of brackets.</p>
-        </div>
-      </div>
+      <h2>What surprised us</h2>
+      <ul class="facts">
+        <li><span class="fig">2 of 60.</span> The counter lost only two pairs, and they are exactly the two heroes
+          whose description in the course data is cut off mid-sentence.</li>
+        <li><span class="fig">33 words.</span> The longest stretch Fable copied from Wikipedia is the stock opening
+          line, “appearing in American comic books published by Marvel Comics…”, which real articles share too.</li>
+        <li><span class="fig">2×.</span> Real articles about famous heroes look twice as suspicious to the counter
+          as articles about obscure ones. They have the long sentences and brackets Fable likes.</li>
+      </ul>
     </section>
 
     <!-- What we did -->
     <section id="how">
-      <span class="section-kicker">How we did it</span>
-      <h2>Three steps</h2>
-      <div class="steps">
-        <div class="step"><h3>Pick 60 heroes</h3>
-          <p>From the course's Marvel network: 20 famous, 20 in between, 20 obscure.</p></div>
-        <div class="step"><h3>Let an AI forge them</h3>
-          <p>Each article came from its own Claude Fable 5.1 agent, given only the name, a one-line description and
-            the linked heroes. It never saw the real article, and we checked every agent's log.</p></div>
-        <div class="step"><h3>Count words</h3>
-          <p>Twelve simple counts (sentence length, punctuation, rare word pairs…) feed a basic statistical model.</p></div>
-      </div>
+      <h2>How we did it</h2>
+      <ol class="steps-list">
+        <li>Picked 60 heroes from the course's Marvel network: 20 famous, 20 in between, 20 obscure.</li>
+        <li>Gave each one to its own Claude Fable 5.1 agent with only the name, a one-line description and the
+          linked heroes. No agent saw the real article, and we checked every agent's log.</li>
+        <li>Scored every article on 12 simple counts (sentence length, punctuation, rare word pairs) with a
+          textbook statistical model.</li>
+      </ol>
     </section>
 
-    <!-- Limitation + links -->
-    <div class="fine">
-      <p><strong>Fine print.</strong> You read 120 words; the counter reads the whole article (up to 1,500), which
-        makes its job easier. The agents ran inside Claude Code, and we ran only round 1 of the planned arms race.</p>
-      <div class="links">
-        <a href="week5-deep-dive.html">Full write-up</a>
-        <a href="notebooks/analysis.ipynb">Analysis notebook</a>
-        <a href="AI_METHODS.md">How we used AI</a>
-      </div>
-    </div>
+    <p class="fine-print">You read 120 words, while the counter reads the whole article (up to 1,500), which makes
+      its job easier. The agents ran inside Claude Code, and only round 1 of the planned arms race was run.
+      More: <a href="week5-deep-dive.html">full write-up</a> · <a href="notebooks/analysis.ipynb">analysis notebook</a>
+      · <a href="AI_METHODS.md">how we used AI</a>.</p>
 
     <footer class="footer">
       <p>Real article text: <a href="https://en.wikipedia.org/" target="_blank" rel="noopener">Wikipedia</a>,
         <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.
-        Every forgery is <strong>AI-generated</strong> by Claude Fable 5.1 and labelled once revealed. This page
-        never calls an AI; the game reads precomputed data.</p>
-      <p>DTU 02805 Social Graphs and Interactions, Week 5.</p>
+        Every fake is <strong>AI-generated</strong> by Claude Fable 5.1 and labelled once revealed. This page never
+        calls an AI; the game reads precomputed data.</p>
     </footer>
   </main>
 
