@@ -75,6 +75,12 @@ def main() -> None:
                      "d1_pair_accuracy": det["cv"]["pair_accuracy"],
                      "d1_pairs_right": int(sum(x["detector_correct"] for x in pairs)),
                      "best_single_feature": best, "best_single_pair_accuracy": single[best]["pair_accuracy"]}
+    check = json.loads((config.FORGERIES_DIR / "round1" / "check.json").read_text(encoding="utf-8"))
+    usage = pd.read_csv(config.USAGE_LOG)
+    usage = usage[usage["label"] == "round1"]
+    data["stats"].update({"forged_words": int(sum(v.get("clean_words", 0) for v in check.values())),
+                          "forger_minutes": int(round(usage["duration_s"].sum() / 60)),
+                          "forger_model": "Claude Fable 5.1"})
     out = config.GAME_DIR / "game_data.json"
     out.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
     wc = [(x["real_words"], x["forged_words"]) for x in pairs]

@@ -115,13 +115,13 @@
           const c = cardEls[k];
           c.btn.remove();
           c.card.classList.add(k === "real" ? "is-real" : "is-forged");
-          c.tagSlot.appendChild(k === "real" ? el("span", "ai-tag real-tag", "Real · Wikipedia") : el("span", "ai-tag", "AI-generated"));
+          c.tagSlot.appendChild(k === "real" ? el("span", "ai-tag real-tag", "Real · Wikipedia") : el("span", "ai-tag", "AI · Claude Fable 5.1"));
         }
         cardEls.forged.text.replaceChildren(forgedText(pair.forged, true));
         wrap.querySelector(".g-status").replaceWith(status());
 
         const box = el("div", "g-reveal");
-        box.appendChild(el("div", "verdict " + (correct ? "ok" : "no"), correct ? "Correct!" : "Fooled — that was the AI."));
+        box.appendChild(el("div", "verdict " + (correct ? "ok" : "no"), correct ? "Correct! You caught Claude Fable 5.1." : "Fooled — Claude Fable 5.1 wrote that one."));
         const prob = el("div", "g-prob");
         prob.appendChild(el("span", "g-prob-title", "How suspicious the word counter found each full article:"));
         for (const [label, p, col] of [["Real", pair.p_real_doc, "var(--real)"], ["AI", pair.p_forged_doc, "var(--forged)"]]) {
@@ -136,7 +136,7 @@
         }
         box.appendChild(prob);
         const foot = el("p", "note");
-        foot.append(pair.detector_correct ? "The counter got this one. " : "The counter was fooled too. ",
+        foot.append(pair.detector_correct ? "The word counter caught it too. " : "Fable fooled the word counter here as well. ",
           el("mark", null, "Highlighted"), " = word pairs no real Marvel article uses. ");
         const a = el("a", null, "Real article ↗");
         a.href = pair.url; a.target = "_blank"; a.rel = "noopener";
@@ -165,6 +165,8 @@
         scores.appendChild(s);
       }
       end.appendChild(scores);
+      const plural = k => (k === 1 ? "" : "s");
+      end.appendChild(el("p", "g-end-line", `Claude Fable 5.1 fooled you ${n - game.score} time${plural(n - game.score)}, and the word counter ${n - game.detector} time${plural(n - game.detector)}.`));
       if (best !== null) end.appendChild(el("p", "note", `Your best: ${best}/${n} (saved in this browser only).`));
       const result = { game: "week5-forger", round: Number(round), score: game.score, of: n, detector: game.detector, picks: game.picks };
       const actions = el("div", "actions");

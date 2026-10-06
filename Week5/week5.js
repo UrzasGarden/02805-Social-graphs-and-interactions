@@ -128,6 +128,7 @@
   function fillStats(data) {
     const s = data.stats;
     const values = { n_pairs: String(s.n_pairs), n_features: String(s.n_features),
+                     forged_words: s.forged_words.toLocaleString("en-US"), forger_minutes: String(s.forger_minutes),
                      d1_pair_accuracy: pct(s.d1_pair_accuracy), best_single: pct(s.best_single_pair_accuracy),
                      d1_pairs_right: `${s.d1_pairs_right} of ${s.n_pairs}` };
     document.querySelectorAll("[data-stat]").forEach(n => {

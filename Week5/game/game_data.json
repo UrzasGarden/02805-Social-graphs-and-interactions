@@ -7197,6 +7197,9 @@
   "d1_pair_accuracy": 0.9666666666666667,
   "d1_pairs_right": 58,
   "best_single_feature": "sent_len_mean",
-  "best_single_pair_accuracy": 0.9333
+  "best_single_pair_accuracy": 0.9333,
+  "forged_words": 63706,
+  "forger_minutes": 108,
+  "forger_model": "Claude Fable 5.1"
  }
 }

@@ -50,3 +50,4 @@
 .g-end .score.you .big { color: var(--human); }
 .g-end .score.machine .big { color: var(--machine); }
 .g-text, .g-question, .g-reveal { overflow-wrap: anywhere; }
+.g-end-line { font-weight: 600; margin: 4px 0 2px; }

@@ -32,16 +32,40 @@
     <header class="hero">
       <span class="section-kicker">Week 5 · Words &amp; n-grams</span>
       <h1>Can you spot the <span class="ai">AI</span>?</h1>
-      <p class="lede">An AI forged the Wikipedia articles of <span data-stat="n_pairs">60</span> Marvel heroes.
-        A simple word counter catches almost all of them. Can you?</p>
-      <div class="cta">
-        <a class="btn-big primary" href="#play">Play the game</a>
-        <a class="btn-big" href="#how">How it works</a>
+      <p class="lede">We asked <strong>Claude Fable 5.1</strong>, Anthropic's most capable publicly available AI,
+        to fake the Wikipedia articles of <span data-stat="n_pairs">60</span> Marvel heroes.
+        Then we tried to catch it by doing nothing smarter than counting words.</p>
+
+      <div class="matchup" aria-label="The matchup">
+        <div class="fighter ai">
+          <div class="who">Claude Fable 5.1</div>
+          <div class="what">Frontier AI model</div>
+          <ul>
+            <li>Thinks before it writes</li>
+            <li>Was told what we would test</li>
+            <li><span data-stat="forger_minutes">108</span> minutes of writing</li>
+          </ul>
+        </div>
+        <div class="vs">VS</div>
+        <div class="fighter machine">
+          <div class="who">A word counter</div>
+          <div class="what"><span data-stat="n_features">12</span> simple counts + textbook statistics</div>
+          <ul>
+            <li>Sentence length, dashes, brackets…</li>
+            <li>Never reads for meaning</li>
+            <li>Scores every article in seconds</li>
+          </ul>
+        </div>
       </div>
+
       <div class="stat-row">
-        <div class="stat"><div class="n" data-stat="n_pairs">60</div><div class="t">AI-forged articles</div></div>
-        <div class="stat"><div class="n" data-stat="n_features">12</div><div class="t">word counts, nothing smarter</div></div>
-        <div class="stat"><div class="n machine" data-stat="d1_pair_accuracy">97%</div><div class="t">caught by counting words</div></div>
+        <div class="stat"><div class="n" data-stat="n_pairs">60</div><div class="t">heroes forged</div></div>
+        <div class="stat"><div class="n" data-stat="forged_words">63,706</div><div class="t">words of fake Wikipedia</div></div>
+        <div class="stat"><div class="n machine" data-stat="d1_pair_accuracy">97%</div><div class="t">caught by the word counter</div></div>
+      </div>
+      <div class="cta">
+        <a class="btn-big primary" href="#play">Play: can you beat it?</a>
+        <a class="btn-big" href="#how">How it works</a>
       </div>
     </header>
 
@@ -49,23 +73,36 @@
     <section id="play">
       <span class="section-kicker">Round 1</span>
       <h2>Real or AI?</h2>
-      <p class="sub">Two openings, same hero. One is Wikipedia, one is <strong>AI-generated</strong>. Pick the real one. Ten rounds.</p>
+      <p class="sub">Two openings, same hero. One is the real Wikipedia article, one was written by <strong>Claude Fable 5.1</strong>. Pick the real one. Ten rounds.</p>
       <div class="panel" id="game"><p class="note">Loading…</p></div>
     </section>
 
     <!-- Main figure -->
     <section>
       <span class="section-kicker">The scoreboard</span>
-      <h2>You vs. the word counter</h2>
-      <p class="sub">How often each one picks the right article, across the <span data-stat="n_pairs">60</span> pairs.</p>
+      <h2>Who catches Claude Fable 5.1?</h2>
+      <p class="sub">How often each one picks the real article over the AI fake, across the <span data-stat="n_pairs">60</span> pairs.</p>
       <div class="panel"><div id="vs-figure"><p class="note">Loading…</p></div></div>
+    </section>
+
+    <!-- It was warned -->
+    <section>
+      <div class="warned">
+        <span class="section-kicker">The twist</span>
+        <h2>It knew it was being tested</h2>
+        <p class="sub">From the prompt every forger received:</p>
+        <blockquote>"You are taking part in a university research experiment … on whether
+          <strong>simple word statistics</strong> can tell real Wikipedia articles apart from AI-written ones.
+          … Your goal is an article that a careful reader cannot tell apart from the real one."</blockquote>
+        <p class="verdict-line">The word counter still picked out the fake in <span data-stat="d1_pairs_right">58 of 60</span> pairs.</p>
+      </div>
     </section>
 
     <!-- What gives it away -->
     <section>
       <span class="section-kicker">The giveaways</span>
-      <h2>What gives the AI away</h2>
-      <p class="sub">Typical values: real Wikipedia articles vs. AI forgeries.</p>
+      <h2>How Claude Fable 5.1 gives itself away</h2>
+      <p class="sub">Typical values: real Wikipedia articles vs. Fable's forgeries.</p>
       <div class="tells" id="tells"><p class="note">Loading…</p></div>
     </section>
 
@@ -82,7 +119,7 @@
         </div>
         <div class="surprise">
           <div class="n">33 words</div>
-          <h3>It doesn't copy Wikipedia</h3>
+          <h3>It didn't just copy Wikipedia</h3>
           <p>Its longest copied stretch is the stock opening line, "appearing in American comic books published by
             Marvel Comics…", which real articles share too.</p>
         </div>
@@ -103,8 +140,8 @@
         <div class="step"><h3>Pick 60 heroes</h3>
           <p>From the course's Marvel network: 20 famous, 20 in between, 20 obscure.</p></div>
         <div class="step"><h3>Let an AI forge them</h3>
-          <p>Claude Fable 5.1 got only the name, a one-line description and the linked heroes. It never saw the
-            real article.</p></div>
+          <p>Each article came from its own Claude Fable 5.1 agent, given only the name, a one-line description and
+            the linked heroes. It never saw the real article, and we checked every agent's log.</p></div>
         <div class="step"><h3>Count words</h3>
           <p>Twelve simple counts (sentence length, punctuation, rare word pairs…) feed a basic statistical model.</p></div>
       </div>
@@ -113,7 +150,7 @@
     <!-- Limitation + links -->
     <div class="fine">
       <p><strong>Fine print.</strong> You read 120 words; the counter reads the whole article (up to 1,500), which
-        makes its job easier. We ran only round 1 of the planned arms race.</p>
+        makes its job easier. The agents ran inside Claude Code, and we ran only round 1 of the planned arms race.</p>
       <div class="links">
         <a href="week5-deep-dive.html">Full write-up</a>
         <a href="notebooks/analysis.ipynb">Analysis notebook</a>

@@ -167,3 +167,27 @@ details.table-view td.num { text-align: right; font-variant-numeric: tabular-num
 .fine { margin-top: 56px; padding: 16px 18px; border: 1px dashed var(--line); border-radius: 14px; color: var(--muted); font-size: 0.88rem; }
 .fine strong { color: var(--text); }
 .fine .links { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 10px; }
+
+/* ───────────── Matchup + twist (week5.html) ───────────── */
+.matchup { display: grid; grid-template-columns: 1fr auto 1fr; gap: 14px; align-items: stretch; margin-top: 28px; text-align: left; }
+.fighter { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; }
+.fighter.ai { border-color: var(--forged); box-shadow: inset 0 3px 0 var(--forged); }
+.fighter.machine { border-color: var(--machine); box-shadow: inset 0 3px 0 var(--machine); }
+.fighter .who { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.01em; }
+.fighter.ai .who { color: var(--forged); }
+.fighter.machine .who { color: var(--machine); }
+.fighter .what { color: var(--muted); font-size: 0.88rem; margin: 2px 0 10px; }
+.fighter ul { list-style: none; padding: 0; margin: 0; }
+.post .fighter li { font-size: 0.9rem; color: #cfd6e4; padding: 3px 0 3px 18px; position: relative; margin: 0; }
+.fighter li::before { content: ""; position: absolute; left: 2px; top: 11px; width: 7px; height: 7px; border-radius: 50%; background: var(--line); }
+.fighter.ai li::before { background: var(--forged); }
+.fighter.machine li::before { background: var(--machine); }
+.vs { align-self: center; font-weight: 900; font-size: 1.4rem; color: var(--muted); letter-spacing: 0.05em; }
+@media (max-width: 640px) { .matchup { grid-template-columns: 1fr; } .vs { justify-self: center; } }
+
+.warned { background: linear-gradient(180deg, rgba(217, 89, 38, 0.10), rgba(217, 89, 38, 0) 70%), var(--panel);
+  border: 1px solid var(--forged); border-radius: 16px; padding: 22px 22px 18px; }
+.warned blockquote { font-size: 1.02rem; color: #e7ecf5; border-left-color: var(--forged); background: rgba(11, 15, 24, 0.5); }
+.warned blockquote strong { color: var(--forged); }
+.verdict-line { font-size: 1.15rem; font-weight: 700; margin-top: 12px; }
+.verdict-line span { color: var(--machine); }
