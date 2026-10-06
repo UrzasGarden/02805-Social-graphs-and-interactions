@@ -7164,5 +7164,39 @@
    "auc": 0.9322222222222223,
    "pair_accuracy": 0.9666666666666667
   }
+ },
+ "tells": [
+  {
+   "feature": "sent_len_mean",
+   "real": 20.078598484848484,
+   "forged": 24.49076923076923,
+   "pair_accuracy": 0.9333
+  },
+  {
+   "feature": "dash_rate",
+   "real": 0.11457660384588989,
+   "forged": 0.36065445843304544,
+   "pair_accuracy": 0.6667
+  },
+  {
+   "feature": "paren_rate",
+   "real": 0.6109669833330222,
+   "forged": 1.0467083709705691,
+   "pair_accuracy": 0.8167
+  },
+  {
+   "feature": "unseen_bigram_rate",
+   "real": 0.32112990165959804,
+   "forged": 0.27988319163268643,
+   "pair_accuracy": 0.8167
+  }
+ ],
+ "stats": {
+  "n_pairs": 60,
+  "n_features": 12,
+  "d1_pair_accuracy": 0.9666666666666667,
+  "d1_pairs_right": 58,
+  "best_single_feature": "sent_len_mean",
+  "best_single_pair_accuracy": 0.9333
  }
 }

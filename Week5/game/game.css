@@ -38,3 +38,15 @@
 .g-end .cap { color: var(--muted); font-size: 0.82rem; margin-top: 4px; }
 .g-end .actions { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
 .g-copied { color: var(--good); font-size: 0.85rem; min-height: 1.2em; margin-top: 8px; }
+
+/* compact presentation tweaks */
+.g-name { color: var(--text); font-weight: 800; }
+.g-prob { display: block; margin: 8px 0; }
+.g-prob-title { display: block; color: var(--muted); font-size: 0.82rem; margin-bottom: 6px; }
+.g-prob-row { display: grid; grid-template-columns: 34px 1fr 44px; gap: 8px; align-items: center; margin: 4px 0; font-size: 0.84rem; }
+.g-prob-row .lbl { color: var(--muted); font-weight: 600; }
+.g-reveal .g-btn.primary { margin-top: 10px; }
+.g-end-head { font-size: 1.4rem; margin-bottom: 4px; }
+.g-end .score.you .big { color: var(--human); }
+.g-end .score.machine .big { color: var(--machine); }
+.g-text, .g-question, .g-reveal { overflow-wrap: anywhere; }

@@ -64,6 +64,17 @@ def main() -> None:
             "d1": det["cv"],
         },
     }
+    # Headline numbers and the real-vs-AI "tells" for the presentation page
+    feat = pd.read_csv(config.OUTPUTS_DIR / "features.csv")
+    r1 = feat[feat["round"].isin([0, 1])]
+    med = r1.groupby("label")[ts.FEATURES].median()
+    data["tells"] = [{"feature": f, "real": float(med.loc[0, f]), "forged": float(med.loc[1, f]),
+                      "pair_accuracy": single[f]["pair_accuracy"]}
+                     for f in ("sent_len_mean", "dash_rate", "paren_rate", "unseen_bigram_rate")]
+    data["stats"] = {"n_pairs": len(pairs), "n_features": len(ts.FEATURES),
+                     "d1_pair_accuracy": det["cv"]["pair_accuracy"],
+                     "d1_pairs_right": int(sum(x["detector_correct"] for x in pairs)),
+                     "best_single_feature": best, "best_single_pair_accuracy": single[best]["pair_accuracy"]}
     out = config.GAME_DIR / "game_data.json"
     out.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
     wc = [(x["real_words"], x["forged_words"]) for x in pairs]

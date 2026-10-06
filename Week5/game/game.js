@@ -1,4 +1,4 @@
-/* Real-or-forged game (Week 5: The Forger).
+/* Real-or-AI game (Week 5: The Forger).
  * Reads precomputed data only (game/game_data.json); nothing here calls a model.
  * All data is inserted with textContent / createTextNode, never innerHTML. */
 (function () {
@@ -34,16 +34,17 @@
     return frag;
   }
   function plain(segments) { return segments.map(s => s[0]).join(""); }
+  function pctText(p) { return p < 0.005 ? "<1%" : p > 0.995 ? ">99%" : `${Math.round(p * 100)}%`; }
 
-  function init(root, data) {
+  function init(root, data, opts) {
+    opts = opts || {};
     let round = "1", game = null;
 
     const controls = el("div", "game-controls");
-    controls.appendChild(el("span", "label", "Forger round:"));
     const roundBtns = {};
     for (const r of ["1", "2", "3"]) {
       const info = data.rounds[r];
-      const b = el("button", "g-btn", info.available ? `Round ${r}` : `Round ${r} (${info.note})`);
+      const b = el("button", "g-btn", info.available ? `Round ${r}` : `Round ${r} · ${info.note}`);
       b.type = "button";
       b.disabled = !info.available;
       b.addEventListener("click", () => { round = r; start(); });
@@ -67,32 +68,34 @@
     function status() {
       const s = el("div", "g-status");
       const left = el("span");
-      left.append("Turn ", el("strong", null, `${game.turn + 1} of ${game.pairs.length}`));
+      left.append(el("strong", null, `${game.turn + 1} / ${game.pairs.length}`));
       const right = el("span");
-      right.append("You ", el("strong", null, String(game.score)), " · Detector ", el("strong", null, String(game.detector)));
+      right.append("You ", el("strong", null, String(game.score)), "  ·  Word counter ", el("strong", null, String(game.detector)));
       s.append(left, right);
       return s;
     }
 
     function showTurn() {
       const pair = game.pairs[game.turn];
-      const realFirst = Math.random() < 0.5;
-      const sides = realFirst ? ["real", "forged"] : ["forged", "real"];
+      const sides = Math.random() < 0.5 ? ["real", "forged"] : ["forged", "real"];
       const wrap = el("div", "game");
       wrap.appendChild(status());
-      wrap.appendChild(el("p", "g-question", `${pair.name}: which opening is the real Wikipedia article? (The other one was written by an AI.)`));
+      const q = el("p", "g-question");
+      q.append(el("span", "g-name", pair.name), " — which one is the real Wikipedia article?");
+      wrap.appendChild(q);
       const cards = el("div", "g-cards");
       const cardEls = {};
       sides.forEach((kind, i) => {
         const card = el("div", "g-card");
         const head = el("div", "g-card-head");
-        head.appendChild(el("span", null, `Excerpt ${"AB"[i]}`));
+        head.appendChild(el("span", null, "AB"[i]));
         const tagSlot = el("span");
         head.appendChild(tagSlot);
         const text = el("div", "g-text");
-        text.appendChild(kind === "real" ? document.createTextNode(pair.real) : document.createTextNode(plain(pair.forged)));
-        const btn = el("button", "g-btn g-pick", `Excerpt ${"AB"[i]} is the real one`);
+        text.appendChild(document.createTextNode(kind === "real" ? pair.real : plain(pair.forged)));
+        const btn = el("button", "g-btn g-pick", "This one is real");
         btn.type = "button";
+        btn.setAttribute("aria-label", `Excerpt ${"AB"[i]} is the real one`);
         btn.addEventListener("click", () => guess(kind));
         card.append(head, text, btn);
         cards.appendChild(card);
@@ -112,81 +115,79 @@
           const c = cardEls[k];
           c.btn.remove();
           c.card.classList.add(k === "real" ? "is-real" : "is-forged");
-          c.tagSlot.appendChild(k === "real" ? el("span", "ai-tag real-tag", "Real · Wikipedia") : el("span", "ai-tag", "AI-generated forgery"));
+          c.tagSlot.appendChild(k === "real" ? el("span", "ai-tag real-tag", "Real · Wikipedia") : el("span", "ai-tag", "AI-generated"));
         }
         cardEls.forged.text.replaceChildren(forgedText(pair.forged, true));
         wrap.querySelector(".g-status").replaceWith(status());
 
         const box = el("div", "g-reveal");
-        box.appendChild(el("div", "verdict " + (correct ? "ok" : "no"), correct ? "Correct: you found the real article." : "Fooled: that one was the AI forgery."));
-        box.appendChild(el("p", null, "What the counting detector said about the two full documents (probability that the document is forged):"));
+        box.appendChild(el("div", "verdict " + (correct ? "ok" : "no"), correct ? "Correct!" : "Fooled — that was the AI."));
         const prob = el("div", "g-prob");
-        for (const [label, p, col] of [["Real article", pair.p_real_doc, "var(--real)"], ["AI forgery", pair.p_forged_doc, "var(--forged)"]]) {
+        prob.appendChild(el("span", "g-prob-title", "How suspicious the word counter found each full article:"));
+        for (const [label, p, col] of [["Real", pair.p_real_doc, "var(--real)"], ["AI", pair.p_forged_doc, "var(--forged)"]]) {
+          const row = el("div", "g-prob-row");
           const track = el("div", "track");
           const fill = el("div", "fill");
-          fill.style.width = `${Math.round(p * 100)}%`;
+          fill.style.width = `${Math.max(1, Math.round(p * 100))}%`;
           fill.style.background = col;
           track.appendChild(fill);
-          prob.append(el("span", null, label), track, el("span", "num", p < 0.005 ? "<1%" : p > 0.995 ? ">99%" : `${Math.round(p * 100)}%`));
+          row.append(el("span", "lbl", label), track, el("span", "num", pctText(p)));
+          prob.appendChild(row);
         }
         box.appendChild(prob);
-        box.appendChild(el("p", null, pair.detector_correct
-          ? "The detector rated the forgery as more likely forged, so it got this pair right."
-          : "The detector rated the real article as more likely forged, so it got this pair wrong."));
-        const hl = el("p", "note");
-        hl.append("Highlighted in the forgery: ", el("mark", null, "word pairs"),
-          " that never occur in any other real Marvel article in our corpus (the character's own page is left out, so names can light up too).");
-        box.appendChild(hl);
-        const link = el("p", "note");
-        const a = el("a", null, `Read the real "${pair.name}" article on Wikipedia`);
+        const foot = el("p", "note");
+        foot.append(pair.detector_correct ? "The counter got this one. " : "The counter was fooled too. ",
+          el("mark", null, "Highlighted"), " = word pairs no real Marvel article uses. ");
+        const a = el("a", null, "Real article ↗");
         a.href = pair.url; a.target = "_blank"; a.rel = "noopener";
-        link.append(a, " (CC BY-SA 4.0).");
-        box.appendChild(link);
-        const next = el("button", "g-btn primary", game.turn + 1 < game.pairs.length ? "Next pair" : "See results");
+        foot.appendChild(a);
+        box.appendChild(foot);
+        const next = el("button", "g-btn primary", game.turn + 1 < game.pairs.length ? "Next" : "See results");
         next.type = "button";
-        next.style.marginTop = "10px";
         next.addEventListener("click", () => { game.turn++; game.turn < game.pairs.length ? showTurn() : showEnd(); });
         box.appendChild(next);
         reveal.replaceChildren(box);
-        next.focus();
+        next.focus({ preventScroll: true });
       }
     }
 
     function showEnd() {
       writeBest(round, game.score);
       const best = readBest(round);
-      const end = el("div", "g-end panel");
-      end.appendChild(el("h3", null, `Round ${round} results`));
+      const n = game.pairs.length;
+      const end = el("div", "g-end");
+      const head = game.score > game.detector ? "You beat the machine!" : game.score === game.detector ? "A draw with the machine." : "The machine wins this time.";
+      end.appendChild(el("h3", "g-end-head", head));
       const scores = el("div", "scores");
-      for (const [n, cap] of [[game.score, "you"], [game.detector, "the counting detector"]]) {
-        const s = el("div");
-        s.append(el("div", "big", `${n}/${game.pairs.length}`), el("div", "cap", cap));
+      for (const [v, cap, cls] of [[game.score, "you", "you"], [game.detector, "word counter", "machine"]]) {
+        const s = el("div", "score " + cls);
+        s.append(el("div", "big", `${v}/${n}`), el("div", "cap", cap));
         scores.appendChild(s);
       }
       end.appendChild(scores);
-      end.appendChild(el("p", "note", "Same 10 pairs for both. " + (best !== null ? `Your personal best on this round: ${best}/${game.pairs.length} (stored only in this browser).` : "")));
-      const result = { game: "week5-forger", round: Number(round), score: game.score, of: game.pairs.length,
-                       detector: game.detector, picks: game.picks };
+      if (best !== null) end.appendChild(el("p", "note", `Your best: ${best}/${n} (saved in this browser only).`));
+      const result = { game: "week5-forger", round: Number(round), score: game.score, of: n, detector: game.detector, picks: game.picks };
       const actions = el("div", "actions");
-      const copy = el("button", "g-btn", "Copy results for Teams");
+      const copy = el("button", "g-btn", "Copy my result");
       copy.type = "button";
       const msg = el("div", "g-copied");
       copy.addEventListener("click", async () => {
         const text = JSON.stringify(result);
-        try { await navigator.clipboard.writeText(text); msg.textContent = "Copied. Paste it to us in Teams."; }
+        try { await navigator.clipboard.writeText(text); msg.textContent = "Copied — paste it to us in Teams."; }
         catch (e) {
           try {
             const ta = el("textarea"); ta.value = text; document.body.appendChild(ta); ta.select();
-            document.execCommand("copy"); ta.remove(); msg.textContent = "Copied. Paste it to us in Teams.";
+            document.execCommand("copy"); ta.remove(); msg.textContent = "Copied — paste it to us in Teams.";
           } catch (e2) { msg.textContent = text; }
         }
       });
       const again = el("button", "g-btn primary", "Play again");
       again.type = "button";
       again.addEventListener("click", start);
-      actions.append(copy, again);
+      actions.append(again, copy);
       end.append(actions, msg);
       stage.replaceChildren(end);
+      if (typeof opts.onFinish === "function") opts.onFinish({ score: game.score, of: n, detector: game.detector });
     }
 
     start();
