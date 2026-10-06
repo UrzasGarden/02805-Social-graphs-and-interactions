@@ -38,19 +38,10 @@
 
   function init(root, data, opts) {
     opts = opts || {};
-    let round = "1", game = null;
+    const round = "1";   // only round 1 of the forgery arms race was run
+    let game = null;
 
     const controls = el("div", "game-controls");
-    const roundBtns = {};
-    for (const r of ["1", "2", "3"]) {
-      const info = data.rounds[r];
-      const b = el("button", "g-btn", info.available ? `Round ${r}` : `Round ${r} · ${info.note}`);
-      b.type = "button";
-      b.disabled = !info.available;
-      b.addEventListener("click", () => { round = r; start(); });
-      roundBtns[r] = b;
-      controls.appendChild(b);
-    }
     const newBtn = el("button", "g-btn primary", "New game");
     newBtn.type = "button";
     newBtn.addEventListener("click", start);
@@ -59,7 +50,6 @@
     root.replaceChildren(controls, stage);
 
     function start() {
-      for (const r in roundBtns) roundBtns[r].classList.toggle("active", r === round);
       const pool = shuffle(data.rounds[round].pairs.slice()).slice(0, TURNS);
       game = { turn: 0, pairs: pool, picks: [], score: 0, detector: 0 };
       showTurn();
